@@ -2,3 +2,44 @@
 {
     height: 6vh;
 }
+.slider
+{
+    position: relative;    
+}
+#slider-image
+{
+    height: 94vh;
+}
+#slider-image img
+{
+    width: 100%;
+    height: 100%;
+}
+#slider-text
+{
+    width: 100%;
+    position: absolute;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+}
+#slider-text p
+{
+    margin: 0;
+    font-size: 3em;
+    font-family: 'Montserrat', sans-serif;
+}
+#slider-text button
+{
+    margin-top: 10px;
+    font-size: 20px;
+}
+.separator
+{
+    width: 200px;
+    height: 2px;
+    background: #fff;
+    margin: 10px auto;
+}
