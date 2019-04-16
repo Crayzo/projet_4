@@ -1,0 +1,1 @@
+$("#slider-image").css('max-height', $("#slider-image").height() - $(".navbar").outerHeight(true));

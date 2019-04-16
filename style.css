@@ -1,14 +1,10 @@
-.navbar
-{
-    height: 6vh;
-}
 .slider
 {
     position: relative;    
 }
 #slider-image
 {
-    height: 94vh;
+    height: 100vh;
 }
 #slider-image img
 {
