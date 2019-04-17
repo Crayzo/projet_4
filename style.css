@@ -1,3 +1,7 @@
+body
+{
+    background-color: #f2f2f2;
+}
 .slider
 {
     position: relative;    
@@ -10,11 +14,13 @@
 }
 #slider-image
 {
+    width: auto;
     height: 100vh;
+    overflow: hidden;
 }
 #slider-image img
 {
-    width: 100%;
+    width: 150%;
     height: 100%;
     border-bottom: 1px solid black;
 }
@@ -60,5 +66,25 @@
     width: 200px;
     height: 2px;
     background: #bdc3c7;
-    margin: 10px auto; 
+    margin: 10px auto 50px auto; 
+}
+.book
+{
+    margin-bottom: 20px;
+    background: #fff;
+    padding: 40px;
+}
+@media (min-width: 576px) 
+{
+    .book
+    {
+        border-radius: 10px;
+    }
+}
+@media (min-width: 768px)
+{
+    #slider-image img 
+    {
+        width: 100%;
+    }
 }
