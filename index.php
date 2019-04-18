@@ -1,4 +1,5 @@
 <?php
+// Connexion à la base de données
 try
 {
 	$bdd = new PDO('mysql:host=localhost;dbname=projet_4', 'root', 'root', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
@@ -8,7 +9,8 @@ catch(Exception $e)
     die('Erreur : '.$e->getMessage());
 }
 // On récupère les 4 derniers chapitres
-$req = $bdd->query('SELECT id, titre, contenu, DATE_FORMAT(date_ajout, \'%d/%m/%Y\') AS date_ajout_fr, DATE_FORMAT(date_modification, \'%d/%m/%Y\') AS date_modification_fr FROM book ORDER BY id DESC LIMIT 0, 4');
+$req = $bdd->prepare('SELECT id, titre, contenu, DATE_FORMAT(date_ajout, \'%d/%m/%Y\') AS date_ajout_fr, DATE_FORMAT(date_modification, \'%d/%m/%Y\') AS date_modification_fr FROM book ORDER BY id DESC LIMIT 0, 4');
+$req->execute();
 ?>
 <!doctype html>
 <html lang="fr">
@@ -68,8 +70,8 @@ $req = $bdd->query('SELECT id, titre, contenu, DATE_FORMAT(date_ajout, \'%d/%m/%
     </section>
     <!-- Chapters -->
     <section id="chapter">
-        <h2>Derniers chapitres</h2>
-        <div class="grey-divider"></div>
+        <h2 class="text-center">Derniers chapitres</h2>
+        <div class="divider div-transparent mb-5"></div>
         <div class="container">
             <div class="row">
                 <?php while($donnees = $req->fetch())
@@ -79,11 +81,11 @@ $req = $bdd->query('SELECT id, titre, contenu, DATE_FORMAT(date_ajout, \'%d/%m/%
                     <h3><?= htmlspecialchars($donnees['titre']); ?></h3>
                     <span>Ajouté le <?= htmlspecialchars($donnees['date_ajout_fr']) ?></span><br>
                     <span>Dernière modification le <?= htmlspecialchars($donnees['date_modification_fr']) ?></span>
-                    <p><?= nl2br(htmlspecialchars($donnees['contenu'])); ?></p>
-                    <button type="button" class="btn btn-outline-dark">Lire le chapitre</button>
+                    <a href="chapter.php?id=<?= $donnees['id']; ?>"><button type="button" class="btn btn-outline-dark mt-3">Lire le chapitre</button></a>
                 </div>
                 <?php
                 }
+                $req->closeCursor();
                 ?>
             </div> 
         </div>

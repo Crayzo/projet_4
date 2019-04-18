@@ -1,6 +1,7 @@
 body
 {
     background-color: #f2f2f2;
+    font-family: 'Montserrat', sans-serif;
 }
 .slider
 {
@@ -38,7 +39,6 @@ body
 {
     margin: 0;
     font-size: 3em;
-    font-family: 'Montserrat', sans-serif;
 }
 #slider-text button
 {
@@ -52,7 +52,6 @@ body
 #chapter h2
 {
     font-size: 2.5em;
-    text-align: center;
 }
 .white-divider
 {
@@ -61,12 +60,23 @@ body
     background: #fff;
     margin: 10px auto;
 }
-.grey-divider
+.divider
 {
-    width: 200px;
+	position: relative;
     height: 2px;
-    background: #bdc3c7;
-    margin: 10px auto 50px auto; 
+    margin-bottom: 50px;
+}
+.div-transparent:before
+{
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 5%;
+	right: 5%;
+	width: 80%;
+    height: 2px;
+    margin: auto;
+	background-image: linear-gradient(to right, transparent, rgb(48,49,51), transparent);
 }
 .book
 {
@@ -99,6 +109,10 @@ footer h5
     .book
     {
         border-radius: 10px;
+    }
+    .div-transparent:before
+    {
+        width: 20%;
     }
 }
 @media (min-width: 768px)
