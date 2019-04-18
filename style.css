@@ -74,6 +74,26 @@ body
     background: #fff;
     padding: 40px;
 }
+footer
+{
+    margin-top: 50px;
+    display: flex;
+    height: 130px;
+    background: #fff;
+}
+footer div
+{
+    margin: auto;
+}
+footer span
+{
+    font-size: 1.5em;
+    padding: 15px;
+}
+footer h5
+{
+    font-size: 1em;
+}
 @media (min-width: 576px) 
 {
     .book

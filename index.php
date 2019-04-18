@@ -29,6 +29,7 @@ $req = $bdd->query('SELECT id, titre, contenu, DATE_FORMAT(date_ajout, \'%d/%m/%
     <title>Jean Forteroche</title>
   </head>
   <body>
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
         <a class="navbar-brand" href="#">Jean Forteroche</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,6 +53,7 @@ $req = $bdd->query('SELECT id, titre, contenu, DATE_FORMAT(date_ajout, \'%d/%m/%
             </ul>
         </div>
     </nav>
+    <!-- Slider -->
     <section>
        <div class="slider">
             <div id="slider-image">
@@ -64,6 +66,7 @@ $req = $bdd->query('SELECT id, titre, contenu, DATE_FORMAT(date_ajout, \'%d/%m/%
             </div>
        </div>
     </section>
+    <!-- Chapters -->
     <section id="chapter">
         <h2>Derniers chapitres</h2>
         <div class="grey-divider"></div>
@@ -85,6 +88,13 @@ $req = $bdd->query('SELECT id, titre, contenu, DATE_FORMAT(date_ajout, \'%d/%m/%
             </div> 
         </div>
     </section>
+    <!-- Footer -->
+    <footer class="text-center">
+        <div>
+            <a href="#"><span class="fa fa-chevron-up"></span></a>
+            <h5>Copyright © 2019<br>Tous droits réservés.</h5>
+        </div>
+    </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
