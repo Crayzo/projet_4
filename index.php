@@ -32,36 +32,14 @@ $req->execute();
   </head>
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
-        <a class="navbar-brand" href="#">Jean Forteroche</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#"><i class="fa fa-home"></i> Accueil <span class="sr-only"></span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa fa-book"></i> Chapitres</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa fa-info-circle"></i> À propos</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link"><i class="fa fa-pen"></i> Inscription</a></li>
-                <li class="nav-item"><a class="nav-link"><i class="fa fa-user"></i> Connexion</a></li>
-            </ul>
-        </div>
-    </nav>
+    <?php include 'includes/navbar.php' ?>
     <!-- Slider -->
     <section>
        <div class="slider">
-            <div id="slider-image">
+            <div id="home-image">
                 <img src="assets/img/1.jpg" alt="Responsive image">
             </div>
-            <div id="slider-text">
+            <div id="home-text">
                 <h1>Billet simple pour l'Alaska</h1>
                 <div class="white-divider"></div>
                 <button class="btn btn-outline-light">Voir les chapitres</button>
@@ -91,12 +69,7 @@ $req->execute();
         </div>
     </section>
     <!-- Footer -->
-    <footer class="text-center">
-        <div>
-            <a href="#"><span class="fa fa-chevron-up"></span></a>
-            <h5>Copyright © 2019<br>Tous droits réservés.</h5>
-        </div>
-    </footer>
+    <?php include 'includes/footer.php' ?>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

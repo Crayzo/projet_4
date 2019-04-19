@@ -13,19 +13,19 @@ body
     position: absolute;
     z-index: 1;
 }
-#slider-image
+#home-image
 {
     width: auto;
     height: 100vh;
     overflow: hidden;
 }
-#slider-image img
+#home-image img
 {
     width: 150%;
     height: 100%;
     border-bottom: 1px solid black;
 }
-#slider-text
+#home-text
 {
     width: 100%;
     position: absolute;
@@ -35,12 +35,12 @@ body
     color: white;
     text-align: center;
 }
-#slider-text h1
+#home-text h1
 {
     margin: 0;
     font-size: 3em;
 }
-#slider-text button
+#home-text button
 {
     margin-top: 10px;
     font-size: 20px;
@@ -117,7 +117,7 @@ footer h5
 }
 @media (min-width: 768px)
 {
-    #slider-image img 
+    #home-image img 
     {
         width: 100%;
     }

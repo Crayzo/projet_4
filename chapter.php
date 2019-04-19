@@ -36,14 +36,22 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
     <title><?php if(isset($donnees['id'])){echo $donnees['titre'];} else echo "Erreur";  ?></title>
   </head>
   <body>
-      <?php if(isset($donnees['id'])){ ?>
-      <p>ID : <?= $donnees["id"] ?></p>
-      <p>Titre : <?= $donnees["titre"] ?></p>
-      <p>Contenu : <?= $donnees["contenu"] ?></p>
-      <?php }
-      else
-        echo "Erreur : Ce chapitre n'existe pas !";
-      ?>
+    <?php if(!isset($donnees['id'])){echo "Erreur : Ce chapitre n'existe pas !";} else { ?>
+    <?php include 'includes/navbar.php'; ?>
+    <section>
+       <div class="slider">
+            <div id="chapter-image">
+                <img src="assets/img/3.jpg" alt="Responsive image">
+            </div>
+            <div id="chapter-text">
+                <h1><?= $donnees['titre']; ?></h1>
+                <div class="divider div-transparent mb-5"></div>
+                <p><?= $donnees['contenu']; ?></p>
+            </div>
+       </div>
+    </section>
+    <?php include 'includes/footer.php' ?>
+    <?php } ?>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
