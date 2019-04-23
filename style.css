@@ -1,13 +1,28 @@
+html, body 
+{ 
+    margin: 0; 
+    padding: 0; 
+    height: 100%; 
+}
 body
 {
     background-color: #f2f2f2;
     font-family: 'Montserrat', sans-serif;
 }
+ #main 
+{ 
+    min-height: 100%;
+    position: relative; 
+    padding-bottom: 130px;   /* Hauteur du pied de page */ 
+    display: flex;
+    flex-direction: column;
+} 
+/* index.php */
 .slider
 {
-    position: relative;    
+    position: relative;   
 }
-.navbar
+.bg-transparent
 {
     width: 100%;
     position: absolute;
@@ -45,11 +60,12 @@ body
     margin-top: 10px;
     font-size: 20px;
 }
-#chapter
+#last-chapters
 {
     margin-top: 20px;
+    margin-bottom: 50px;
 }
-#chapter h2
+#last-chapters h2
 {
     font-size: 2.5em;
 }
@@ -70,9 +86,7 @@ body
 {
 	content: "";
 	position: absolute;
-	top: 0;
-	left: 5%;
-	right: 5%;
+	top: 0; left: 5%; right: 5%;
 	width: 80%;
     height: 2px;
     margin: auto;
@@ -86,9 +100,11 @@ body
 }
 footer
 {
-    margin-top: 50px;
-    display: flex;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
     height: 130px;
+    display: flex;
     background: #fff;
 }
 footer div
@@ -103,6 +119,17 @@ footer span
 footer h5
 {
     font-size: 1em;
+}
+/* chapter.php */
+#chapter-text
+{
+    margin: auto;
+}
+#chapter-text p 
+{
+    width: 70%;
+    text-align: justify;
+    margin: 0 auto 50px auto;
 }
 @media (min-width: 576px) 
 {

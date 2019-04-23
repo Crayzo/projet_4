@@ -31,45 +31,47 @@ $req->execute();
     <title>Jean Forteroche</title>
   </head>
   <body>
-    <!-- Navbar -->
-    <?php include 'includes/navbar.php' ?>
-    <!-- Slider -->
-    <section>
-       <div class="slider">
-            <div id="home-image">
-                <img src="assets/img/1.jpg" alt="Responsive image">
-            </div>
-            <div id="home-text">
-                <h1>Billet simple pour l'Alaska</h1>
-                <div class="white-divider"></div>
-                <button class="btn btn-outline-light">Voir les chapitres</button>
-            </div>
-       </div>
-    </section>
-    <!-- Chapters -->
-    <section id="chapter">
-        <h2 class="text-center">Derniers chapitres</h2>
-        <div class="divider div-transparent mb-5"></div>
-        <div class="container">
-            <div class="row">
-                <?php while($donnees = $req->fetch())
-                {
-                ?>
-                <div class="book col-12 col-sm-5 offset-sm-1 mx-auto text-center">
-                    <h3><?= htmlspecialchars($donnees['titre']); ?></h3>
-                    <span>Ajouté le <?= htmlspecialchars($donnees['date_ajout_fr']) ?></span><br>
-                    <span>Dernière modification le <?= htmlspecialchars($donnees['date_modification_fr']) ?></span>
-                    <a href="chapter.php?id=<?= $donnees['id']; ?>"><button type="button" class="btn btn-outline-dark mt-3">Lire le chapitre</button></a>
+    <div id="main">
+        <!-- Navbar -->
+        <?php include 'includes/navbar.php' ?>
+        <!-- Slider -->
+        <section>
+            <div class="slider">
+                <div id="home-image">
+                    <img src="assets/img/1.jpg" alt="Responsive image">
                 </div>
-                <?php
-                }
-                $req->closeCursor();
-                ?>
-            </div> 
-        </div>
-    </section>
-    <!-- Footer -->
-    <?php include 'includes/footer.php' ?>
+                <div id="home-text">
+                    <h1>Billet simple pour l'Alaska</h1>
+                    <div class="white-divider"></div>
+                    <button class="btn btn-outline-light">Voir les chapitres</button>
+                </div>
+            </div>
+        </section>
+        <!-- Chapters -->
+        <section id="last-chapters">
+            <h2 class="text-center">Derniers chapitres</h2>
+            <div class="divider div-transparent mb-5"></div>
+            <div class="container">
+                <div class="row">
+                    <?php while($donnees = $req->fetch())
+                    {
+                    ?>
+                    <div class="book col-12 col-sm-5 offset-sm-1 mx-auto text-center">
+                        <h3><?= htmlspecialchars($donnees['titre']); ?></h3>
+                        <span>Ajouté le <?= htmlspecialchars($donnees['date_ajout_fr']) ?></span><br>
+                        <span>Dernière modification le <?= htmlspecialchars($donnees['date_modification_fr']) ?></span>
+                        <a href="chapter.php?id=<?= $donnees['id']; ?>"><button class="btn btn-outline-dark mt-3">Lire le chapitre</button></a>
+                    </div>
+                    <?php
+                    }
+                    $req->closeCursor();
+                    ?>
+                </div> 
+            </div>
+        </section>
+        <!-- Footer -->
+        <?php include 'includes/footer.php' ?>
+    </div> 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
