@@ -22,8 +22,8 @@
             </li>
         </ul>
         <ul class="navbar-nav">
-            <li class="nav-item <?php if($page === "inscription.php" || $page === ""){echo ' active';} ?>"><a class="nav-link" href="inscription.php"><i class="fa fa-pen"></i> Inscription</a></li>
-            <li class="nav-item"><a class="nav-link"><i class="fa fa-user"></i> Connexion</a></li>
+            <li class="nav-item <?php if($page === "inscription.php"){echo ' active';} ?>"><a class="nav-link" href="inscription.php"><i class="fa fa-pen"></i> Inscription</a></li>
+            <li class="nav-item <?php if($page === "connexion.php"){echo ' active';} ?>"><a class="nav-link" href="connexion.php"><i class="fa fa-user"></i> Connexion</a></li>
         </ul>
     </div>
 </nav>

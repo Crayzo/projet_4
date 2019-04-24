@@ -50,7 +50,6 @@ if(!empty($_POST))
                 }
                 else
                     $message = "Vos adresses mail ne correspondent pas !";
-
             }
             else
                 $message = "Le pseudo existe déjà !";
