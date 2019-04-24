@@ -8,6 +8,38 @@ catch(Exception $e)
 {
     die('Erreur : '.$e->getMessage());
 }
+if(!empty($_POST))
+{
+    $idConnect = htmlspecialchars($_POST['idConnect']);
+    $passwordConnect = $_POST['passwordConnect'];
+    if(!empty($idConnect) && !empty($passwordConnect))
+    {
+        // Récupération de l'utilisateur et de son pass hashé
+        $req = $bdd->prepare("SELECT * FROM membres WHERE pseudo = :pseudo OR mail = :mail");
+        $req->execute(array(
+            'pseudo' => $idConnect,
+            'mail' => $idConnect));
+        $resultat = $req->fetch();
+        // Comparaison du pass envoyé via le formulaire avec la base
+        $isPasswordCorrect = password_verify($passwordConnect, $resultat["password"]);
+        if($resultat)
+        {
+            if($isPasswordCorrect)
+            {
+                $_SESSION['id'] = $resultat['id'];
+                $_SESSION['pseudo'] = $resultat['pseudo'];
+                $_SESSION['mail'] = $resultat['mail'];
+                echo "Vous êtes connecté(e)";
+            }
+            else
+                $message = "Mauvais mot de passe !";
+        }
+        else
+            $message = "Mauvais identifiant !";
+    }
+    else
+        $message = "Tous les champs doivent être complétés !";
+}
 ?>
 <!doctype html>
 <html lang="fr">
