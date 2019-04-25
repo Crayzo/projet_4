@@ -8,6 +8,10 @@ catch(Exception $e)
 {
     die('Erreur : '.$e->getMessage());
 }
+if(isset($_SESSION["id"]))
+{
+    header("Location: index.php");
+}
 if(!empty($_POST))
 {
     $idConnect = htmlspecialchars($_POST['idConnect']);
@@ -29,7 +33,7 @@ if(!empty($_POST))
                 $_SESSION['id'] = $resultat['id'];
                 $_SESSION['pseudo'] = $resultat['pseudo'];
                 $_SESSION['mail'] = $resultat['mail'];
-                echo "Vous êtes connecté(e)";
+                header("Location: index.php");
             }
             else
                 $message = "Mauvais mot de passe !";

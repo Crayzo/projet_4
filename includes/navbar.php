@@ -22,8 +22,13 @@
             </li>
         </ul>
         <ul class="navbar-nav">
+            <?php if(isset($_SESSION['id'])){ ?>
+             <li class="nav-item <?php if($page === "edition.php"){echo ' active';} ?>"><a class="nav-link" href="edition.php"><i class="fa fa-user-circle"></i> <?= $_SESSION['pseudo'] ?></a></li>
+             <li class="nav-item <?php if($page === "deconnexion.php"){echo ' active';} ?>"><a class="nav-link" href="deconnexion.php"><i class="fa fa-sign-out-alt"></i> Déconnexion</a></li>
+            <?php } else { ?>
             <li class="nav-item <?php if($page === "inscription.php"){echo ' active';} ?>"><a class="nav-link" href="inscription.php"><i class="fa fa-pen"></i> Inscription</a></li>
             <li class="nav-item <?php if($page === "connexion.php"){echo ' active';} ?>"><a class="nav-link" href="connexion.php"><i class="fa fa-user"></i> Connexion</a></li>
+            <?php } ?>
         </ul>
     </div>
 </nav>

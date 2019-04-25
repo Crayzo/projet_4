@@ -3,7 +3,7 @@ body
     background-color: #f2f2f2;
     font-family: 'Montserrat', sans-serif;
 }
- #main 
+#main 
 { 
     min-height: 100%;
     position: relative; 
@@ -126,6 +126,11 @@ footer h5
 .inscription
 {
     margin: 20px auto;
+}
+form
+{
+    max-width: 500px;
+    margin: auto;
 }
 @media (min-width: 576px) 
 {

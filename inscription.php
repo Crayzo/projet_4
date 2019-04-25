@@ -8,6 +8,10 @@ catch(Exception $e)
 {
     die('Erreur : '.$e->getMessage());
 }
+if(isset($_SESSION["id"]))
+{
+    header("Location: index.php");
+}
 if(!empty($_POST))
 {
     $pseudo = htmlspecialchars($_POST['pseudo']);
