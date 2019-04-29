@@ -56,6 +56,30 @@ if(isset($_SESSION['id']))
         else
             $message = "Votre adresse mail n'est pas valide.";
     }
+    if(isset($_POST['newMdp']) && !empty($_POST['newMdp']) && $_POST['newMdp'] !== $user['password'] && isset($_POST['newMdp2']) && !empty($_POST['newMdp2']) && $_POST['newMdp2'] !== $user['password'])
+    {
+        $mdp = password_hash($_POST['newMdp'], PASSWORD_DEFAULT);
+        $mdp2 = $_POST['newMdp2'];
+        $isPasswordCorrect = password_verify($mdp2, $mdp);
+        if($isPasswordCorrect)
+        {
+            $reqMdp = $bdd->prepare('SELECT password FROM membres WHERE id = ?');
+            $reqMdp->execute(array($_SESSION['id']));
+            $resultat = $reqMdp->fetch();
+            $verificationMdp = password_verify($mdp2, $resultat['password']);
+            if($verificationMdp === false)
+            {
+                $insertMdp = $bdd->prepare('UPDATE membres SET password = ? WHERE id = ?');
+                $insertMdp->execute(array($mdp, $_SESSION['id']));
+                $success = "Votre compte a bien été mis à jour";
+            }
+            else
+                $message = "Veuillez saisir un mot de passe différent de votre mot de passe actuel !";
+        }
+        else
+            $message = "Vos deux mots de passe ne correspondent pas !";
+
+    }
 }
 ?>
 <!doctype html>
