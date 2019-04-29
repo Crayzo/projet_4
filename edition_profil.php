@@ -35,6 +35,27 @@ if(isset($_SESSION['id']))
         else
             $message = "Votre pseudo ne doit pas dépasser 25 caractères !";
     }
+    if(isset($_POST['newMail']) && !empty($_POST['newMail']) && $_POST['newMail'] !== $user['mail'])
+    {
+        $newMail = htmlspecialchars($_POST['newMail']);
+        if(filter_var($newMail, FILTER_VALIDATE_EMAIL))
+        {
+            $reqMail = $bdd->prepare('SELECT * FROM membres WHERE mail = ?');
+            $reqMail->execute(array($newMail));
+            $mailExist = $reqMail->rowCount();
+            if($mailExist === 0)
+            {
+                $insertMail = $bdd->prepare('UPDATE membres SET mail = ? WHERE id = ?');
+                $insertMail->execute(array($newMail, $_SESSION['id']));
+                $_SESSION['mail'] = $newMail;
+                $success = "Votre compte a bien été mis à jour";
+            }
+            else
+                $message = "Adresse mail déjà utilisée !";
+        }
+        else
+            $message = "Votre adresse mail n'est pas valide.";
+    }
 }
 ?>
 <!doctype html>
