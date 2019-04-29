@@ -86,29 +86,28 @@ if(!empty($_POST))
   <body>
     <?php include 'includes/navbar.php' ?>
     <div class="container inscription">
-        <h3 class="text-center mt-2">Inscription</h3>
         <form action="inscription.php" method="post">
+            <h3 class="text-center">Inscription</h3>
             <div class="form-group">
                 <label for="pseudo">Pseudo</label>
                 <input type="text" class="form-control" name="pseudo" id="pseudo" placeholder="Votre pseudo" value="<?php if(isset($pseudo)){echo $pseudo;} ?>" requiered>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-12">
                     <label for="mail">Mail</label>
                     <input type="mail" class="form-control" name="mail" id="mail" placeholder="Votre mail" value="<?php if(isset($mail)){echo $mail;} ?>" requiered>
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-12">
                     <label for="mail2">Confirmation du mail</label>
                     <input type="mail" class="form-control" name="mail2" id="mail2" placeholder="Confirmation de votre mail" value="<?php if(isset($mail2)){echo $mail2;} ?>" requiered>
                 </div>
             </div>
-
             <div class="form-row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-12">
                     <label for="password">Mot de passe</label>
                     <input type="password" class="form-control" name="password" id="password" placeholder="Votre mot de passe" requiered>
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-12">
                     <label for="password2">Confirmation mot de passe</label>
                     <input type="password" class="form-control" name="password2" id="password2" placeholder="Confirmation de votre mot de passe" requiered>
                 </div>

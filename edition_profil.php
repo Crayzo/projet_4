@@ -102,25 +102,28 @@ if(isset($_SESSION['id']))
   </head>
   <body>
     <?php include 'includes/navbar.php' ?>
-    <div class="container">
-        <h3 class="text-center mt-2 mb-4">Edition de mon profil</h3>
+    <div class="container edit">
         <form action="edition_profil.php" method="post">
-            <div class="form-group">
-                <label>Pseudo</label>
-                <input type="text" class="form-control" name="newPseudo" placeholder="Pseudo" value="<?= $_SESSION["pseudo"]; ?>" requiered>
+            <h3 class="mb-4">Éditer mon profil</h3>
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label>Pseudo</label>
+                    <input type="text" class="form-control" name="newPseudo" placeholder="Pseudo" value="<?= $_SESSION["pseudo"]; ?>" requiered>
+                </div>
+                <div class="form-group col-12">
+                    <label for="pseudo">Mail</label>
+                    <input type="mail" class="form-control" name="newMail" placeholder="Mail" value="<?= $_SESSION["mail"]; ?>" requiered>
+                </div>
+                <div class="form-group col-12">
+                    <label for="pseudo">Mot de passe</label>
+                    <input type="password" class="form-control" name="newMdp" placeholder="Mot de passe" requiered>
+                </div>
+                <div class="form-group col-12">
+                    <label for="pseudo">Confirmation du mot de passe</label>
+                    <input type="password" class="form-control" name="newMdp2" placeholder="Confirmation mot de passe" requiered>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="pseudo">Mail</label>
-                <input type="mail" class="form-control" name="newMail" placeholder="Mail" value="<?= $_SESSION["mail"]; ?>" requiered>
-            </div>
-            <div class="form-group">
-                <label for="pseudo">Mot de passe</label>
-                <input type="password" class="form-control" name="newMdp" placeholder="Mot de passe" requiered>
-            </div>
-            <div class="form-group">
-                <label for="pseudo">Confirmation du mot de passe</label>
-                <input type="password" class="form-control" name="newMdp2" placeholder="Confirmation mot de passe" requiered>
-            </div>
+            
             <?php if(isset($message)){ ?>
             <p class="text-danger"><?= $message ?></p>
             <?php } ?>

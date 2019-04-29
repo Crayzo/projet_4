@@ -33,7 +33,7 @@ if(!empty($_POST))
                 $_SESSION['id'] = $resultat['id'];
                 $_SESSION['pseudo'] = $resultat['pseudo'];
                 $_SESSION['mail'] = $resultat['mail'];
-                header("Location: index.php");
+                header("Location: edition_profil.php");
             }
             else
                 $message = "Mauvais mot de passe !";
@@ -65,14 +65,16 @@ if(!empty($_POST))
   </head>
   <body>
     <?php include 'includes/navbar.php' ?>
-    <div class="container">
-        <h3 class="text-center mt-2 mb-4">Connexion</h3>
+    <div class="container connexion">
         <form action="connexion.php" method="post">
-            <div class="form-group">
-                <input type="text" class="form-control" name="idConnect" placeholder="Votre pseudo ou adresse mail" requiered>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" name="passwordConnect" placeholder="Votre mot de passe" requiered>
+            <h3 class="text-center mb-4">Connexion</h3>
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <input type="text" class="form-control" name="idConnect" placeholder="Votre pseudo ou adresse mail" requiered>
+                </div>
+                <div class="form-group col-12">
+                    <input type="password" class="form-control" name="passwordConnect" placeholder="Votre mot de passe" requiered>
+                </div>
             </div>
             <?php if(isset($message)){ ?>
             <p class="text-danger"><?= $message ?></p>
