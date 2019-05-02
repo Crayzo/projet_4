@@ -85,7 +85,7 @@ if(!empty($_POST))
   </head>
   <body>
     <?php include 'includes/navbar.php' ?>
-    <div class="container inscription">
+    <div class="container inscription py-3">
         <form action="inscription.php" method="post">
             <h3 class="text-center">Inscription</h3>
             <div class="form-group">
