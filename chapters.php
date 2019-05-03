@@ -38,7 +38,7 @@ $req->execute();
         <!-- Chapters -->
         <section class="chapters">
             <h2 class="text-center">Tous les chapitres</h2>
-            <div class="divider div-transparent mb-5"></div>
+            <div class="divider div-black mb-5"></div>
             <div class="container">
                 <div class="row">
                     <?php while($donnees = $req->fetch())

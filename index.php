@@ -43,7 +43,7 @@ $req->execute();
                 </div>
                 <div id="home-text">
                     <h1>Billet simple pour l'Alaska</h1>
-                    <div class="white-divider"></div>
+                    <div class="divider div-white my-3"></div>
                     <a href="chapters.php" class="btn btn-outline-light btn-lg mt-2">Voir les chapitres</a>
                 </div>
             </div>
@@ -51,7 +51,7 @@ $req->execute();
         <!-- Chapters -->
         <section class="chapters">
             <h2 class="text-center">Derniers chapitres</h2>
-            <div class="divider div-transparent mb-5"></div>
+            <div class="divider div-black mb-4"></div>
             <div class="container">
                 <div class="row">
                     <?php while($donnees = $req->fetch())

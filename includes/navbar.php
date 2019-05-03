@@ -14,7 +14,7 @@
             <li class="nav-item <?php if($page === "index.php" || $page === ""){echo ' active';} ?>">
                 <a class="nav-link" href="index.php"><i class="fa fa-home"></i> Accueil <span class="sr-only"></span></a>
             </li>
-            <li class="nav-item  <?php if($page === "chapters.php"){echo ' active';} ?>">
+            <li class="nav-item  <?php if($page === "chapters.php" || $page === "chapter.php?id=" . $_GET['id']){echo ' active';} ?>">
                 <a class="nav-link" href="chapters.php"><i class="fa fa-book"></i> Chapitres</a>
             </li>
             <li class="nav-item">

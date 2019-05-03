@@ -57,7 +57,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
 			<section id="chapter-text">
 				<div>
 					<h1 class="text-center mt-3"><?= $donnees['titre']; ?></h1>
-					<div class="divider div-transparent mb-4"></div>
+					<div class="divider div-black mb-4"></div>
 					<p><?= $donnees['contenu']; ?></p>
 				</div>
 			</section>

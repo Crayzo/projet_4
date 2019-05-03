@@ -109,20 +109,20 @@ else
             <h3 class="mb-4">Éditer mon profil</h3>
             <div class="form-row">
                 <div class="form-group col-12">
-                    <label>Pseudo</label>
-                    <input type="text" class="form-control" name="newPseudo" placeholder="Pseudo" value="<?= $_SESSION["pseudo"]; ?>" requiered>
+                    <label for="pseudo">Pseudo</label>
+                    <input type="text" class="form-control" id="pseudo" name="newPseudo" placeholder="Pseudo" value="<?= $_SESSION["pseudo"]; ?>" requiered>
                 </div>
                 <div class="form-group col-12">
-                    <label for="pseudo">Mail</label>
-                    <input type="mail" class="form-control" name="newMail" placeholder="Mail" value="<?= $_SESSION["mail"]; ?>" requiered>
+                    <label for="mail">Mail</label>
+                    <input type="mail" id="mail" class="form-control" name="newMail" placeholder="Mail" value="<?= $_SESSION["mail"]; ?>" requiered>
                 </div>
                 <div class="form-group col-12">
-                    <label for="pseudo">Mot de passe</label>
-                    <input type="password" class="form-control" name="newMdp" placeholder="Mot de passe" requiered>
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" class="form-control" name="newMdp" placeholder="Mot de passe" requiered>
                 </div>
                 <div class="form-group col-12">
-                    <label for="pseudo">Confirmation du mot de passe</label>
-                    <input type="password" class="form-control" name="newMdp2" placeholder="Confirmation mot de passe" requiered>
+                    <label for="password2">Confirmation du mot de passe</label>
+                    <input type="password" id="password2" class="form-control" name="newMdp2" placeholder="Confirmation mot de passe" requiered>
                 </div>
             </div>
             

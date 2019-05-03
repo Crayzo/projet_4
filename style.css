@@ -84,17 +84,26 @@ body
 {
 	position: relative;
     height: 2px;
-    margin-bottom: 50px;
 }
-.div-transparent:before
+.div-black:before
 {
 	content: "";
 	position: absolute;
 	top: 0; left: 5%; right: 5%;
-	width: 80%;
+	max-width: 300px;
     height: 2px;
     margin: auto;
-	background-image: linear-gradient(to right, transparent, rgb(48,49,51), transparent);
+	background-image: linear-gradient(to right, transparent, rgb(0,0,0), transparent);
+}
+.div-white:before
+{
+	content: "";
+	position: absolute;
+	top: 0; left: 5%; right: 5%;
+	max-width: 300px;
+    height: 2px;
+    margin: auto;
+	background-image: linear-gradient(to right, transparent, rgb(255,255,255), transparent);
 }
 .book
 {
