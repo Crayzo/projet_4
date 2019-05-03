@@ -126,15 +126,11 @@ footer h5
     font-size: 1em;
 }
 /* chapter.php */
-#chapter-text
-{
-    margin: 20px auto;
-}
 #chapter-text p 
 {
     width: 70%;
     text-align: justify;
-    margin: 0 auto 50px auto;
+    margin: 0 auto 30px auto;
 }
 form
 {
