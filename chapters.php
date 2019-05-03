@@ -10,7 +10,7 @@ catch(Exception $e)
     die('Erreur : '.$e->getMessage());
 }
 // On récupère les 4 derniers chapitres
-$req = $bdd->prepare('SELECT id, titre, contenu, DATE_FORMAT(date_ajout, \'%d/%m/%Y\') AS date_ajout_fr, DATE_FORMAT(date_modification, \'%d/%m/%Y\') AS date_modification_fr FROM chapitres ORDER BY id DESC LIMIT 0, 4');
+$req = $bdd->prepare('SELECT id, titre, contenu, DATE_FORMAT(date_ajout, \'%d/%m/%Y\') AS date_ajout_fr, DATE_FORMAT(date_modification, \'%d/%m/%Y\') AS date_modification_fr FROM chapitres ORDER BY id DESC');
 $req->execute();
 ?>
 <!doctype html>
@@ -29,28 +29,15 @@ $req->execute();
     <link rel="stylesheet" href="style.css?t=<?= time() ?>">
     <!-- Font Family -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <title>Accueil</title>
+    <title>Chapitres</title>
   </head>
   <body>
     <div id="main">
         <!-- Navbar -->
         <?php include 'includes/navbar.php' ?>
-        <!-- Slider -->
-        <section>
-            <div class="slider">
-                <div id="home-image">
-                    <img src="assets/img/1.jpg" alt="Responsive image">
-                </div>
-                <div id="home-text">
-                    <h1>Billet simple pour l'Alaska</h1>
-                    <div class="white-divider"></div>
-                    <a href="chapters.php" class="btn btn-outline-light btn-lg mt-2">Voir les chapitres</a>
-                </div>
-            </div>
-        </section>
         <!-- Chapters -->
         <section class="chapters">
-            <h2 class="text-center">Derniers chapitres</h2>
+            <h2 class="text-center">Tous les chapitres</h2>
             <div class="divider div-transparent mb-5"></div>
             <div class="container">
                 <div class="row">

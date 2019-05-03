@@ -81,6 +81,8 @@ if(isset($_SESSION['id']))
 
     }
 }
+else
+    header('Location: index.php');
 ?>
 <!doctype html>
 <html lang="fr">
@@ -98,7 +100,7 @@ if(isset($_SESSION['id']))
     <link rel="stylesheet" href="style.css?t=<?= time() ?>">
     <!-- Font Family -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <title>Édition</title>
+    <title>Édition du profil</title>
   </head>
   <body>
     <?php include 'includes/navbar.php' ?>

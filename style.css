@@ -65,12 +65,11 @@ body
     margin-top: 10px;
     font-size: 20px;
 }
-#last-chapters
+.chapters
 {
-    margin-top: 20px;
-    margin-bottom: 50px;
+    margin: 30px auto;
 }
-#last-chapters h2
+.chapters h2
 {
     font-size: 2.5em;
 }
@@ -109,7 +108,8 @@ footer
     width: 100%;
     height: 100px;
     display: flex;
-    background: #fff;
+    background: #343a40;
+    color: white;
     border-top: 1px solid #e1e6e9;
 }
 footer div

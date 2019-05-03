@@ -26,7 +26,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
             $success = "Votre commentaire a été envoyé avec succès";
         }
         else
-            $message = "Tous les champs doivent être complétés !";
+            $message = "Vous devez écrire un commentaire avant d'envoyer !";
     }
     $commentaires = $bdd->prepare('SELECT *, DATE_FORMAT(date_commentaire, \'%d/%m/%Y à %H:%i:%s\') AS date_commentaire_fr FROM commentaires WHERE id_chapitre = ? ORDER BY id DESC');
     $commentaires->execute(array($getID));
@@ -68,7 +68,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
                         <h3 class="text-center mb-4">Ajouter un commentaire</h3>
                         <div class="form-row">
                             <div class="form-group col-12">
-                                <textarea name="commentaire" class="form-control" placeholder="Votre commentaire" requiered></textarea>
+                                <textarea name="commentaire" class="form-control" placeholder="Votre commentaire"></textarea>
                             </div>
                         </div>
                         <?php if(isset($message)){ ?>
