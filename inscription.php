@@ -80,7 +80,7 @@ if(!empty($_POST))
     <!-- CSS -->
     <link rel="stylesheet" href="style.css?t=<?= time() ?>">
     <!-- Font Family -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
     <title>Inscription</title>
   </head>
   <body>

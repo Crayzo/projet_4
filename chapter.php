@@ -24,6 +24,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
             $insertCommentaire = $bdd->prepare('INSERT INTO commentaires (commentaire, id_chapitre, id_auteur, date_commentaire) VALUES (?, ?, ?, NOW())');
             $insertCommentaire->execute(array($postCommentaire, $getID, $_SESSION['id']));
             $success = "Votre commentaire a été envoyé avec succès";
+            header("Location : edit.php?id=" . $donnees['id']);
         }
         else
             $message = "Vous devez écrire un commentaire avant d'envoyer !";
@@ -47,23 +48,30 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
 	<!-- CSS -->
 	<link rel="stylesheet" href="style.css?t=<?= time() ?>">
 	<!-- Font Family -->
-	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
 	<title><?php if(isset($donnees['id'])){echo $donnees['titre'];} else echo "Erreur";  ?></title>
   </head>
   <body>
   	<?php if(!isset($donnees['id'])){echo "Erreur : Ce chapitre n'existe pas !";} else { ?>
     <div id="main">
-			<?php include 'includes/navbar.php'; ?>
+            <?php include 'includes/navbar.php'; ?>
 			<section id="chapter-text">
 				<div>
 					<h1 class="text-center mt-3"><?= $donnees['titre']; ?></h1>
 					<div class="divider div-black mb-4"></div>
-					<p><?= $donnees['contenu']; ?></p>
+                    <p><?= $donnees['contenu']; ?></p>
+                    <!-- Administration -->
+                    <?php if(isset($_SESSION['id']) && $_SESSION['admin'] == true) { ?> 
+                    <div class="text-center mb-4">
+                        <a href="edit.php?id=<?= $donnees['id']; ?>" class="btn btn-dark mt-3">Modifier</a>
+                        <a href="delete.php?id=<?= $donnees['id']; ?>" class="btn btn-dark mt-3">Supprimer</a>
+                    </div>
+                    <?php } ?>
 				</div>
 			</section>
             <section>
                 <div class="container mb-5">
-                    <form method="post">
+                    <form method="post" class="mt-3">
                         <?php if(isset($_SESSION['id'])) { ?>
                         <h3 class="text-center mb-4">Ajouter un commentaire</h3>
                         <div class="form-row">
@@ -90,7 +98,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
                     ?>
                     <div class="card mt-3">
                         <div class="card-header">
-                            <?= $user['pseudo'] ?> le <?= $commentaire['date_commentaire_fr'] ?>
+                            <b><?= $user['pseudo'] ?></b> le <?= $commentaire['date_commentaire_fr'] ?>
                         </div>
                         <div class="card-body">
                             <blockquote class="blockquote mb-0">

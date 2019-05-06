@@ -33,6 +33,7 @@ if(!empty($_POST))
                 $_SESSION['id'] = $resultat['id'];
                 $_SESSION['pseudo'] = $resultat['pseudo'];
                 $_SESSION['mail'] = $resultat['mail'];
+                $_SESSION['admin'] = $resultat['admin'];
                 header("Location: edition_profil.php");
             }
             else
@@ -60,7 +61,7 @@ if(!empty($_POST))
     <!-- CSS -->
     <link rel="stylesheet" href="style.css?t=<?= time() ?>">
     <!-- Font Family -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
     <title>Connexion</title>
   </head>
   <body>
