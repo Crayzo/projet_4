@@ -176,4 +176,8 @@ form
     {
         width: 100%;
     }
+    .add-btn
+    {
+        margin-right: 3rem;
+    }
 }

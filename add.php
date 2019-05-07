@@ -10,29 +10,20 @@ catch(Exception $e)
 }
 if(isset($_SESSION['id']) && $_SESSION['admin'] == 1)
 {
-    if(isset($_GET['id']) && $_GET['id'] > 0)
+    if(!empty($_POST))
     {
-        $getID = intval($_GET['id']);
-        $req = $bdd->prepare("SELECT * FROM chapitres WHERE id = ?");
-        $req->execute(array($getID));
-        $donnees = $req->fetch();
-        if(!empty($_POST))
+        if(isset($_POST['contenu']) && !empty($_POST['contenu']) && isset($_POST['titre']) && !empty($_POST['titre']))
         {
-            if(isset($_POST['contenu']) && !empty($_POST['contenu']) && isset($_POST['titre']) && !empty($_POST['titre']))
-            {
-                $updateChapter = $bdd->prepare('UPDATE chapitres SET contenu = ?, titre = ?, date_modification = NOW() WHERE id = ?');
-                $updateChapter->execute(array($_POST['contenu'], $_POST['titre'], $getID));
-                $donnees["contenu"] = $_POST['contenu'];
-                $donnees["titre"] = $_POST['titre'];
-                $success = "Le chapitre a bien été modifié !";
-            }
-            else
-                $message = "Tous les champs doivent être complétés !";
+            $insertChapter = $bdd->prepare('INSERT INTO chapitres (titre, contenu, date_ajout, date_modification) VALUES (?, ?, NOW(), NOW())');
+            $insertChapter->execute(array($_POST['titre'], $_POST['contenu']));
+            $success = "Le chapitre a bien été ajouté";
+        }
+        else
+        {
+            $message = "Tous les champs doivent être complétés !";
         }
     }
 }
-else
-    header("Location: index.php");
 ?>
 <!doctype html>
 <html lang="fr">
@@ -50,29 +41,27 @@ else
     <link rel="stylesheet" href="style.css?t=<?= time() ?>">
     <!-- Font Family -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
-    <title><?php if(isset($donnees['id'])){echo $donnees['titre'];} else echo "Erreur";  ?></title>
+    <title>Ajouter un chapitre</title>
   </head>
   <body>
-    <?php if(!isset($donnees['id'])){echo "Erreur : Ce chapitre n'existe pas !";} else { ?>
     <?php include 'includes/navbar.php' ?>
     <div class="container mt-3 text-right">
-        <form action="edit.php?id=<?= $getID ?>" method="post">
+        <form action="add.php" method="post">
             <div class="form-row">
                 <div class="form-group col-12">
-                    <input type="text" class="form-control" name="titre" value="<?= $donnees['titre'] ?>" requiered>
+                    <input type="text" class="form-control" name="titre" placeholder="Titre du chapitre" value="<?php if(isset($_POST['titre'])) {echo $_POST['titre'];} ?>" requiered>
                 </div>
             </div>
-            <textarea name="contenu"><?= $donnees['contenu'] ?></textarea>
+            <textarea name="contenu"><?php if(isset($_POST['contenu'])){echo $_POST['contenu'];} ?></textarea>
             <?php if(isset($message)){ ?>
             <p class="text-danger mb-1"><?= $message ?></p>
             <?php } ?>
             <?php if(isset($success)){ ?>
             <p class="text-success mb-1"><?= $success ?></p>
             <?php } ?>
-            <button type="submit" class="btn btn-dark">Modifier</button>
+            <button type="submit" class="btn btn-dark">Ajouter</button>
         </form>
     </div>
-    <?php } ?>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

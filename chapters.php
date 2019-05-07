@@ -33,12 +33,16 @@ $req->execute();
   </head>
   <body>
     <div id="main">
-        <!-- Navbar -->
         <?php include 'includes/navbar.php' ?>
         <!-- Chapters -->
         <section class="chapters">
             <h2 class="text-center">Tous les chapitres</h2>
             <div class="divider div-black mb-5"></div>
+            <?php if(isset($_SESSION['id']) && $_SESSION['admin'] == 1){ ?>
+            <div class="d-flex justify-content-md-end justify-content-center mb-4">
+                <a href="add.php" class="btn btn-dark add-btn">Ajouter un chapitre</a>
+            </div>
+            <?php } ?>
             <div class="container">
                 <div class="row">
                     <?php while($donnees = $req->fetch())
