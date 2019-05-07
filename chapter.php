@@ -24,7 +24,6 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
             $insertCommentaire = $bdd->prepare('INSERT INTO commentaires (commentaire, id_chapitre, id_auteur, date_commentaire) VALUES (?, ?, ?, NOW())');
             $insertCommentaire->execute(array($postCommentaire, $getID, $_SESSION['id']));
             $success = "Votre commentaire a été envoyé avec succès";
-            header("Location : edit.php?id=" . $donnees['id']);
         }
         else
             $message = "Vous devez écrire un commentaire avant d'envoyer !";
@@ -64,7 +63,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
                     <?php if(isset($_SESSION['id']) && $_SESSION['admin'] == true) { ?> 
                     <div class="text-center mb-4">
                         <a href="edit.php?id=<?= $donnees['id']; ?>" class="btn btn-dark mt-3">Modifier</a>
-                        <a href="delete.php?id=<?= $donnees['id']; ?>" class="btn btn-dark mt-3">Supprimer</a>
+                        <a href="delete.php?id=<?= $donnees['id']; ?>" onclick="return(confirm('Voulez-vous vraiment supprimer ce chapitre ?'));" class="btn btn-dark mt-3">Supprimer</a>
                     </div>
                     <?php } ?>
 				</div>
