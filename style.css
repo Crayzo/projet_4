@@ -23,10 +23,7 @@ body
     display: flex;
     align-items: flex-start;
 }
-.slider
-{
-    position: relative;   
-}
+.slider {position: relative;}
 .bg-transparent
 {
     width: 100%;
@@ -65,14 +62,8 @@ body
     margin-top: 10px;
     font-size: 20px;
 }
-.chapters
-{
-    margin: 30px auto;
-}
-.chapters h2
-{
-    font-size: 2.5em;
-}
+.chapters {margin: 30px auto;}
+.chapters h2 {font-size: 2.5em;}
 .white-divider
 {
     width: 200px;
@@ -93,7 +84,7 @@ body
 	max-width: 300px;
     height: 2px;
     margin: auto;
-	background-image: linear-gradient(to right, transparent, rgb(0,0,0), transparent);
+	background-image: linear-gradient(to right, rgba(255,255,255, 0), rgb(0,0,0), rgba(255,255,255, 0));
 }
 .div-white:before
 {
@@ -103,7 +94,7 @@ body
 	max-width: 300px;
     height: 2px;
     margin: auto;
-	background-image: linear-gradient(to right, transparent, rgb(255,255,255), transparent);
+    background-image: linear-gradient(to right, rgba(255,255,255, 0), rgb(255,255,255), rgba(255,255,255, 0));
 }
 .book
 {
@@ -121,23 +112,17 @@ footer
     color: white;
     border-top: 1px solid #e1e6e9;
 }
-footer div
-{
-    margin: auto;
-}
+footer div {margin: auto;}
 footer span
 {
     font-size: 1.5em;
     padding: 15px;
 }
-footer h5
-{
-    font-size: 1em;
-}
+footer h5 {font-size: 1em;}
 /* chapter.php */
 #chapter-text p 
 {
-    width: 70%;
+    width: 90%;
     text-align: justify;
     margin: 0 auto;
 }
@@ -150,34 +135,18 @@ form
     max-width: 600px;
     margin: auto;
 }
+.card-header a {max-height: 30px;}
 /* edit.php */
-.tox-tinymce
-{
-    margin-bottom: 10px!important;
-}
+.tox-tinymce {margin-bottom: 10px!important;}
 @media (min-width: 576px) 
 {
-    #home-text h1
-    {
-        font-size: 3em;
-    }
-    .book
-    {
-        border-radius: 10px;
-    }
-    .div-transparent:before
-    {
-        width: 20%;
-    }
+    #home-text h1 {font-size: 3em;}
+    .book {border-radius: 10px;}
+    .div-transparent:before {width: 20%;}
 }
 @media (min-width: 768px)
 {
-    #home-image img 
-    {
-        width: 100%;
-    }
-    .add-btn
-    {
-        margin-right: 3rem;
-    }
+    #home-image img {width: 100%;}
+    .add-btn {margin-right: 3rem;}
+    #chapter-text p {width: 70%;}
 }

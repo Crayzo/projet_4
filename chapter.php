@@ -96,8 +96,13 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
                         $user = $reqUser->fetch();
                     ?>
                     <div class="card mt-3">
-                        <div class="card-header">
-                            <b><?= $user['pseudo'] ?></b> le <?= $commentaire['date_commentaire_fr'] ?>
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="align-self-center">
+                                <strong><?= $user['pseudo'] ?></strong> le <?= $commentaire['date_commentaire_fr'] ?> 
+                            </div>
+                            <?php if(isset($_SESSION['id'])){ ?>
+                            <a class="btn btn-outline-danger btn-sm" href="#" onclick="return(confirm('Voulez vous vraiment signaler le commentaire de <?= $user['pseudo'] ?> ?'));">Signaler</a>
+                            <?php } ?>
                         </div>
                         <div class="card-body">
                             <blockquote class="blockquote mb-0">
