@@ -34,7 +34,7 @@ if(!empty($_POST))
                 $_SESSION['pseudo'] = $resultat['pseudo'];
                 $_SESSION['mail'] = $resultat['mail'];
                 $_SESSION['admin'] = $resultat['admin'];
-                header("Location: edition_profil.php");
+                header("Location: index.php");
             }
             else
                 $message = "Mauvais mot de passe !";
