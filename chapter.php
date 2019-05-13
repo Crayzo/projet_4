@@ -117,7 +117,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
                             <a class="btn btn-outline-dark btn-sm" href="delete_commentaire.php?id=<?= $commentaire['id']; ?>" onclick="return(confirm('Voulez-vous vraiment supprimer votre commentaire ?'));">Supprimer</a>
                             <!-- Sinon -->
                             <?php } elseif(isset($_SESSION['id'])){ ?>
-                            <a class="btn btn-outline-danger btn-sm" href="#" onclick="return(confirm('Voulez-vous vraiment signaler le commentaire de <?= $user['pseudo'] ?> ?'));">Signaler</a>
+                            <a class="btn btn-outline-danger btn-sm" href="report_commentaire.php?id=<?= $commentaire['id'] ?>" onclick="return(confirm('Voulez-vous vraiment signaler le commentaire de <?= $user['pseudo'] ?> ?'));">Signaler</a>
                             <?php } ?>
                         </div>
                         <!-- Corps du commentaire -->
