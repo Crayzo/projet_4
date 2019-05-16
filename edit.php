@@ -8,7 +8,7 @@ catch(Exception $e)
 {
     die('Erreur : '.$e->getMessage());
 }
-if(isset($_SESSION['id']) && $_SESSION['admin'] == 1)
+if(isset($_SESSION['id']) && $_SESSION['admin'] == true)
 {
     if(isset($_GET['id']) && $_GET['id'] > 0)
     {

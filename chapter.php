@@ -34,6 +34,10 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
     }
     $commentaires = $bdd->prepare('SELECT *, DATE_FORMAT(date_commentaire, \'%d/%m/%Y à %H:%i:%s\') AS date_commentaire_fr FROM commentaires WHERE id_chapitre = ? ORDER BY id DESC');
     $commentaires->execute(array($getID));
+    if(!empty($_POST))
+    {
+        header("Location: chapter.php?id=$getID");
+    }
 }
 ?>
 <!doctype html>
@@ -57,7 +61,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
   </head>
   <body>
     <!-- Si la variable id n'existe pas -->
-  	<?php if(!isset($donnees['id'])){echo "Erreur : Ce chapitre n'existe pas !";} else { ?>
+  	<?php if(!isset($donnees['id'])){echo "Erreur : Ce chapitre n'existe pas.";} else { ?>
     <div id="main">
             <?php include 'includes/navbar.php'; ?>
             <!-- Chapitre -->
@@ -105,6 +109,13 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
                         $reqUser = $bdd->prepare('SELECT pseudo FROM membres WHERE id = ?');
                         $reqUser->execute(array($commentaire['id_auteur']));
                         $user = $reqUser->fetch();
+
+                        if(isset($_SESSION['id']))
+                        {
+                            $reqReport = $bdd->prepare('SELECT * FROM signalements WHERE id_membre = ? AND id_commentaire = ?');
+                            $reqReport->execute(array($_SESSION['id'], $commentaire['id']));
+                            $reportExist = $reqReport->rowCount();
+                        }
                     ?>
                     <div class="card mt-3">
                         <!-- Entête du commentaire -->
@@ -114,11 +125,35 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
                             </div>
                             <!-- Si le membre est connecté et qu'il possède un commentaire -->
                             <?php if(isset($_SESSION['id']) && $_SESSION['id'] === $commentaire['id_auteur']){ ?>
-                            <a class="btn btn-outline-dark btn-sm" href="delete_commentaire.php?id=<?= $commentaire['id']; ?>" onclick="return(confirm('Voulez-vous vraiment supprimer votre commentaire ?'));">Supprimer</a>
-                            <!-- Sinon -->
-                            <?php } elseif(isset($_SESSION['id'])){ ?>
-                            <a class="btn btn-outline-danger btn-sm" href="report_commentaire.php?id=<?= $commentaire['id'] ?>" onclick="return(confirm('Voulez-vous vraiment signaler le commentaire de <?= $user['pseudo'] ?> ?'));">Signaler</a>
-                            <?php } ?>
+                                <a class="btn btn-outline-dark btn-sm" href="delete_commentaire.php?id=<?= $commentaire['id']; ?>" onclick="return(confirm('Voulez-vous vraiment supprimer votre commentaire ?'));">Supprimer</a>
+                                <!-- Sinon -->
+                                <?php } elseif(isset($_SESSION['id'] )){ ?>   
+                                <!-- Si le commentaire n'a pas été signalé par l'utilisateur -->
+                                <?php if(!$reportExist){ ?>
+                                <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modal">Signaler</button>
+                                <!-- Si le commentaire a déjà été signalé -->
+                                <?php } elseif($reportExist){ ?>
+                                <button type="button" class="btn btn-outline-danger btn-sm" disabled>Signalé</button>
+                                <?php } ?>
+                                <!-- MODAL -->
+                                <?php include 'includes/modal.php' ?>
+                                
+                                <?php
+                                if(!empty($_POST))
+                                {
+                                    if(isset($_SESSION['id'], $_POST['message_report']) && !empty($_POST['message_report']))
+                                    {
+                                        if(!$reportExist)
+                                        {
+                                            $postMessage = htmlspecialchars($_POST['message_report']);
+                                            $insertReport = $bdd->prepare('INSERT INTO signalements SET id_membre = ?, id_commentaire = ?, message = ?');
+                                            $insertReport->execute(array($_SESSION['id'], $commentaire['id'], $postMessage));
+                                        }
+                                        else
+                                            echo "Vous avez déjà signalé ce commentaire";
+                                    }
+                                } ?><?php 
+                            } ?>
                         </div>
                         <!-- Corps du commentaire -->
                         <div class="card-body">
@@ -127,11 +162,11 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
                             </blockquote>
                         </div>
                     </div>
-                    <?php } ?>
+                    <?php } $reqUser->closeCursor(); ?>
                 </div>
             </section>
 			<?php include 'includes/footer.php' ?>
-			<?php $req->closeCursor(); } ?>
+			<?php } ?>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
