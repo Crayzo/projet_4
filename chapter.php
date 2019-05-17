@@ -34,8 +34,27 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
     }
     $commentaires = $bdd->prepare('SELECT *, DATE_FORMAT(date_commentaire, \'%d/%m/%Y à %H:%i:%s\') AS date_commentaire_fr FROM commentaires WHERE id_chapitre = ? ORDER BY id DESC');
     $commentaires->execute(array($getID));
-    if(!empty($_POST))
+    if(isset($_POST['submit_report']))
     {
+        if(!empty($_POST))
+        {
+            if(isset($_SESSION['id'], $_GET['report']) && !empty($_POST['message_report']) && $_GET['report'] > 0)
+            {
+
+                $getReport = intval($_GET['report']);
+                $reqReport = $bdd->prepare('SELECT * FROM signalements WHERE id_membre = ? AND id_commentaire = ?');
+                $reqReport->execute(array($_SESSION['id'], $getReport));
+                $reportExist = $reqReport->rowCount();
+                if(!$reportExist)
+                {
+                    $postMessage = htmlspecialchars($_POST['message_report']);
+                    $insertReport = $bdd->prepare('INSERT INTO signalements SET id_membre = ?, id_commentaire = ?, message = ?');
+                    $insertReport->execute(array($_SESSION['id'], $getReport, $postMessage));
+                }
+                else
+                    echo "Vous avez déjà signalé ce commentaire";
+            }
+        }
         header("Location: chapter.php?id=$getID");
     }
 }
@@ -130,30 +149,14 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
                                 <?php } elseif(isset($_SESSION['id'] )){ ?>   
                                 <!-- Si le commentaire n'a pas été signalé par l'utilisateur -->
                                 <?php if(!$reportExist){ ?>
-                                <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modal">Signaler</button>
+                                <button data-id="<?= $commentaire['id'] ?>" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modal">Signaler</button>
                                 <!-- Si le commentaire a déjà été signalé -->
                                 <?php } elseif($reportExist){ ?>
                                 <button type="button" class="btn btn-outline-danger btn-sm" disabled>Signalé</button>
                                 <?php } ?>
                                 <!-- MODAL -->
                                 <?php include 'includes/modal.php' ?>
-                                
-                                <?php
-                                if(!empty($_POST))
-                                {
-                                    if(isset($_SESSION['id'], $_POST['message_report']) && !empty($_POST['message_report']))
-                                    {
-                                        if(!$reportExist)
-                                        {
-                                            $postMessage = htmlspecialchars($_POST['message_report']);
-                                            $insertReport = $bdd->prepare('INSERT INTO signalements SET id_membre = ?, id_commentaire = ?, message = ?');
-                                            $insertReport->execute(array($_SESSION['id'], $commentaire['id'], $postMessage));
-                                        }
-                                        else
-                                            echo "Vous avez déjà signalé ce commentaire";
-                                    }
-                                } ?><?php 
-                            } ?>
+                                <?php } ?>
                         </div>
                         <!-- Corps du commentaire -->
                         <div class="card-body">
@@ -174,5 +177,14 @@ if(isset($_GET['id']) && $_GET['id'] > 0)
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
+    <script>
+    $('#modal').on('show.bs.modal', function (event) 
+    {
+        var button = $(event.relatedTarget);
+        var recipient = button.data('id'); 
+        var modal = $(this);
+        modal.find('#modal-form').attr('action', "chapter.php?id=<?= $getID ?>&report=" + recipient);
+    })
+    </script>
   </body>
 </html>

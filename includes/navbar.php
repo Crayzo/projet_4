@@ -23,8 +23,11 @@
         </ul>
         <ul class="navbar-nav">
             <?php if(isset($_SESSION['id'])){ ?>
-             <li class="nav-item <?php if($page === "edition_profil.php"){echo ' active';} ?>"><a class="nav-link" href="edition_profil.php"><i class="fa fa-user-circle"></i> <?= $_SESSION['pseudo'] ?></a></li>
-             <li class="nav-item <?php if($page === "deconnexion.php"){echo ' active';} ?>"><a class="nav-link" href="deconnexion.php"><i class="fa fa-sign-out-alt"></i> Déconnexion</a></li>
+            <?php if(isset($_SESSION['admin']) && $_SESSION['admin'] == true){ ?>
+            <li class="nav-item <?php if($page === "reports.php"){echo ' active';} ?>"><a class="nav-link" href="reports.php"><i class="fa fa-exclamation-circle"></i> Signalements</a></li>  
+            <?php } ?>
+            <li class="nav-item <?php if($page === "edition_profil.php"){echo ' active';} ?>"><a class="nav-link" href="edition_profil.php"><i class="fa fa-user-circle"></i> <?= $_SESSION['pseudo'] ?></a></li>
+            <li class="nav-item <?php if($page === "deconnexion.php"){echo ' active';} ?>"><a class="nav-link" href="deconnexion.php"><i class="fa fa-sign-out-alt"></i> Déconnexion</a></li>
             <?php } else { ?>
             <li class="nav-item <?php if($page === "inscription.php"){echo ' active';} ?>"><a class="nav-link" href="inscription.php"><i class="fa fa-pen"></i> Inscription</a></li>
             <li class="nav-item <?php if($page === "connexion.php"){echo ' active';} ?>"><a class="nav-link" href="connexion.php"><i class="fa fa-user"></i> Connexion</a></li>

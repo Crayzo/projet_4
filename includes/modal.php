@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
                 <?php if(!$reportExist){ ?>
-                <form method="post">
+                <form id="modal-form" action="" method="post">
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Raison :</label>
                         <textarea class="form-control" name="message_report" id="message-text" required></textarea>
