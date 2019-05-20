@@ -9,6 +9,7 @@ catch(Exception $e)
 {
     die('Erreur : '.$e->getMessage());
 }
+include_once 'includes/cookie.php';
 // Si la variable id existe et qu'elle est supérieure à zéro
 if(isset($_GET['id']) && $_GET['id'] > 0)
 {

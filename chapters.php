@@ -9,6 +9,7 @@ catch(Exception $e)
 {
     die('Erreur : '.$e->getMessage());
 }
+include_once 'includes/cookie.php';
 // On récupère les 4 derniers chapitres
 $req = $bdd->prepare('SELECT id, titre, contenu, DATE_FORMAT(date_ajout, \'%d/%m/%Y\') AS date_ajout_fr, DATE_FORMAT(date_modification, \'%d/%m/%Y\') AS date_modification_fr FROM chapitres ORDER BY id DESC');
 $req->execute();

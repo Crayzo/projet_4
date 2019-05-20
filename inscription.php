@@ -8,6 +8,7 @@ catch(Exception $e)
 {
     die('Erreur : '.$e->getMessage());
 }
+include_once 'includes/cookie.php';
 if(isset($_SESSION["id"]))
 {
     header("Location: index.php");

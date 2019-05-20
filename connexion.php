@@ -8,6 +8,7 @@ catch(Exception $e)
 {
     die('Erreur : '.$e->getMessage());
 }
+include_once 'includes/cookie.php';
 if(isset($_SESSION["id"]))
 {
     header("Location: index.php");
@@ -30,6 +31,12 @@ if(!empty($_POST))
         {
             if($isPasswordCorrect)
             {
+                if(isset($_POST['rememberMe']))
+                {
+                    $passHash = password_hash($passwordConnect, PASSWORD_DEFAULT);
+                    setcookie('idConnect', $idConnect, time()+365*24*3600, null, null, false, true);
+                    setcookie('password', $resultat['password'], time()+365*24*3600, null, null, false, true);
+                }
                 $_SESSION['id'] = $resultat['id'];
                 $_SESSION['pseudo'] = $resultat['pseudo'];
                 $_SESSION['mail'] = $resultat['mail'];
@@ -76,6 +83,10 @@ if(!empty($_POST))
                 <div class="form-group col-12">
                     <input type="password" class="form-control" name="passwordConnect" placeholder="Votre mot de passe" requiered>
                 </div>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" name="rememberMe" type="checkbox" id="checkbox">
+                <label class="form-check-label" for="checkbox">Se souvenir de moi</label>
             </div>
             <?php if(isset($message)){ ?>
             <p class="text-danger"><?= $message ?></p>

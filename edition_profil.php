@@ -8,6 +8,7 @@ catch(Exception $e)
 {
     die('Erreur : '.$e->getMessage());
 }
+include_once 'includes/cookie.php';
 if(isset($_SESSION['id']))
 {
     $req = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
