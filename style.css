@@ -136,6 +136,13 @@ form
     margin: auto;
 }
 .card-header a {max-height: 30px;}
+/* navbar.php */
+.alert-light
+{
+    background: rgba(0,0,0, 0.7);
+    color: white;
+    border: 0;
+}
 /* edit.php */
 .tox-tinymce {margin-bottom: 10px!important;}
 @media (min-width: 576px) 
