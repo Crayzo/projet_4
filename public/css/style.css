@@ -10,8 +10,7 @@ body
     display: flex;
     flex-direction: column;
 } 
-/* index.php */
-.inscription, .connexion, .edit
+.inscription, .login, .edit
 {
     height: calc(100vh - 56px);
     display: flex;
@@ -40,7 +39,6 @@ body
 {
     width: 150%;
     height: 100%;
-    border-bottom: 1px solid black;
 }
 #home-text
 {
@@ -63,7 +61,7 @@ body
     font-size: 20px;
 }
 .chapters {margin: 30px auto;}
-.chapters h2 {font-size: 2.5em;}
+.chapters h2 {font-size: 2em;}
 .white-divider
 {
     width: 200px;
@@ -98,10 +96,11 @@ body
 }
 .book
 {
-    margin-bottom: 20px;
     background: #fff;
+    border-top: 1px solid #e1e6e9;
+    border-bottom: 1px solid #e1e6e9;
+    margin-bottom: 20px;
     padding: 40px;
-    border: 1px solid #e1e6e9;
 }
 footer
 {
@@ -115,11 +114,11 @@ footer
 footer div {margin: auto;}
 footer span
 {
+    cursor: pointer;
     font-size: 1.5em;
     padding: 15px;
 }
 footer h5 {font-size: 1em;}
-/* chapter.php */
 #chapter-text p 
 {
     width: 90%;
@@ -135,20 +134,29 @@ form
     max-width: 600px;
     margin: auto;
 }
+.report-buttons
+{
+    width: 200px;
+    height: 70px;
+    align-items: center;
+}
 .card-header a {max-height: 30px;}
-/* navbar.php */
 .alert-light
 {
     background: rgba(0,0,0, 0.7);
     color: white;
     border: 0;
 }
-/* edit.php */
 .tox-tinymce {margin-bottom: 10px!important;}
 @media (min-width: 576px) 
 {
     #home-text h1 {font-size: 3em;}
-    .book {border-radius: 10px;}
+    .book 
+    {
+        border-radius: 10px;
+        border-left: 1px solid #e1e6e9;
+        border-right: 1px solid #e1e6e9;
+    }
     .div-transparent:before {width: 20%;}
 }
 @media (min-width: 768px)
@@ -156,4 +164,5 @@ form
     #home-image img {width: 100%;}
     .add-btn {margin-right: 3rem;}
     #chapter-text p {width: 70%;}
+    .chapters h2 {font-size: 2.5em;}
 }

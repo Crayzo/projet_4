@@ -6,7 +6,6 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <?php if(!$reportExist){ ?>
                 <form id="modal-form" action="" method="post">
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Raison :</label>
@@ -17,7 +16,6 @@
                         <button type="submit" class="btn btn-primary" name="submit_report">Signaler</button>
                     </div>
                 </form>
-                <?php } else echo "Vous avez déjà signalé ce commentaire"; ?>
             </div>
         </div>
     </div>
