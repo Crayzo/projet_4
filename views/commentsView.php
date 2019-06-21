@@ -5,7 +5,6 @@
         </div>
         <?php if(isset($_SESSION['id']) && $_SESSION['id'] === $comment['author_id']){ ?>
                 <a id="delete-comment" class="btn btn-outline-dark btn-sm" href="index.php?action=delete_comment&id=<?= $comment['id']; ?>">Supprimer</a>
-            <!-- Sinon -->
             <?php } elseif(isset($_SESSION['id'] )){ ?>   
                 <?php if(!$reportExist){ ?>
                     <button data-id="<?= $comment['id'] ?>" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modal">Signaler</button>

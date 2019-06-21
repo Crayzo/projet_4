@@ -13,10 +13,10 @@
             <p><?= $chapter['content']; ?></p>
             <!-- ADMIN -->
             <?php if(isset($_SESSION['id']) && $_SESSION['admin'] == true) { ?> 
-            <div class="text-center mb-4">
-                <a href="index.php?action=edit_chapter&id=<?= $chapter['id']; ?>" class="btn btn-dark mt-3">Modifier</a>
-                <a href="index.php?action=delete_chapter&id=<?= $chapter['id']; ?>" onclick="return(confirm('Voulez-vous vraiment supprimer ce chapitre ?'));" class="btn btn-dark mt-3">Supprimer</a>
-            </div>
+                <div class="text-center mb-4">
+                    <a href="index.php?action=edit_chapter&id=<?= $chapter['id']; ?>" class="btn btn-dark mt-3">Modifier</a>
+                    <a href="index.php?action=delete_chapter&id=<?= $chapter['id']; ?>" onclick="return(confirm('Voulez-vous vraiment supprimer ce chapitre ?'));" class="btn btn-dark mt-3">Supprimer</a>
+                </div>
             <?php } ?>
         </div>
     </section>

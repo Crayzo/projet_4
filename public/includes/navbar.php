@@ -10,7 +10,6 @@ else
         <a class="btn btn-secondary my-1 btn-sm align-self-center" href="index.php?action=accept_cookie">Accepter</a>
     </div>
 <?php } ?>
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark <?php if(isset($navTransparent) && $navTransparent === true){echo ' bg-transparent';} else echo ' bg-dark'; ?>">
     <a class="navbar-brand" href="index.php">Jean Forteroche</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,7 +17,7 @@ else
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item <?php if(isset($title) && $title === "Accueil"){echo ' active';} ?>">
+            <li class="nav-item <?php if(isset($title) && $title === "Blog de Jean Forteroche"){echo ' active';} ?>">
                 <a class="nav-link" href="index.php"><i class="fa fa-home"></i> Accueil <span class="sr-only"></span></a>
             </li>
             <li class="nav-item  <?php if(isset($title) && $title === "Chapitres" || isset($chapterPage) && $chapterPage === true){echo ' active';} ?>">

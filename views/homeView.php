@@ -1,11 +1,9 @@
 <?php
-    $title = "Accueil";
+    $title = "Blog de Jean Forteroche";
     $navTransparent = true;
 ?>
 <?php ob_start(); ?>
 <div id="main">
-    <!-- NAVBAR -->
-    <!-- SLIDER -->
     <section>
         <div class="slider">
             <div id="home-image">
