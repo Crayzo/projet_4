@@ -1,6 +1,5 @@
 <?php
     $title = $chapter['title'];
-    $modal = true; 
     $chapterPage = true;
 ?>
 <?php ob_start(); ?>
@@ -24,7 +23,6 @@
     <section>
         <div class="container mb-5">
             <form method="post" class="mt-3">
-                <!-- Si le membre est connecté -->
                 <?php if(isset($_SESSION['id'])) { ?>
                     <h3 class="text-center mb-4">Ajouter un commentaire</h3>
                     <div class="form-row">
@@ -32,14 +30,13 @@
                             <textarea name="comment" class="form-control" placeholder="Votre commentaire"></textarea>
                         </div>
                     </div>
-                    <?php if(isset($message)){ ?>
-                        <p class="text-danger"><?= $message ?></p>
+                    <?php if(isset($error)){ ?>
+                        <p class="text-danger"><?= $error ?></p>
                     <?php } ?>
                     <?php if(isset($success)){ ?>
                         <p class="text-success"><?= $success ?></p>
                     <?php } ?>
                         <button type="submit" class="btn btn-outline-secondary w-100" name="submit_comment">Envoyer</button>
-                <!-- Sinon -->
                 <?php } else { ?> 
                     <p class="my-0">Vous devez être connecté(e) pour ajouter un commentaire !</p>
                     <a href="index.php?action=login">Se connecter</a>

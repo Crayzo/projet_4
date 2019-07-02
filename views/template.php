@@ -34,16 +34,5 @@
             <script>tinymce.init({selector: "textarea",});</script>
         <?php } ?>
         <script src="public/js/script.js?t=<?= time() ?>"></script>
-        <?php if(isset($modal) && $modal === true){ ?>
-            <script>
-                $('#modal').on('show.bs.modal', function (event) 
-                {
-                    var button = $(event.relatedTarget);
-                    var recipient = button.data('id'); 
-                    var modal = $(this);
-                    modal.find('#modal-form').attr('action', "index.php?action=chapter&id=<?= $getId ?>&report=" + recipient);
-                })
-            </script>
-        <?php } ?>
     </body>
 </html>

@@ -8,29 +8,38 @@ function getLastChapters()
     $chapters = $chapterManager->selectLastChapters();
     require('views/homeView.php');
 }
+
 function getChapter()
 {
+    $validation = true;
+
     if(isset($_GET['id']) && $_GET['id'] > 0) 
     {
         $getId = intval($_GET['id']);
         $chapterManager = new Project\Models\ChapterManager();
         $data = $chapterManager->selectChapter($getId);
         $chapter = $data->fetch();
-    
         $commentManager = new Project\Models\CommentManager();
+
         /* SUBMIT A COMMENT */
         if(isset($_POST['submit_comment']))
         {
-            if(isset($_SESSION['username'], $_POST['comment']) && !empty($_SESSION['username']) && !empty($_POST['comment']))
+            if(!isset($_SESSION['username'], $_POST['comment']) || empty($_SESSION['username']) || empty($_POST['comment']))
+            {
+                $validation = false;
+                $error = "Vous devez écrire un commentaire avant d'envoyer !";
+            }
+
+            elseif($validation)
             {
                 $postComment = htmlspecialchars($_POST['comment']);
                 $commentManager->insertComment($postComment, $getId, $_SESSION['id']);
                 $success = "Votre commentaire a été ajouté avec succès";
             }
-            else
-                $error = "Vous devez écrire un commentaire avant d'envoyer !";
         }
+        
         $comments = $commentManager->selectComments($getId);
+
         /* SUBMIT A REPORT */
         if(isset($_POST['submit_report']))
         {
@@ -59,61 +68,78 @@ function getChapter()
         header('Location: index.php');
 
 }
+
 function getChapters()
 {
     $chapterManager = new Project\Models\ChapterManager();
     $chapters = $chapterManager->selectChapters();
     require('views/chaptersView.php');
 }
+
 function addChapter()
 {
-    if(isset($_SESSION['id'], $_SESSION['admin']) && !empty($_SESSION['id']) && !empty($_SESSION['admin']) && $_SESSION['admin'] == true)
-    {
-        if(!empty($_POST))
-        {
-            if(isset($_POST['content']) && !empty($_POST['content']) && isset($_POST['title']) && !empty($_POST['title']))
-            {
-                $chapterManager = new Project\Models\ChapterManager();
-                $chapterManager->insertChapter($_POST['title'], $_POST['content']);
-                $success = "Le chapitre a bien été ajouté";
-            }
-            else
-                $error = "Tous les champs doivent être complétés !";
-        }
-        require('views/newChapterView.php');
-    }
-    else
+    if(!isset($_SESSION['admin']))
+    {  
         header('Location: index.php');
-    
-}
-function editChapter()
-{
-    if(isset($_SESSION['id'], $_SESSION['admin']) && !empty($_SESSION['id']) && !empty($_SESSION['admin']) && $_SESSION['admin'] == true)
+        exit();
+    }
+    if(!empty($_POST))
     {
-        if(isset($_GET['id']) && $_GET['id'] > 0)
+        $validation = true;
+
+        if(!isset($_POST['content'], $_POST['title']) || empty($_POST['content']) || empty($_POST['title']))
+        {
+            $validation = false;
+            $error = 'Tous les champs doivent être complétés !';
+        }
+        elseif($validation)
         {
             $chapterManager = new Project\Models\ChapterManager();
-            $getId = intval($_GET['id']);
-            $reqChapter = $chapterManager->selectChapter($getId);
-            $data = $reqChapter->fetch();
-            if(!empty($_POST))
-            {
-                if(isset($_POST['content']) && !empty($_POST['content']) && isset($_POST['title']) && !empty($_POST['title']))
-                {
-                    $chapterManager->updateChapter($_POST['content'], $_POST['title'], $getId);
-                    $data["content"] = $_POST['content'];
-                    $data["title"] = $_POST['title'];
-                    $success = "Le chapitre a bien été modifié !";
-                }
-                else
-                    $error = "Tous les champs doivent être complétés !";
-            }
-            require('views/editChapterView.php');
+            $chapterManager->insertChapter($_POST['title'], $_POST['content']);
+            $success = "Le chapitre a bien été ajouté";
         }
+    }
+    require('views/newChapterView.php');
+}
+
+function editChapter()
+{
+    if(!isset($_SESSION['admin']))
+    {  
+        header('Location: index.php');
+        exit();
+    }
+    if(isset($_GET['id']) && $_GET['id'] > 0)
+    {
+        $chapterManager = new Project\Models\ChapterManager();
+        $getId = intval($_GET['id']);
+        $reqChapter = $chapterManager->selectChapter($getId);
+        $data = $reqChapter->fetch();
+        $validation = true;
+
+        if(!empty($_POST))
+        {
+            if(!isset($_POST['content'], $_POST['title']) || empty($_POST['content']) || empty($_POST['title']))
+            {
+                $validation = false;
+                $error = "Tous les champs doivent être complétés !";
+            }
+            
+            elseif($validation)
+            {
+                $chapterManager->updateChapter($_POST['content'], $_POST['title'], $getId);
+                $data["content"] = $_POST['content'];
+                $data["title"] = $_POST['title'];
+                $success = "Le chapitre a bien été modifié !";
+            }
+        }
+        require('views/editChapterView.php');
     }
     else
         header("Location: index.php");
+        exit();
 }
+
 function deleteChapter()
 {
     if(isset($_SESSION['id'], $_SESSION['admin']) && !empty($_SESSION['id']) && !empty($_SESSION['admin']) && $_SESSION['admin'] == true)
@@ -126,6 +152,7 @@ function deleteChapter()
             $chapterManager->deleteCommentsFromChapter($getId);
             header("Location: index.php?action=chapters");
         }
+
         else
             header('Location: index.php');
     }

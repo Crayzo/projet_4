@@ -7,7 +7,7 @@
                 <a id="delete-comment" class="btn btn-outline-dark btn-sm" href="index.php?action=delete_comment&id=<?= $comment['id']; ?>">Supprimer</a>
             <?php } elseif(isset($_SESSION['id'] )){ ?>   
                 <?php if(!$reportExist){ ?>
-                    <button data-id="<?= $comment['id'] ?>" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modal">Signaler</button>
+                    <button data-id="<?= $comment['id'] ?>" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modal<?= $comment['id'] ?>">Signaler</button>
                 <?php } elseif($reportExist){ ?>
                     <button type="button" class="btn btn-outline-danger btn-sm" disabled>Signalé</button>
                 <?php } ?>

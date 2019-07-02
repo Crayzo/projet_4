@@ -41,6 +41,5 @@ $(function()
                 $this.text('Chargement...');
             });
         }
-    
     });
 });
