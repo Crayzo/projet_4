@@ -1,6 +1,5 @@
 <?php
 namespace Project\Models;
-require_once('models/Manager.php');
 
 Class UserManager extends Manager
 {

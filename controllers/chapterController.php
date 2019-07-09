@@ -1,11 +1,9 @@
 <?php
-require_once('models/ChapterManager.php');
-require_once('models/CommentManager.php');
 
 function getLastChapters()
 {
     $chapterManager = new Project\Models\ChapterManager();
-    $chapters = $chapterManager->selectLastChapters();
+    $chapters = $chapterManager->getLastChapters();
     require('views/homeView.php');
 }
 
@@ -17,10 +15,9 @@ function getChapter()
     {
         $getId = intval($_GET['id']);
         $chapterManager = new Project\Models\ChapterManager();
-        $data = $chapterManager->selectChapter($getId);
-        $chapter = $data->fetch();
-        $commentManager = new Project\Models\CommentManager();
+        $chapter = $chapterManager->get($getId);
 
+        $commentManager = new Project\Models\CommentManager();
         /* SUBMIT A COMMENT */
         if(isset($_POST['submit_comment']))
         {
@@ -94,12 +91,16 @@ function addChapter()
         }
         elseif($validation)
         {
+            $chapter = new Project\Models\Chapters([
+                "title" => $_POST['title'],
+                "content" => $_POST['content']
+            ]);
             $chapterManager = new Project\Models\ChapterManager();
-            $chapterManager->insertChapter($_POST['title'], $_POST['content']);
-            $success = "Le chapitre a bien été ajouté";
+            $chapterManager->add($chapter);
+            header('Location: index.php?action=chapters');
         }
     }
-    require('views/newChapterView.php');
+    require('views/addChapterView.php');
 }
 
 function editChapter()
@@ -113,8 +114,7 @@ function editChapter()
     {
         $chapterManager = new Project\Models\ChapterManager();
         $getId = intval($_GET['id']);
-        $reqChapter = $chapterManager->selectChapter($getId);
-        $data = $reqChapter->fetch();
+        $data = $chapterManager->get($getId);
         $validation = true;
 
         if(!empty($_POST))
@@ -127,10 +127,13 @@ function editChapter()
             
             elseif($validation)
             {
-                $chapterManager->updateChapter($_POST['content'], $_POST['title'], $getId);
-                $data["content"] = $_POST['content'];
-                $data["title"] = $_POST['title'];
-                $success = "Le chapitre a bien été modifié !";
+                $chapter = new Project\Models\Chapters([
+                    'id' => $_GET['id'],
+                    'content' => $_POST['content'],
+                    'title' => $_POST['title']
+                ]);
+                $chapterManager->update($chapter);
+                header('Location: index.php?action=chapter&id=' . $data->getId());
             }
         }
         require('views/editChapterView.php');

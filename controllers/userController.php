@@ -1,5 +1,4 @@
 <?php
-require_once('models/UserManager.php');
 
 function login()
 {

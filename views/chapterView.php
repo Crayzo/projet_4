@@ -1,5 +1,5 @@
 <?php
-    $title = $chapter['title'];
+    $title = $chapter->getTitle();
     $chapterPage = true;
 ?>
 <?php ob_start(); ?>
@@ -7,14 +7,14 @@
     <!-- CHAPTER -->
     <section id="chapter-text">
         <div>
-            <h1 class="text-center mt-3"><?= $chapter['title']; ?></h1>
+            <h1 class="text-center mt-3"><?= $chapter->getTitle(); ?></h1>
             <div class="divider div-black mb-4"></div>
-            <p><?= $chapter['content']; ?></p>
+            <p><?= $chapter->getContent(); ?></p>
             <!-- ADMIN -->
             <?php if(isset($_SESSION['id']) && $_SESSION['admin'] == true) { ?> 
                 <div class="text-center mb-4">
-                    <a href="index.php?action=edit_chapter&id=<?= $chapter['id']; ?>" class="btn btn-dark mt-3">Modifier</a>
-                    <a href="index.php?action=delete_chapter&id=<?= $chapter['id']; ?>" onclick="return(confirm('Voulez-vous vraiment supprimer ce chapitre ?'));" class="btn btn-dark mt-3">Supprimer</a>
+                    <a href="index.php?action=edit_chapter&id=<?= $chapter->getId(); ?>" class="btn btn-dark mt-3">Modifier</a>
+                    <a href="index.php?action=delete_chapter&id=<?= $chapter->getId(); ?>" onclick="return(confirm('Voulez-vous vraiment supprimer ce chapitre ?'));" class="btn btn-dark mt-3">Supprimer</a>
                 </div>
             <?php } ?>
         </div>

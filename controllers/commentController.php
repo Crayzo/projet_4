@@ -1,7 +1,4 @@
 <?php
-require_once('models/CommentManager.php');
-require_once('models/UserManager.php');
-require_once('models/ReportManager.php');
 
 function deleteComment()
 {

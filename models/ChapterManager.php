@@ -1,22 +1,22 @@
 <?php
 namespace Project\Models;
-require_once('models/Manager.php');
 
 Class ChapterManager extends Manager
 {
-    public function selectLastChapters()
+    public function getLastChapters()
     {
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT id, title, content, DATE_FORMAT(added_date, \'%d/%m/%Y\') AS added_date_fr, DATE_FORMAT(modification_date, \'%d/%m/%Y\') AS modification_date_fr FROM chapters ORDER BY id DESC LIMIT 0, 4');
         $req->execute();
         return $req;
     }
-    public function selectChapter($getId)
+    public function get($id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT id, title, content FROM chapters WHERE id = ?');
-        $req->execute(array($getId));
-        return $req;
+        $req = $db->prepare('SELECT * FROM chapters WHERE id = ?');
+        $req->execute([$id]);
+        $data = $req->fetch();
+        return new Chapters($data);  
     }
     public function selectChapters()
     {
@@ -25,19 +25,24 @@ Class ChapterManager extends Manager
         $req->execute();
         return $req;
     }
-    public function insertChapter($title, $content)
-    {
+    public function add(Chapters $chapter)
+    {   
         $db = $this->dbConnect();
         $req = $db->prepare('INSERT INTO chapters (title, content, added_date, modification_date) VALUES (?, ?, NOW(), NOW())');
-        $req->execute(array($title, $content));
-        return $req;
+        $req->execute([
+            $chapter->getTitle(),
+            $chapter->getContent()
+        ]);
     }
-    public function updateChapter($content, $title, $id)
+    public function update($chapter)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('UPDATE chapters SET content = ?, title = ?, modification_date = NOW() WHERE id = ?');
-        $req->execute(array($content, $title, $id));
-        return $req;
+        $req->execute([
+            $chapter->getContent(),
+            $chapter->getTitle(),
+            $chapter->getId()
+        ]);
     }
     public function deleteChapter($getId)
     {
