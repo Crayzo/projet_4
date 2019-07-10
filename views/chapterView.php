@@ -22,7 +22,7 @@
     <!-- COMMENT AREA -->
     <section>
         <div class="container mb-5">
-            <form method="post" class="mt-3">
+            <form method="post" class="mt-3" id="form">
                 <?php if(isset($_SESSION['id'])) { ?>
                     <h3 class="text-center mb-4">Ajouter un commentaire</h3>
                     <div class="form-row">
@@ -42,13 +42,16 @@
                     <a href="index.php?action=login">Se connecter</a>
                 <?php } ?>
             </form>
-            <?php while($comment = $comments->fetch()){
-                $users = $commentManager->selectAuthor($comment['author_id']);
-                $user = $users->fetch();
+            <?php foreach($comments as $data){
+
+                $user = $userManager->selectUsername($data->getAuthorId());
                 if(isset($_SESSION['id']))
                 {
-                    $report = $commentManager->selectReports($_SESSION['id'], $comment['id']);
-                    $reportExist = $report->rowCount();
+                    $test = new Project\Models\Reports([
+                        'member_id' => $_SESSION['id'],
+                        'comment_id' => $data->getId(),
+                    ]);
+                    $reportExist = $reportManager->countReports($test);
                 }
                 require('views/commentsView.php');
             } ?>

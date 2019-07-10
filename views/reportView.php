@@ -4,7 +4,7 @@
 $nbReports = $reqReports->rowCount();
 if($nbReports > 0){
     while($reports = $reqReports->fetch()){ 
-    /* MEMBERS */
+    /* USERS */
     $reqUser = $userManager->selectUserId($reports['member_id']);
     $user = $reqUser->fetch();
     /* COMMENTS */

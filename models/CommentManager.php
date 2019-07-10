@@ -3,13 +3,23 @@ namespace Project\Models;
 
 Class CommentManager extends Manager
 {
-    public function selectComments($getId)
+    public function selectAll($getId)
     {
+
+        $comments = [];
+
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT *, DATE_FORMAT(comment_date, \'%d/%m/%Y à %H:%i:%s\') AS comment_date_fr FROM comments WHERE chapter_id = ? ORDER BY id DESC');
-        $req->execute(array($getId));
-        return $req;
+        $req->execute([$getId]);
+
+        while($data = $req->fetch())
+        {
+            $comments[] = new Comments($data);
+        }
+
+        return $comments;
     }
+
     public function selectComment($getId)
     {
         $db = $this->dbConnect();
@@ -17,6 +27,7 @@ Class CommentManager extends Manager
         $req->execute(array($getId));
         return $req;
     }
+
     public function deleteComment($getId)
     {
         $db = $this->dbConnect();
@@ -24,6 +35,7 @@ Class CommentManager extends Manager
         $req->execute(array($getId));
         return $req;
     }
+
     public function checkReport($getId)
     {
         $db = $this->dbConnect();
@@ -31,20 +43,26 @@ Class CommentManager extends Manager
         $req->execute(array($getId));
         return $req;
     }
-    public function insertComment($postComment, $getId, $memberId)
+
+    public function insert(Comments $comment)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('INSERT INTO comments (comment, chapter_id, author_id, comment_date) VALUES (?,?,?,NOW())');
-        $req->execute(array($postComment, $getId, $memberId));
-        return $req;
+        $req->execute([
+            $comment->getComment(),
+            $comment->getChapterId(),
+            $comment->getAuthorId()
+        ]);
     }
-    public function selectAuthor($commentId)
+
+    public function selectAuthor($id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT username FROM members WHERE id = ?');
-        $req->execute(array($commentId));
+        $req = $db->prepare('SELECT username FROM users WHERE id = ?');
+        $req->execute([$id]);
         return $req;
     } 
+
     public function selectReports($memberId, $commentId)
     {
         $db = $this->dbConnect();
@@ -52,6 +70,7 @@ Class CommentManager extends Manager
         $req->execute(array($memberId, $commentId));
         return $req;
     }
+
     public function insertReport($memberId, $commentId, $postMessage)
     {
         $db = $this->dbConnect();
@@ -59,6 +78,7 @@ Class CommentManager extends Manager
         $req->execute(array($memberId, $commentId, $postMessage));
         return $req;
     }
+    
     public function deleteReport($getId)
     {
         $db = $this->dbConnect();

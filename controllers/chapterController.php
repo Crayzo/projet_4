@@ -17,7 +17,9 @@ function getChapter()
         $chapterManager = new Project\Models\ChapterManager();
         $chapter = $chapterManager->get($getId);
 
+        $userManager = new Project\Models\UserManager();
         $commentManager = new Project\Models\CommentManager();
+        $reportManager = new Project\Models\ReportManager();
         /* SUBMIT A COMMENT */
         if(isset($_POST['submit_comment']))
         {
@@ -29,13 +31,18 @@ function getChapter()
 
             elseif($validation)
             {
-                $postComment = htmlspecialchars($_POST['comment']);
-                $commentManager->insertComment($postComment, $getId, $_SESSION['id']);
-                $success = "Votre commentaire a été ajouté avec succès";
+                $comment = new Project\Models\Comments([
+                    'comment' => $_POST['comment'],
+                    'chapter_id' => $getId,
+                    'author_id' => $_SESSION['id']
+                ]);
+
+                $commentManager->insert($comment);
+                header('Location: index.php?action=chapter&id=' . $getId . '#form');
             }
         }
         
-        $comments = $commentManager->selectComments($getId);
+        $comments = $commentManager->selectAll($getId);
 
         /* SUBMIT A REPORT */
         if(isset($_POST['submit_report']))
@@ -44,17 +51,19 @@ function getChapter()
             {
                 if(isset($_SESSION['id'], $_GET['report']) && !empty($_POST['message_report']) && $_GET['report'] > 0)
                 {
-    
-                    $getReport = intval($_GET['report']);
-                    $selectReports = $commentManager->selectReports($_SESSION['id'], $getReport);
-                    $reportExist = $selectReports->rowCount();
+
+                    $report = new Project\Models\Reports([
+                        'member_id' => $_SESSION['id'],
+                        'comment_id' => $_GET['report'],
+                        'message' => $_POST['message_report']
+                    ]);
+
+                    $reportExist = $reportManager->countReports($report);
+
                     if(!$reportExist)
                     {
-                        $postMessage = htmlspecialchars($_POST['message_report']);
-                        $commentManager->insertReport($_SESSION['id'], $getReport, $postMessage);
+                        $reportManager->insert($report);
                     }
-                    else
-                        echo "Vous avez déjà signalé ce commentaire";
                 }
             }
             header("Location: index.php?action=chapter&id=$getId");
@@ -69,7 +78,7 @@ function getChapter()
 function getChapters()
 {
     $chapterManager = new Project\Models\ChapterManager();
-    $chapters = $chapterManager->selectChapters();
+    $chapters = $chapterManager->getAll();
     require('views/chaptersView.php');
 }
 
@@ -151,8 +160,7 @@ function deleteChapter()
         {
             $chapterManager = new Project\Models\ChapterManager();
             $getId = intval($_GET['id']);
-            $chapterManager->deleteChapter($getId);
-            $chapterManager->deleteCommentsFromChapter($getId);
+            $chapterManager->delete($getId);
             header("Location: index.php?action=chapters");
         }
 

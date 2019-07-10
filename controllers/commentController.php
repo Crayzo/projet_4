@@ -51,12 +51,12 @@ function getReports()
         $reportManager = new Project\Models\ReportManager();
         $commentManager = new Project\Models\CommentManager();
         $userManager = new Project\Models\UserManager();
-        $reqReports = $reportManager->selectReports();
+        $reqReports = $reportManager->select();
 
         if(isset($_GET['approve']) && $_GET['approve'] > 0)
         {
             $getApprove = intval($_GET['approve']);
-            $reportManager->deleteReport($getApprove);
+            $reportManager->delete($getApprove);
 
             if(isset($_GET['delete']) && $_GET['delete'] > 0)
             {

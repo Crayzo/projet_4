@@ -3,6 +3,9 @@ session_start();
 
 require('models/Manager.php');
 require('models/Chapters.php');
+require('models/Users.php');
+require('models/Comments.php');
+require('models/Reports.php');
 require('models/ChapterManager.php');
 require('models/CommentManager.php');
 require('models/ReportManager.php');

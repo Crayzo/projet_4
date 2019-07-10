@@ -14,14 +14,14 @@
         <?php } ?>
         <div class="container">
             <div class="row">
-                <?php while($data = $chapters->fetch()){ ?>
+                <?php foreach($chapters as $data){ ?>
                     <div class="book col-12 col-sm-5 offset-sm-1 mx-auto text-center">
-                        <h3><?= htmlspecialchars($data['title']); ?></h3>
-                        <span>Ajouté le <?= htmlspecialchars($data['added_date_fr']) ?></span><br>
-                        <span>Dernière modification le <?= htmlspecialchars($data['modification_date_fr']) ?></span>
-                        <a href="index.php?action=chapter&id=<?= $data['id']; ?>" class="btn btn-outline-dark mt-3">Lire le chapitre</a>
+                        <h3><?= htmlspecialchars($data->getTitle()); ?></h3>
+                        <span>Ajouté le <?= htmlspecialchars($data->getAddedDate()) ?></span><br>
+                        <span>Dernière modification le <?= htmlspecialchars($data->getModificationDate()) ?></span>
+                        <a href="index.php?action=chapter&id=<?= $data->getId(); ?>" class="btn btn-outline-dark mt-3">Lire le chapitre</a>
                     </div>
-                <?php } $chapters->closeCursor(); ?>
+                <?php } ?>
             </div> 
         </div>
     </section>
