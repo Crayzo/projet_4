@@ -1,5 +1,4 @@
 <?php
-
 function getLastChapters()
 {
     $chapterManager = new Project\Models\ChapterManager();
@@ -23,6 +22,7 @@ function getChapter()
         /* SUBMIT A COMMENT */
         if(isset($_POST['submit_comment']))
         {
+            
             if(!isset($_SESSION['username'], $_POST['comment']) || empty($_SESSION['username']) || empty($_POST['comment']))
             {
                 $validation = false;
@@ -31,14 +31,17 @@ function getChapter()
 
             elseif($validation)
             {
+
+                $postComment = Functions::check($_POST['comment']);
+
                 $comment = new Project\Models\Comments([
-                    'comment' => $_POST['comment'],
-                    'chapter_id' => $getId,
+                    'comment' =>  $postComment,
+                    'chapter_id' => $chapter->getId(),
                     'author_id' => $_SESSION['id']
                 ]);
 
                 $commentManager->insert($comment);
-                header('Location: index.php?action=chapter&id=' . $getId . '#form');
+                header('Location: index.php?action=chapter&id=' . $chapter->getId() . '#form');
             }
         }
         
@@ -51,14 +54,15 @@ function getChapter()
             {
                 if(isset($_SESSION['id'], $_GET['report']) && !empty($_POST['message_report']) && $_GET['report'] > 0)
                 {
+                    $messageReport = Functions::check($_POST['message_report']);
 
                     $report = new Project\Models\Reports([
                         'member_id' => $_SESSION['id'],
                         'comment_id' => $_GET['report'],
-                        'message' => $_POST['message_report']
+                        'message' => $messageReport
                     ]);
 
-                    $reportExist = $reportManager->countReports($report);
+                    $reportExist = $reportManager->countReportsId($report);
 
                     if(!$reportExist)
                     {
@@ -137,7 +141,7 @@ function editChapter()
             elseif($validation)
             {
                 $chapter = new Project\Models\Chapters([
-                    'id' => $_GET['id'],
+                    'id' => $getId,
                     'content' => $_POST['content'],
                     'title' => $_POST['title']
                 ]);

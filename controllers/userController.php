@@ -11,7 +11,7 @@ function login()
     if(!empty($_POST))
     {
         $userManager = new Project\Models\UserManager();
-        $idConnect = htmlspecialchars($_POST['idConnect']);
+        $idConnect = Functions::check($_POST['idConnect']);
         $validation = true;
         $member = $userManager->selectUser($idConnect);
         
@@ -80,9 +80,9 @@ function register()
     if(!empty($_POST))
     {
         $userManager = new Project\Models\UserManager();
-        $pseudo = htmlspecialchars($_POST['pseudo']);
-        $mail = htmlspecialchars($_POST['mail']);
-        $mail2 = htmlspecialchars($_POST['mail2']);
+        $pseudo = Functions::check($_POST['pseudo']);
+        $mail = Functions::check($_POST['mail']);
+        $mail2 = Functions::check($_POST['mail2']);
         $reqPseudo = $userManager->selectUserPseudo($pseudo);
         $reqMail = $userManager->selectUserMail($mail);
         $validation = true;
@@ -144,13 +144,12 @@ function getProfile()
     if(isset($_SESSION['id']))
     {
         $userManager = new Project\Models\UserManager();
-        $req = $userManager->selectUserId($_SESSION['id']);
-        $user = $req->fetch();
+        $user = $userManager->selectUserId($_SESSION['id']);
         $validation = true;
-        if(isset($_POST['newPseudo']) && !empty($_POST['newPseudo']) && $_POST['newPseudo'] !== $user['username'])
+        if(isset($_POST['newPseudo']) && !empty($_POST['newPseudo']) && $_POST['newPseudo'] !== $user->getUsername())
         {
-            $newPseudo = htmlspecialchars($_POST['newPseudo']);
-            $pseudoLength = strlen($newPseudo);
+            $newPseudo = Functions::check($_POST['newPseudo']);
+            $pseudoLength = strlen($_POST['newPseudo']);
             $reqPseudo = $userManager->selectUserPseudo($newPseudo);
 
             if($pseudoLength >= 25)
@@ -172,9 +171,9 @@ function getProfile()
                 $success = "Votre compte a bien été mis à jour";
             }
         }
-        if(isset($_POST['newMail']) && !empty($_POST['newMail']) && $_POST['newMail'] !== $user['mail'])
+        if(isset($_POST['newMail']) && !empty($_POST['newMail']) && $_POST['newMail'] !== $user->getMail())
         {
-            $newMail = htmlspecialchars($_POST['newMail']);
+            $newMail = Functions::check($_POST['newMail']);
             $reqMail = $userManager->selectUserMail($newMail);
 
             if(!filter_var($newMail, FILTER_VALIDATE_EMAIL))

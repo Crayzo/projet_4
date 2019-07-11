@@ -65,19 +65,16 @@ Class Reports
 
     public function setMemberId($memberId)
     {
-        $memberId = intval($memberId);
         $this->memberId = $memberId;
     }
 
     public function setCommentId($commentId)
     {
-        $commentId = intval($commentId);
         $this->commentId = $commentId;
     }
 
     public function setMessage($message)
     {
-        $message = htmlspecialchars($message);
         $this->message = $message;
     }
 }

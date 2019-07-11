@@ -30,12 +30,15 @@ Class UserManager extends Manager
         return $req;
     }
 
-    public function selectUserId($id)
+    public function selectUserId($data)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT * FROM users WHERE id = ?');
-        $req->execute(array($id));
-        return $req;
+        $req->execute([
+            $data
+        ]);
+        $data = $req->fetch();
+        return new Users($data);
     }
 
     public function selectUsername($authorId)

@@ -20,28 +20,33 @@ Class CommentManager extends Manager
         return $comments;
     }
 
-    public function selectComment($getId)
+    public function selectId($comment)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT *, DATE_FORMAT(comment_date, \'%d/%m/%Y à %H:%i:%s\') AS comment_date_fr FROM comments WHERE id = ?');
-        $req->execute(array($getId));
-        return $req;
+        $req->execute([
+            $comment
+        ]);
+        $data = $req->fetch();
+        return new Comments($data);
     }
 
-    public function deleteComment($getId)
+    public function selectComment($report)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('SELECT *, DATE_FORMAT(comment_date, \'%d/%m/%Y à %H:%i:%s\') AS comment_date_fr FROM comments WHERE id = ?');
+        $req->execute([
+            $report->getCommentId()
+        ]);
+        $data = $req->fetch();
+        return new Comments($data);
+    }
+
+    public function delete($getId)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('DELETE FROM comments WHERE id = ?');
-        $req->execute(array($getId));
-        return $req;
-    }
-
-    public function checkReport($getId)
-    {
-        $db = $this->dbConnect();
-        $req = $db->prepare('SELECT * FROM reports WHERE comment_id = ?');
-        $req->execute(array($getId));
-        return $req;
+        $req->execute([$getId]);
     }
 
     public function insert(Comments $comment)
@@ -76,14 +81,6 @@ Class CommentManager extends Manager
         $db = $this->dbConnect();
         $req = $db->prepare('INSERT INTO reports SET member_id = ?, comment_id = ?, message = ?');
         $req->execute(array($memberId, $commentId, $postMessage));
-        return $req;
-    }
-    
-    public function deleteReport($getId)
-    {
-        $db = $this->dbConnect();
-        $req = $db->prepare('DELETE FROM reports WHERE comment_id = ?');
-        $req->execute(array($getId));
         return $req;
     }
 }

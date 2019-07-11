@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+require('models/Functions.php');
 require('models/Manager.php');
 require('models/Chapters.php');
 require('models/Users.php');

@@ -5,21 +5,21 @@ function deleteComment()
     if(isset($_GET['id']) && $_GET['id'] > 0)
     {
         $commentManager = new Project\Models\CommentManager();
+        $reportManager = new Project\Models\ReportManager();
         $getId = intval($_GET['id']);
-        $comments = $commentManager->selectComment($getId);
-        $comment = $comments->fetch();
+        
+        $comment = $commentManager->selectId($getId);
 
         if(isset($_SESSION['id']))
         {
-            if($_SESSION['id'] === $comment['author_id'])
+            if($_SESSION['id'] === $comment->getAuthorId())
             {
-                $commentManager->deleteComment($getId);
-                $report = $commentManager->checkReport($getId);
-                $reportExist = $report->rowCount();
+                $commentManager->delete($comment->getId());
+                $reportExist = $reportManager->selectCommentId($comment->getId());
 
                 if($reportExist)
                 {
-                    $commentManager->deleteReport($getId);
+                    $reportManager->deleteCommentId($comment->getId());
                 }
 
                 if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']))
@@ -51,7 +51,9 @@ function getReports()
         $reportManager = new Project\Models\ReportManager();
         $commentManager = new Project\Models\CommentManager();
         $userManager = new Project\Models\UserManager();
-        $reqReports = $reportManager->select();
+
+        $reports = $reportManager->select();
+        $reportExist = $reportManager->countReports();
 
         if(isset($_GET['approve']) && $_GET['approve'] > 0)
         {
@@ -61,7 +63,7 @@ function getReports()
             if(isset($_GET['delete']) && $_GET['delete'] > 0)
             {
                 $getDelete = intval($_GET['delete']);
-                $commentManager->deleteComment($getDelete);
+                $commentManager->delete($getDelete);
             }
             header('Location: index.php?action=reports');
         }

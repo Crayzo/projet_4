@@ -22,7 +22,7 @@
     <!-- COMMENT AREA -->
     <section>
         <div class="container mb-5">
-            <form method="post" class="mt-3" id="form">
+            <form method="post" action="#form" id="form" class="mt-3" id="form">
                 <?php if(isset($_SESSION['id'])) { ?>
                     <h3 class="text-center mb-4">Ajouter un commentaire</h3>
                     <div class="form-row">
@@ -32,9 +32,6 @@
                     </div>
                     <?php if(isset($error)){ ?>
                         <p class="text-danger"><?= $error ?></p>
-                    <?php } ?>
-                    <?php if(isset($success)){ ?>
-                        <p class="text-success"><?= $success ?></p>
                     <?php } ?>
                         <button type="submit" class="btn btn-outline-secondary w-100" name="submit_comment">Envoyer</button>
                 <?php } else { ?> 
@@ -47,11 +44,11 @@
                 $user = $userManager->selectUsername($data->getAuthorId());
                 if(isset($_SESSION['id']))
                 {
-                    $test = new Project\Models\Reports([
+                    $report = new Project\Models\Reports([
                         'member_id' => $_SESSION['id'],
                         'comment_id' => $data->getId(),
                     ]);
-                    $reportExist = $reportManager->countReports($test);
+                    $reportExist = $reportManager->countReportsId($report);
                 }
                 require('views/commentsView.php');
             } ?>

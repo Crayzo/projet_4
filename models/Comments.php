@@ -76,7 +76,6 @@ Class Comments
 
     public function setComment($comment)
     {
-        $comment = htmlspecialchars($comment);
         $this->comment = $comment;
     }
 
