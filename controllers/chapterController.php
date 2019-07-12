@@ -12,13 +12,14 @@ function getChapter()
 
     if(isset($_GET['id']) && $_GET['id'] > 0) 
     {
-        $getId = intval($_GET['id']);
         $chapterManager = new Project\Models\ChapterManager();
-        $chapter = $chapterManager->get($getId);
-
         $userManager = new Project\Models\UserManager();
         $commentManager = new Project\Models\CommentManager();
         $reportManager = new Project\Models\ReportManager();
+
+        $getId = intval($_GET['id']);
+        $chapter = $chapterManager->get($getId);
+
         /* SUBMIT A COMMENT */
         if(isset($_POST['submit_comment']))
         {
@@ -82,6 +83,7 @@ function getChapter()
 function getChapters()
 {
     $chapterManager = new Project\Models\ChapterManager();
+
     $chapters = $chapterManager->getAll();
     require('views/chaptersView.php');
 }
@@ -95,6 +97,8 @@ function addChapter()
     }
     if(!empty($_POST))
     {
+        $chapterManager = new Project\Models\ChapterManager();
+
         $validation = true;
 
         if(!isset($_POST['content'], $_POST['title']) || empty($_POST['content']) || empty($_POST['title']))
@@ -108,7 +112,7 @@ function addChapter()
                 "title" => $_POST['title'],
                 "content" => $_POST['content']
             ]);
-            $chapterManager = new Project\Models\ChapterManager();
+  
             $chapterManager->add($chapter);
             header('Location: index.php?action=chapters');
         }
@@ -126,6 +130,7 @@ function editChapter()
     if(isset($_GET['id']) && $_GET['id'] > 0)
     {
         $chapterManager = new Project\Models\ChapterManager();
+
         $getId = intval($_GET['id']);
         $data = $chapterManager->get($getId);
         $validation = true;
@@ -145,6 +150,7 @@ function editChapter()
                     'content' => $_POST['content'],
                     'title' => $_POST['title']
                 ]);
+                
                 $chapterManager->update($chapter);
                 header('Location: index.php?action=chapter&id=' . $data->getId());
             }
@@ -163,6 +169,7 @@ function deleteChapter()
         if(isset($_GET['id']) && $_GET['id'] > 0)
         {
             $chapterManager = new Project\Models\ChapterManager();
+            
             $getId = intval($_GET['id']);
             $chapterManager->delete($getId);
             header("Location: index.php?action=chapters");

@@ -42,11 +42,13 @@ Class CommentManager extends Manager
         return new Comments($data);
     }
 
-    public function delete($getId)
+    public function delete(Comments $comment)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('DELETE FROM comments WHERE id = ?');
-        $req->execute([$getId]);
+        $req->execute([
+            $comment->getId()
+        ]);
     }
 
     public function insert(Comments $comment)
@@ -58,29 +60,5 @@ Class CommentManager extends Manager
             $comment->getChapterId(),
             $comment->getAuthorId()
         ]);
-    }
-
-    public function selectAuthor($id)
-    {
-        $db = $this->dbConnect();
-        $req = $db->prepare('SELECT username FROM users WHERE id = ?');
-        $req->execute([$id]);
-        return $req;
-    } 
-
-    public function selectReports($memberId, $commentId)
-    {
-        $db = $this->dbConnect();
-        $req = $db->prepare('SELECT * FROM reports WHERE member_id = ? AND comment_id = ?');
-        $req->execute(array($memberId, $commentId));
-        return $req;
-    }
-
-    public function insertReport($memberId, $commentId, $postMessage)
-    {
-        $db = $this->dbConnect();
-        $req = $db->prepare('INSERT INTO reports SET member_id = ?, comment_id = ?, message = ?');
-        $req->execute(array($memberId, $commentId, $postMessage));
-        return $req;
     }
 }

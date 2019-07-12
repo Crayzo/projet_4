@@ -6,20 +6,20 @@ function deleteComment()
     {
         $commentManager = new Project\Models\CommentManager();
         $reportManager = new Project\Models\ReportManager();
+
         $getId = intval($_GET['id']);
-        
         $comment = $commentManager->selectId($getId);
 
         if(isset($_SESSION['id']))
         {
             if($_SESSION['id'] === $comment->getAuthorId())
             {
-                $commentManager->delete($comment->getId());
+                $commentManager->delete($comment);
                 $reportExist = $reportManager->selectCommentId($comment->getId());
 
                 if($reportExist)
                 {
-                    $reportManager->deleteCommentId($comment->getId());
+                    $reportManager->deleteCommentId($comment);
                 }
 
                 if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']))

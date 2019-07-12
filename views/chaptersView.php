@@ -16,9 +16,9 @@
             <div class="row">
                 <?php foreach($chapters as $data){ ?>
                     <div class="book col-12 col-sm-5 offset-sm-1 mx-auto text-center">
-                        <h3><?= htmlspecialchars($data->getTitle()); ?></h3>
-                        <span>Ajouté le <?= htmlspecialchars($data->getAddedDate()) ?></span><br>
-                        <span>Dernière modification le <?= htmlspecialchars($data->getModificationDate()) ?></span>
+                        <h3><?= Functions::check($data->getTitle()); ?></h3>
+                        <span>Ajouté le <?= Functions::check($data->getAddedDate()) ?></span><br>
+                        <span>Dernière modification le <?= Functions::check($data->getModificationDate()) ?></span>
                         <a href="index.php?action=chapter&id=<?= $data->getId(); ?>" class="btn btn-outline-dark mt-3">Lire le chapitre</a>
                     </div>
                 <?php } ?>

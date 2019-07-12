@@ -5,29 +5,42 @@ Class UserManager extends Manager
 {
     public function selectUser($idConnect)
     {
+        $user = [];
+
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT * FROM users WHERE username = :username OR mail = :mail');
-        $req->execute(array(
+        $req->execute([
             'username' => $idConnect,
-            'mail' => $idConnect));
+            'mail' => $idConnect
+        ]);
         $data = $req->fetch();
-        return $data;
+
+        if($data === false)
+        {
+            return false;
+        }
+        else
+        {
+            return new Users($data);
+        }
     }
 
-    public function selectUserPseudo($pseudo)
+    public function countUserPseudo($pseudo)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT * FROM users WHERE username = ?');
-        $req->execute(array($pseudo));
-        return $req;
+        $req->execute([$pseudo]);
+        $count = $req->rowCount();
+        return $count;
     }
 
-    public function selectUserMail($mail)
+    public function countUserMail($mail)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT * FROM users WHERE mail = ?');
-        $req->execute(array($mail));
-        return $req;
+        $req->execute([$mail]);
+        $count = $req->rowCount();
+        return $count;
     }
 
     public function selectUserId($data)
@@ -41,70 +54,95 @@ Class UserManager extends Manager
         return new Users($data);
     }
 
-    public function selectUsername($authorId)
+    public function selectUsername($id)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT username FROM users WHERE id = ?');
         $req->execute([
-            $authorId
+            $id
         ]);
         $username = $req->fetch();
         return new Users($username);
     } 
 
-    public function selectUserPassword($id)
+    public function countUsername($username)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('SELECT username FROM users WHERE username = ?');
+        $req->execute([
+            $username
+        ]);
+        $count = $req->fetch();
+        return $count;
+    }
+
+    public function selectUserPassword(Users $user)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT password FROM users WHERE id = ?');
-        $req->execute(array($id));
-        return $req;
+        $req->execute([
+            $user->getId()
+        ]);
+        $data = $req->fetch();
+        return new Users($data);
     }
 
-    public function insertNewUser($pseudo, $mail, $password)
+    public function insertNewUser(Users $user)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('INSERT INTO users (username, mail, password) VALUES (?,?,?)');
-        $req->execute(array($pseudo, $mail, $password));
-        return $req;
+        $req->execute([
+            $user->getUsername(),
+            $user->getMail(),
+            $user->getPassword()
+        ]);
     }
 
-    public function updateUsername($pseudo, $id)
+    public function updateUsername(Users $user)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('UPDATE users SET username = ? WHERE id = ?');
-        $req->execute(array($pseudo, $id));
-        return $req;
+        $req->execute([
+            $user->getUsername(),
+            $user->getId()
+        ]);
     }
 
-    public function updateMail($mail, $id)
+    public function updateMail(Users $user)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('UPDATE users SET mail = ? WHERE id = ?');
-        $req->execute(array($mail, $id));
-        return $req;
+        $req->execute([
+            $user->getMail(),
+            $user->getId()
+        ]);
     }
     
-    public function updatePassword($password, $id)
+    public function updatePassword(Users $user)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('UPDATE users SET password = ? WHERE id = ?');
-        $req->execute(array($password, $id));
-        return $req;
+        $req->execute([
+            $user->getPassword(),
+            $user->getId()
+        ]);
     }
 
-    public function darkMode($id)
+    public function darkMode(Users $user)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('UPDATE users SET dark = 1 WHERE id = ?');
-        $req->execute(array($id));
-        return $req;
+        $req->execute([
+            $user->getId()
+        ]);
     }
 
-    public function lightMode($id)
+    public function lightMode(Users $user)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('UPDATE users SET dark = 0 WHERE id = ?');
-        $req->execute(array($id));
-        return $req;
+        $req->execute([
+            $user->getId()
+        ]);
     }
 }

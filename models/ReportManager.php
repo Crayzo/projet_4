@@ -38,11 +38,13 @@ Class ReportManager extends Manager
         $req->execute([$getApprove]);
     }
 
-    public function deleteCommentId($id)
+    public function deleteCommentId(Comments $comment)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('DELETE FROM reports WHERE comment_id = ?');
-        $req->execute([$id]);
+        $req->execute([
+            $comment->getId()
+        ]);
     }
 
     public function countReportsId(Reports $report)
