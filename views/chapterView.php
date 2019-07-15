@@ -27,7 +27,7 @@
                     <h3 class="text-center mb-4">Ajouter un commentaire</h3>
                     <div class="form-row">
                         <div class="form-group col-12">
-                            <textarea name="comment" class="form-control" placeholder="Votre commentaire"></textarea>
+                            <textarea name="comment" class="form-control" placeholder="Votre commentaire" maxlength="500" required></textarea>
                         </div>
                     </div>
                     <?php if(isset($error)){ ?>

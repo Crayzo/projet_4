@@ -30,6 +30,12 @@ function getChapter()
                 $error = "Vous devez écrire un commentaire avant d'envoyer !";
             }
 
+            elseif(strlen($_POST['comment']) > 500)
+            {
+                $validation = false;
+                $error = "Votre commentaire ne doit pas dépasser 500 caractères";
+            }
+
             elseif($validation)
             {
 
@@ -55,23 +61,33 @@ function getChapter()
             {
                 if(isset($_SESSION['id'], $_GET['report']) && !empty($_POST['message_report']) && $_GET['report'] > 0)
                 {
-                    $messageReport = Functions::check($_POST['message_report']);
+                    $validation = true;
 
-                    $report = new Project\Models\Reports([
-                        'member_id' => $_SESSION['id'],
-                        'comment_id' => $_GET['report'],
-                        'message' => $messageReport
-                    ]);
-
-                    $reportExist = $reportManager->countReportsId($report);
-
-                    if(!$reportExist)
+                    if(strlen($_POST['message_report']) > 250)
                     {
-                        $reportManager->insert($report);
+                        $validation = false;
                     }
+
+                    elseif($validation)
+                    {
+                        $messageReport = Functions::check($_POST['message_report']);
+
+                        $report = new Project\Models\Reports([
+                            'member_id' => $_SESSION['id'],
+                            'comment_id' => $_GET['report'],
+                            'message' => $messageReport
+                        ]);
+    
+                        $reportExist = $reportManager->countReportsId($report);
+    
+                        if(!$reportExist)
+                        {
+                            $reportManager->insert($report);
+                        }
+                    } 
+                    header("Location: index.php?action=chapter&id=" . $chapter->getId() . "#form");                
                 }
             }
-            header("Location: index.php?action=chapter&id=$getId");
         }
         require('views/chapterView.php');
     }
