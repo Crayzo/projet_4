@@ -1,7 +1,7 @@
 <?php
 namespace Project\Models;
 
-Class UserManager extends Manager
+class UserManager extends Manager
 {
     public function selectUser($idConnect)
     {

@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:og="http://ogp.me/ns#">
+<html lang="fr" prefix="og: http://ogp.me/ns#">
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta property="og:title" content="Jean Forteroche">
+        <meta property="og:description" content="Billet simple pour l'Alaska">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://www.blog.cv-online.me/">
+        <meta property="og:image" content="https://i.ibb.co/7RYkGpD/1.jpg">
         <!-- Favicon -->
         <link rel="icon" type="image/png" href="public/images/favicon.gif">
         <!-- Bootstrap CSS -->

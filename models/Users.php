@@ -1,7 +1,7 @@
 <?php
 namespace Project\Models;
 
-Class Users
+class Users
 {
     private $id,
             $username,

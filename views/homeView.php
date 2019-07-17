@@ -26,9 +26,9 @@
                 {
                 ?>
                     <div class="book col-12 col-sm-5 offset-sm-1 mx-auto text-center">
-                        <h3><?= Functions::check($data->getTitle()); ?></h3>
-                        <span>Ajouté le <?= Functions::check($data->getAddedDate()); ?></span><br>
-                        <span>Dernière modification le <?= Functions::check($data->getModificationDate()) ?></span><br>
+                        <h3><?= Project\Models\Functions::check($data->getTitle()); ?></h3>
+                        <span>Ajouté le <?= Project\Models\Functions::check($data->getAddedDate()); ?></span><br>
+                        <span>Dernière modification le <?= Project\Models\Functions::check($data->getModificationDate()) ?></span><br>
                         <a href="index.php?action=chapter&id=<?= $data->getId(); ?>" class="btn btn-outline-dark mt-3">Lire le chapitre</a>
                     </div>
                 <?php

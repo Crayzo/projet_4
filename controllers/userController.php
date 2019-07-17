@@ -12,26 +12,26 @@ function login()
     {
         $userManager = new Project\Models\UserManager();
         
-        $idConnect = Functions::check($_POST['idConnect']);
+        $idConnect = Project\Models\Functions::check($_POST['idConnect']);
         $validation = true;
         $member = $userManager->selectUser($idConnect);
 
         if(empty($idConnect) || empty($_POST['passwordConnect']))
         {
             $validation = false;
-            $error = 'Tous les champs doivent être complétés !';
+            Project\Models\Functions::setFlash('Tous les champs doivent être complétés !');
         }
 
         elseif(!$member)
         {
             $validation = false;
-            $error = 'Mauvais identifiant !';
+            Project\Models\Functions::setFlash('Mauvais identifiant !');
         }
 
         elseif(!password_verify($_POST['passwordConnect'], $member->getPassword()))
         {
             $validation = false;
-            $error = 'Mauvais mot de passe !';
+            Project\Models\Functions::setFlash('Mauvais mot de passe !');
         }
 
         elseif($validation)
@@ -49,6 +49,7 @@ function login()
             $_SESSION['admin'] = $member->getAdmin();
             $_SESSION['dark'] = $member->getDark();
             header('Location: index.php');
+            exit();
         }   
     }
     require('views/loginView.php');
@@ -83,9 +84,9 @@ function register()
     {
         $userManager = new Project\Models\UserManager();
 
-        $pseudo = Functions::check($_POST['pseudo']);
-        $mail = Functions::check($_POST['mail']);
-        $mail2 = Functions::check($_POST['mail2']);
+        $pseudo = Project\Models\Functions::check($_POST['pseudo']);
+        $mail = Project\Models\Functions::check($_POST['mail']);
+        $mail2 = Project\Models\Functions::check($_POST['mail2']);
 
         $countPseudo = $userManager->countUserPseudo($pseudo);
         $countMail = $userManager->countUserMail($mail);
@@ -94,44 +95,43 @@ function register()
         if(empty($_POST['pseudo']) || empty($_POST['mail']) || empty($_POST['mail2']) || empty($_POST['password']) || empty($_POST['password2']))
         {
             $validation = false;
-            $error = 'Tous les champs doivent être complétés !';
+            Project\Models\Functions::setFlash('Tous les champs doivent être complétés !');
         }
 
         elseif(strlen($pseudo) >= 25)
         {
             $validation = false;
-            $error = 'Votre pseudo ne doit pas dépasser 25 caractères.';
+            Project\Models\Functions::setFlash('Votre pseudo ne doit pas dépasser 25 caractères.');
         }
                 
         elseif($countPseudo > 0)
         {
             $validation = false;
-            $error = 'Le pseudo existe déjà !';
+            Project\Models\Functions::setFlash('Le pseudo existe déjà !');
         }
 
         elseif($mail !== $mail2)
         {
             $validation = false;
-            $error = 'Vos adresses mail ne correspondent pas !';
+            Project\Models\Functions::setFlash('Vos adresses mail ne correspondent pas !');
         }
 
         elseif(!filter_var($mail, FILTER_VALIDATE_EMAIL))
         {
             $validation = false;
-            $error = 'Votre adresse mail n\'est pas valide.';
+            Project\Models\Functions::setFlash('Votre adresse mail n\'est pas valide.');
         }
                             
         elseif($countMail > 0)
         {
             $validation = false;
-            $error = 'Adresse mail déjà utilisée !';
+            Project\Models\Functions::setFlash('Adresse mail déjà utilisée !');
         }
 
         elseif($_POST['password'] !== $_POST['password2'])
         {
             $validation = false;
-            $error = 'Vos mots de passe ne correspondent pas';
-
+            Project\Models\Functions::setFlash('Vos mots de passe ne correspondent pas');
         }
 
         elseif($validation)
@@ -145,7 +145,9 @@ function register()
             ]);
 
             $userManager->insertNewUser($user);
-            header('Location: index.php?action=login');
+            Project\Models\Functions::setFlash("Votre compte a été créé avec succès ! <a href='index.php?action=login' class='alert-link'>Se connecter</a>", "success");
+            header('Location: index.php?action=register');
+            exit();
         }
     }
     require('views/registerView.php');
@@ -161,20 +163,20 @@ function getProfile()
 
         if(isset($_POST['newPseudo']) && !empty($_POST['newPseudo']) && $_POST['newPseudo'] !== $user->getUsername())
         {
-            $newPseudo = Functions::check($_POST['newPseudo']);
+            $newPseudo = Project\Models\Functions::check($_POST['newPseudo']);
             $pseudoLength = strlen($_POST['newPseudo']);
             $countUsername = $userManager->countUsername($newPseudo);
 
             if($pseudoLength >= 25)
             {
                 $validation = false;
-                $error = "Votre pseudo ne doit pas dépasser 25 caractères !";
+                Project\Models\Functions::setFlash("Votre pseudo ne doit pas dépasser 25 caractères !");
             }
             
             elseif($countUsername)
             {
                 $validation = false;
-                $error = "Le pseudo existe déjà !";
+                Project\Models\Functions::setFlash("Le pseudo existe déjà !");
             }
 
             elseif($validation)
@@ -182,25 +184,27 @@ function getProfile()
                 $user->setUsername($newPseudo);
                 $userManager->updateUsername($user);
                 $_SESSION['username'] = $user->getUsername();
-                $success = "Votre compte a bien été mis à jour";
+                Project\Models\Functions::setFlash("Votre compte a bien été mis à jour", "success");
+                header('Location: index.php?action=edit_profile');
+                exit();
             }
         }
 
         if(isset($_POST['newMail']) && !empty($_POST['newMail']) && $_POST['newMail'] !== $user->getMail())
         {
-            $newMail = Functions::check($_POST['newMail']);
+            $newMail = Project\Models\Functions::check($_POST['newMail']);
             $countMail = $userManager->countUserMail($newMail);
 
             if(!filter_var($newMail, FILTER_VALIDATE_EMAIL))
             {
                 $validation = false;
-                $error = "Votre adresse mail n'est pas valide.";
+                Project\Models\Functions::setFlash("Votre adresse mail n'est pas valide.");
             }
 
             elseif($countMail)
             {
                 $validation = false;
-                $error = "Adresse mail déjà utilisée !";
+                Project\Models\Functions::setFlash("Adresse mail déjà utilisée !");
             }
 
             elseif($validation)
@@ -208,7 +212,9 @@ function getProfile()
                 $user->setMail($newMail);
                 $userManager->updateMail($user);
                 $_SESSION['mail'] = $user->getMail();
-                $success = "Votre compte a bien été mis à jour";
+                Project\Models\Functions::setFlash("Votre compte a bien été mis à jour", "success");
+                header('Location: index.php?action=edit_profile');
+                exit();
             }
         }
 
@@ -224,20 +230,22 @@ function getProfile()
             if(!$isPasswordCorrect)
             {
                 $validation = false;
-                $error = "Vos deux mots de passe ne correspondent pas !";
+                Project\Models\Functions::setFlash("Vos deux mots de passe ne correspondent pas !");
             }
 
             elseif($pswdVerify)
             {
                 $validation = false;
-                $error = "Veuillez saisir un mot de passe différent de votre mot de passe actuel !";
+                Project\Models\Functions::setFlash("Veuillez saisir un mot de passe différent de votre mot de passe actuel !");
             }
 
             elseif($validation)
             {
                 $user->setPassword($pswd);
                 $userManager->updatePassword($user);
-                $success = "Votre compte a bien été mis à jour";
+                Project\Models\Functions::setFlash("Votre compte a bien été mis à jour", "success");
+                header('Location: index.php?action=edit_profile');
+                exit();
             }
         }
         require('views/profileView.php');

@@ -1,7 +1,7 @@
 <?php
 namespace Project\Models;
 
-Class Chapters
+class Chapters
 {
     private $id,
             $title,

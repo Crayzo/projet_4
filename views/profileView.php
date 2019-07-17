@@ -6,6 +6,7 @@
 <div class="container edit">
     <form action="index.php?action=edit_profile" method="post">
         <h3 class="mb-4">Éditer mon profil</h3>
+        <?php Project\Models\Functions::flash(); ?>
         <div class="form-row">
             <div class="form-group col-12">
                 <label for="pseudo">Pseudo</label>
@@ -13,7 +14,7 @@
             </div>
             <div class="form-group col-12">
                 <label for="mail">Mail</label>
-                <input type="mail" id="mail" class="form-control" name="newMail" placeholder="Mail" value="<?= $_SESSION["mail"]; ?>">
+                <input type="email" id="mail" class="form-control" name="newMail" placeholder="Mail" value="<?= $_SESSION["mail"]; ?>">
             </div>
             <div class="form-group col-12">
                 <label for="password">Nouveau mot de passe</label>

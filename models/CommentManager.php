@@ -1,7 +1,7 @@
 <?php
 namespace Project\Models;
 
-Class CommentManager extends Manager
+class CommentManager extends Manager
 {
     public function selectAll($getId)
     {

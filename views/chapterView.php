@@ -7,9 +7,9 @@
     <!-- CHAPTER -->
     <section id="chapter-text">
         <div>
-            <h1 class="text-center mt-3"><?= Functions::check($chapter->getTitle()); ?></h1>
+            <h1 class="text-center mt-3"><?= Project\Models\Functions::check($chapter->getTitle()); ?></h1>
             <div class="divider div-black mb-4"></div>
-            <p><?= $chapter->getContent(); ?></p>
+            <?= $chapter->getContent(); ?>
             <!-- ADMIN -->
             <?php if(isset($_SESSION['id']) && $_SESSION['admin'] == true) { ?> 
                 <div class="text-center mb-4">
@@ -22,18 +22,16 @@
     <!-- COMMENT AREA -->
     <section>
         <div class="container mb-5">
-            <form method="post" action="#form" id="form" class="mt-3" id="form">
+            <form method="post" action="#form" id="form" class="mt-3">
                 <?php if(isset($_SESSION['id'])) { ?>
                     <h3 class="text-center mb-4">Ajouter un commentaire</h3>
                     <div class="form-row">
                         <div class="form-group col-12">
-                            <textarea name="comment" class="form-control" placeholder="Votre commentaire" maxlength="500" required></textarea>
+                            <textarea name="comment" class="form-control" placeholder="Votre commentaire" required><?php if(isset($postComment)){echo $postComment;} ?></textarea>
                         </div>
                     </div>
-                    <?php if(isset($error)){ ?>
-                        <p class="text-danger"><?= $error ?></p>
-                    <?php } ?>
-                        <button type="submit" class="btn btn-outline-secondary w-100" name="submit_comment">Envoyer</button>
+                    <?php Project\Models\Functions::flash(); ?>
+                    <button type="submit" class="btn btn-outline-secondary w-100" name="submit_comment">Envoyer</button>
                 <?php } else { ?> 
                     <p class="my-0">Vous devez être connecté(e) pour ajouter un commentaire !</p>
                     <a href="index.php?action=login">Se connecter</a>

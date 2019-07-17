@@ -4,14 +4,15 @@
 ?>
 <?php ob_start(); ?>
 <div class="container login">
-    <form action="" method="post">
+    <form method="post">
         <h3 class="text-center mb-4">Connexion</h3>
+        <?php Project\Models\Functions::flash(); ?>
         <div class="form-row">
             <div class="form-group col-12">
-                <input type="text" class="form-control" name="idConnect" placeholder="Votre pseudo ou adresse mail" value="<?php if(isset($idConnect)) echo $idConnect; ?>" required>
+                <input type="text" class="form-control" name="idConnect" placeholder="Votre pseudo ou adresse mail" value="<?php if(isset($idConnect)) echo $idConnect; ?>" >
             </div>
             <div class="form-group col-12">
-                <input type="password" class="form-control" name="passwordConnect" placeholder="Votre mot de passe" required>
+                <input type="password" class="form-control" name="passwordConnect" placeholder="Votre mot de passe" >
             </div>
         </div>
         <div class="form-check mb-3">

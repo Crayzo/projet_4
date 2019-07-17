@@ -12,6 +12,10 @@ body
     display: flex;
     flex-direction: column;
 } 
+#alert
+{
+    display: none;
+}
 .btn-outline-secondary, .btn-outline-dark, .btn-dark
 {
     color: white!important;

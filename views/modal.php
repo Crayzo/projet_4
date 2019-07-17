@@ -9,7 +9,7 @@
                 <form id="modal-form" action="index.php?action=chapter&id=<?= $getId ?>&report=<?= $data->getId(); ?>" method="post">
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Raison :</label>
-                        <textarea class="form-control" name="message_report" id="message-text" maxlength="250" required></textarea>
+                        <textarea class="form-control" name="message_report" id="message-text" required><?php if(isset($messageReport)){echo $messageReport;} ?></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>

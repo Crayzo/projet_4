@@ -1,7 +1,7 @@
 <?php
 namespace Project\Models;
 
-Class ChapterManager extends Manager
+class ChapterManager extends Manager
 {
     public function getLastChapters()
     {
@@ -27,7 +27,15 @@ Class ChapterManager extends Manager
             $id
         ]);
         $data = $req->fetch();
-        return new Chapters($data);  
+        
+        if($data)
+        {
+            return new Chapters($data);  
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public function getAll()

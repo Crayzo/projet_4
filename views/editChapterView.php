@@ -4,7 +4,8 @@
     $hideFooter = true;
 ?>
 <?php ob_start() ?>
-<div class="container mt-3 text-right">
+<div class="container mt-3">
+    <?php Project\Models\Functions::flash(); ?>
     <form action="index.php?action=edit_chapter&id=<?= $getId ?>" method="post">
         <div class="form-row">
             <div class="form-group col-12">
@@ -15,7 +16,7 @@
         <?php if(isset($error)){ ?>
             <p class="text-danger mb-1"><?= $error ?></p>
         <?php } ?>
-        <button type="submit" class="btn btn-dark">Modifier</button>
+        <button type="submit" class="btn btn-dark w-100">Modifier</button>
     </form>
 </div>
 <?php $content = ob_get_clean(); ?>

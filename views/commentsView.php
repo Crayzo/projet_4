@@ -1,10 +1,10 @@
-<div class="card mt-3" id='content'>
+<div class="card mt-3">
     <div class="card-header d-flex justify-content-between">
         <div class="align-self-center">
             <strong><?= $user->getUsername(); ?></strong> le <?= $data->getCommentDate(); ?> 
         </div>
         <?php if(isset($_SESSION['id']) && $_SESSION['id'] === $data->getAuthorId()){ ?>
-                <a id="delete-comment" class="btn btn-outline-dark btn-sm" href="index.php?action=delete_comment&id=<?= $data->getId(); ?>">Supprimer</a>
+                <a class="btn btn-outline-dark btn-sm delete-comment" href="index.php?action=delete_comment&id=<?= $data->getId(); ?>">Supprimer</a>
             <?php } elseif(isset($_SESSION['id'] )){ ?>   
                 <?php if(!$reportExist){ ?>
                     <button data-id="<?= $data->getId(); ?>" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modal<?= $data->getId(); ?>">Signaler</button>

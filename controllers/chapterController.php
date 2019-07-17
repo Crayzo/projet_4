@@ -20,27 +20,31 @@ function getChapter()
         $getId = intval($_GET['id']);
         $chapter = $chapterManager->get($getId);
 
+        if(!$chapter)
+        {
+            Project\Models\Functions::setFlash("Idendifiant de chapitre inconnu");
+            header('Location: index.php?action=chapters');
+            die();
+        }
         /* SUBMIT A COMMENT */
         if(isset($_POST['submit_comment']))
         {
+            $postComment = Project\Models\Functions::check($_POST['comment']);
             
-            if(!isset($_SESSION['username'], $_POST['comment']) || empty($_SESSION['username']) || empty($_POST['comment']))
+            if(!isset($_SESSION['username'], $postComment) || empty($_SESSION['username']) || empty($postComment))
             {
                 $validation = false;
-                $error = "Vous devez écrire un commentaire avant d'envoyer !";
+                Project\Models\Functions::setFlash("Vous devez écrire un commentaire avant d'envoyer !");
             }
 
-            elseif(strlen($_POST['comment']) > 500)
+            elseif(strlen($postComment) > 500)
             {
                 $validation = false;
-                $error = "Votre commentaire ne doit pas dépasser 500 caractères";
+                Project\Models\Functions::setFlash("Votre commentaire ne doit pas dépasser 500 caractères.");
             }
 
             elseif($validation)
             {
-
-                $postComment = Functions::check($_POST['comment']);
-
                 $comment = new Project\Models\Comments([
                     'comment' =>  $postComment,
                     'chapter_id' => $chapter->getId(),
@@ -48,7 +52,9 @@ function getChapter()
                 ]);
 
                 $commentManager->insert($comment);
+                Project\Models\Functions::setFlash("Votre commentaire a été ajouté avec succès.", "success");
                 header('Location: index.php?action=chapter&id=' . $chapter->getId() . '#form');
+                exit();
             }
         }
         
@@ -56,37 +62,43 @@ function getChapter()
 
         /* SUBMIT A REPORT */
         if(isset($_POST['submit_report']))
-        {
-            if(!empty($_POST))
+        { 
+            if(isset($_SESSION['id'], $_GET['report']) && !empty($_POST['message_report']) && $_GET['report'] > 0)
             {
-                if(isset($_SESSION['id'], $_GET['report']) && !empty($_POST['message_report']) && $_GET['report'] > 0)
+                $validation = true;
+                $messageReport = Project\Models\Functions::check($_POST['message_report']);
+
+                if(!isset($messageReport) || empty($messageReport))
                 {
-                    $validation = true;
-
-                    if(strlen($_POST['message_report']) > 250)
-                    {
-                        $validation = false;
-                    }
-
-                    elseif($validation)
-                    {
-                        $messageReport = Functions::check($_POST['message_report']);
-
-                        $report = new Project\Models\Reports([
-                            'member_id' => $_SESSION['id'],
-                            'comment_id' => $_GET['report'],
-                            'message' => $messageReport
-                        ]);
-    
-                        $reportExist = $reportManager->countReportsId($report);
-    
-                        if(!$reportExist)
-                        {
-                            $reportManager->insert($report);
-                        }
-                    } 
-                    header("Location: index.php?action=chapter&id=" . $chapter->getId() . "#form");                
+                    $validation = false;
+                    Project\Models\Functions::setFlash("Vous devez écrire la raison avant de signaler !");
                 }
+
+                elseif(strlen($messageReport) > 500)
+                {
+                    $validation = false;
+                    Project\Models\Functions::setFlash("Votre signalement ne doit pas dépasser 500 caractères.");
+                }
+                
+                elseif($validation)
+                {
+
+                    $report = new Project\Models\Reports([
+                        'member_id' => $_SESSION['id'],
+                        'comment_id' => $_GET['report'],
+                        'message' => $messageReport
+                    ]);
+
+                    $reportExist = $reportManager->countReportsId($report);
+
+                    if(!$reportExist)
+                    {
+                        $reportManager->insert($report);
+                        Project\Models\Functions::setFlash("Le commentaire a été signalé avec succès.", "success");
+                        header("Location: index.php?action=chapter&id=" . $chapter->getId() . "#form"); 
+                        exit();               
+                    }
+                } 
             }
         }
         require('views/chapterView.php');
@@ -120,8 +132,9 @@ function addChapter()
         if(!isset($_POST['content'], $_POST['title']) || empty($_POST['content']) || empty($_POST['title']))
         {
             $validation = false;
-            $error = 'Tous les champs doivent être complétés !';
+            Project\Models\Functions::setFlash("Tous les champs doivent être complétés !");
         }
+
         elseif($validation)
         {
             $chapter = new Project\Models\Chapters([
@@ -130,7 +143,9 @@ function addChapter()
             ]);
   
             $chapterManager->add($chapter);
+            Project\Models\Functions::setFlash("Le chapitre a été ajouté avec succès.", "success");
             header('Location: index.php?action=chapters');
+            exit();
         }
     }
     require('views/addChapterView.php');
@@ -156,7 +171,7 @@ function editChapter()
             if(!isset($_POST['content'], $_POST['title']) || empty($_POST['content']) || empty($_POST['title']))
             {
                 $validation = false;
-                $error = "Tous les champs doivent être complétés !";
+                Project\Models\Functions::setFlash("Tous les champs doivent être complétés !");
             }
             
             elseif($validation)
@@ -168,7 +183,9 @@ function editChapter()
                 ]);
                 
                 $chapterManager->update($chapter);
-                header('Location: index.php?action=chapter&id=' . $data->getId());
+                Project\Models\Functions::setFlash("Le chapitre a été modifié avec succès. <a class='alert-link' href='index.php?action=chapter&id=$getId'>Retour au chapitre</a>", "success");
+                header('Location: index.php?action=edit_chapter&id=' . $data->getId());
+                exit();
             }
         }
         require('views/editChapterView.php');
@@ -180,7 +197,7 @@ function editChapter()
 
 function deleteChapter()
 {
-    if(isset($_SESSION['id'], $_SESSION['admin']) && !empty($_SESSION['id']) && !empty($_SESSION['admin']) && $_SESSION['admin'] == true)
+    if(isset($_SESSION['admin']) && !empty($_SESSION['admin']) && $_SESSION['admin'] == true)
     {
         if(isset($_GET['id']) && $_GET['id'] > 0)
         {
@@ -188,10 +205,19 @@ function deleteChapter()
             
             $getId = intval($_GET['id']);
             $chapterManager->delete($getId);
+            Project\Models\Functions::setFlash("Le chapitre a été supprimé avec succès", "success");
             header("Location: index.php?action=chapters");
+            exit();
         }
-
         else
+        {
             header('Location: index.php');
+            exit();
+        }
+    }
+    else
+    {
+        header('Location: index.php');
+        exit();
     }
 }

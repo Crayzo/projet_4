@@ -1,7 +1,7 @@
 <?php
 namespace Project\Models;
 
-Class Reports
+class Reports
 {
     private $id,
             $memberId,

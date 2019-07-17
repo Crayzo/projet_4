@@ -1,7 +1,7 @@
 <?php
 namespace Project\Models;
 
-Class Comments
+class Comments
 {
     private $id,
             $comment,

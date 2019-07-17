@@ -1,7 +1,7 @@
 <?php
 namespace Project\Models;
 
-Class ReportManager extends Manager
+class ReportManager extends Manager
 {
     public function select()
     {
