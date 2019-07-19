@@ -13,9 +13,6 @@
             </div>
         </div>
         <textarea name="content"><?php if(isset($_POST['content'])){echo $_POST['content'];} ?></textarea>
-        <?php if(isset($error)){ ?>
-            <p class="text-danger mb-1"><?= $error ?></p>
-        <?php } ?>
         <button type="submit" class="btn btn-dark w-100">Ajouter</button>
     </form>
 </div>

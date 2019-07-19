@@ -13,9 +13,6 @@
             </div>
         </div>
         <textarea name="content"><?= $data->getContent(); ?></textarea>
-        <?php if(isset($error)){ ?>
-            <p class="text-danger mb-1"><?= $error ?></p>
-        <?php } ?>
         <button type="submit" class="btn btn-dark w-100">Modifier</button>
     </form>
 </div>

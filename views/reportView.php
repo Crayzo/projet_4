@@ -28,7 +28,7 @@ if($reportExist)
                 </div>
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">
-                    <p class="mb-0"><?= $comment->getComment(); ?></p>
+                        <p class="mb-0"><?= $comment->getComment(); ?></p>
                     </blockquote>
                 </div>
             </div>

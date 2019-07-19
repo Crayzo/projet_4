@@ -63,7 +63,8 @@ function getReports()
             if(isset($_GET['delete']) && $_GET['delete'] > 0)
             {
                 $getDelete = intval($_GET['delete']);
-                $commentManager->delete($getDelete);
+                $comment = $commentManager->selectId($getDelete);
+                $commentManager->delete($comment);
             }
             header('Location: index.php?action=reports');
         }

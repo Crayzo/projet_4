@@ -1,9 +1,15 @@
 <?php
+
 if(isset($_COOKIE['accept_cookie']))
-    $showCookie = false;
+{
+    $showCookie = false;    
+}
 else
+{
     $showCookie = true;
+}
 ?>
+
 <?php if($showCookie){ ?>
     <div class="alert alert-light alert-dismissible fade show mb-0 align-items-center rounded-0 p-1 flex-column fixed-bottom text-center" role="alert">
         <p class='my-0'>En poursuivant votre navigation, vous <b>acceptez</b> l’utilisation de <b>cookies</b> pour vous offrir une meilleure expérience utilisateur.</p>

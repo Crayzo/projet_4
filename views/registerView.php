@@ -30,12 +30,6 @@
                 <label for="password2">Confirmation mot de passe</label>
                 <input type="password" class="form-control" name="password2" id="password2" placeholder="Confirmation de votre mot de passe" required>
             </div>
-            <?php if(isset($error)){ ?>
-                <p class="text-danger"><?= $error ?></p>
-            <?php } ?>
-            <?php if(isset($success)){ ?>
-                <p class="text-success"><?= $success ?></p>
-            <?php } ?>
         </div>
         <button type="submit" class="btn btn-primary">Je m'inscris</button>
         <p class="mt-2">Vous avez un compte ? <a href="index.php?action=login">Se connecter</a></p>

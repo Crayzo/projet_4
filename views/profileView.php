@@ -25,12 +25,6 @@
                 <input type="password" id="password2" class="form-control" name="newPswd2" placeholder="Confirmation mot de passe">
             </div>
         </div>
-        <?php if(isset($error)){ ?>
-            <p class="text-danger"><?= $error ?></p>
-        <?php } ?>
-        <?php if(isset($success)){ ?>
-            <p class="text-success"><?= $success ?></p>
-        <?php } ?>
         <button type="submit" class="btn btn-primary">Mettre à jour mon profil</button>
     </form>
 </div>

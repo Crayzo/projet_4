@@ -7,7 +7,7 @@
     <!-- CHAPTER -->
     <section id="chapter-text">
         <div>
-            <h1 class="text-center mt-3"><?= Project\Models\Functions::check($chapter->getTitle()); ?></h1>
+            <h1 class="text-center mt-3"><?= $chapter->getTitle(); ?></h1>
             <div class="divider div-black mb-4"></div>
             <?= $chapter->getContent(); ?>
             <!-- ADMIN -->

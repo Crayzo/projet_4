@@ -9,7 +9,7 @@
         <?php Project\Models\Functions::flash(); ?>
         <div class="form-row">
             <div class="form-group col-12">
-                <input type="text" class="form-control" name="idConnect" placeholder="Votre pseudo ou adresse mail" value="<?php if(isset($idConnect)) echo $idConnect; ?>" >
+                <input type="text" class="form-control" name="idConnect" placeholder="Votre pseudo ou adresse mail" value="<?php if(isset($idConnect)){echo $idConnect;} ?>" >
             </div>
             <div class="form-group col-12">
                 <input type="password" class="form-control" name="passwordConnect" placeholder="Votre mot de passe" >
@@ -19,9 +19,6 @@
             <input class="form-check-input" name="rememberMe" type="checkbox" id="checkbox">
             <label class="form-check-label" for="checkbox">Se souvenir de moi</label>
         </div>
-        <?php if(isset($error)){ ?>
-            <p class="text-danger"><?= $error ?></p>
-        <?php } ?>
         <button type="submit" class="btn btn-primary" name="submit">Se connecter !</button>
         <p class="mt-2">Vous n'avez pas de compte ? <a href="index.php?action=register">S'inscrire</a></p>
     </form>
