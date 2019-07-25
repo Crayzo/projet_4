@@ -2,10 +2,11 @@
     $title = "Modifier un chapitre"; 
     $tinyMce = true;
     $hideFooter = true;
+    use Models\Functions;
 ?>
 <?php ob_start() ?>
 <div class="container mt-3">
-    <?php Project\Models\Functions::flash(); ?>
+    <?php Functions::flash(); ?>
     <form action="index.php?action=edit_chapter&id=<?= $getId ?>" method="post">
         <div class="form-row">
             <div class="form-group col-12">

@@ -1,12 +1,13 @@
 <?php 
     $title = "Connexion";
     $hideFooter = true;
+    use Models\Functions;
 ?>
 <?php ob_start(); ?>
 <div class="container login">
     <form method="post">
         <h3 class="text-center mb-4">Connexion</h3>
-        <?php Project\Models\Functions::flash(); ?>
+        <?php Functions::flash(); ?>
         <div class="form-row">
             <div class="form-group col-12">
                 <input type="text" class="form-control" name="idConnect" placeholder="Votre pseudo ou adresse mail" value="<?php if(isset($idConnect)){echo $idConnect;} ?>" >

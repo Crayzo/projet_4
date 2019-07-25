@@ -1,13 +1,13 @@
 <?php
-namespace Project\Models;
+namespace Models;
 
 class Chapters
 {
-    private $id,
-            $title,
-            $content,
-            $addedDate,
-            $modificationDate;
+    private $_id,
+            $_title,
+            $_content,
+            $_addedDate,
+            $_modificationDate;
 
     public function __construct(Array $data)
     {
@@ -45,52 +45,52 @@ class Chapters
     //GETTERS
     public function getId()
     {
-        return $this->id;
+        return $this->_id;
     }
 
     public function getTitle()
     {
-        return $this->title;
+        return $this->_title;
     }
 
     public function getContent()
     {
-        return $this->content;
+        return $this->_content;
     }
 
     public function getAddedDate()
     {
-        return $this->addedDate;
+        return $this->_addedDate;
     }
 
     public function getModificationDate()
     {
-        return $this->modificationDate;
+        return $this->_modificationDate;
     }
 
     //SETTERS
     public function setId($id)
     {
-        $this->id = $id;
+        $this->_id = $id;
     }
 
     public function setTitle($title)
     {
-        $this->title = $title;
+        $this->_title = $title;
     }
 
     public function setContent($content)
     {
-        $this->content = $content;
+        $this->_content = $content;
     }
 
     public function setAddedDate($addedDate)
     {
-        $this->addedDate = $addedDate;
+        $this->_addedDate = $addedDate;
     }
 
     public function setModificationDate($modificationDate)
     {
-        $this->modificationDate = $modificationDate;
+        $this->_modificationDate = $modificationDate;
     }
 }

@@ -19,7 +19,7 @@
         <?php if(isset($_SESSION['dark']) && $_SESSION['dark'] == true){ ?>
             <link rel="stylesheet" href="public/css/dark.css?t=<?= time() ?>">
         <?php } else { ?>
-            <link rel="stylesheet" href="public/css/style.css?t=<?= time() ?>">
+            <link rel="stylesheet" href="public/css/light.css?t=<?= time() ?>">
         <?php } ?>
         <!-- Font Family -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
@@ -38,6 +38,6 @@
             <script src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=0ymxvkk8uy5skowdciteng030bzu94w3024imvbtq9xgrrqz"></script>
             <script>tinymce.init({selector: "textarea",});</script>
         <?php } ?>
-        <script src="public/js/script.js?t=<?= time() ?>"></script>
+        <script src="public/js/main.js?t=<?= time() ?>"></script>
     </body>
 </html>

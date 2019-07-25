@@ -1,13 +1,13 @@
 <?php
-namespace Project\Models;
+namespace Models;
 
 class Comments
 {
-    private $id,
-            $comment,
-            $chapterId,
-            $authorId,
-            $commentDate;
+    private $_id,
+            $_comment,
+            $_chapterId,
+            $_authorId,
+            $_commentDate;
     
     public function __construct(Array $data)
     {
@@ -45,52 +45,52 @@ class Comments
     //GETTERS
     public function getId()
     {
-        return $this->id;
+        return $this->_id;
     }
 
     public function getComment()
     {
-        return $this->comment;
+        return $this->_comment;
     }
 
     public function getChapterId()
     {
-        return $this->chapterId;
+        return $this->_chapterId;
     }
 
     public function getAuthorId()
     {
-        return $this->authorId;
+        return $this->_authorId;
     }
 
     public function getCommentDate()
     {
-        return $this->commentDate;
+        return $this->_commentDate;
     }
 
     //SETTERS
     public function setId($id)
     {
-        $this->id = $id;
+        $this->_id = $id;
     }
 
     public function setComment($comment)
     {
-        $this->comment = $comment;
+        $this->_comment = $comment;
     }
 
     public function setChapterId($chapterId)
     {
-        $this->chapterId = $chapterId;
+        $this->_chapterId = $chapterId;
     }
 
     public function setAuthorId($authorId)
     {
-        $this->authorId = $authorId;
+        $this->_authorId = $authorId;
     }
 
     public function setCommentDate($commentDate)
     {
-        $this->commentDate = $commentDate;
+        $this->_commentDate = $commentDate;
     }
 }

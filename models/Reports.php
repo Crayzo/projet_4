@@ -1,12 +1,12 @@
 <?php
-namespace Project\Models;
+namespace Models;
 
 class Reports
 {
-    private $id,
-            $memberId,
-            $commentId,
-            $message;
+    private $_id,
+            $_memberId,
+            $_commentId,
+            $_message;
 
     public function __construct(Array $data)
     {
@@ -39,42 +39,42 @@ class Reports
     //GETTERS
     public function getId()
     {
-        return $this->id;
+        return $this->_id;
     }
 
     public function getMemberId()
     {
-        return $this->memberId;
+        return $this->_memberId;
     }
 
     public function getCommentId()
     {
-        return $this->commentId;
+        return $this->_commentId;
     }
 
     public function getMessage()
     {
-        return $this->message;
+        return $this->_message;
     }
 
     //SETTERS
     public function setId($id)
     {
-        $this->id = $id;
+        $this->_id = $id;
     }
 
     public function setMemberId($memberId)
     {
-        $this->memberId = $memberId;
+        $this->_memberId = $memberId;
     }
 
     public function setCommentId($commentId)
     {
-        $this->commentId = $commentId;
+        $this->_commentId = $commentId;
     }
 
     public function setMessage($message)
     {
-        $this->message = $message;
+        $this->_message = $message;
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Project\Models;
+namespace Models;
 
 class ChapterManager extends Manager
 {

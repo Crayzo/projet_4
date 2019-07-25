@@ -1,12 +1,13 @@
 <?php
     $title = "Inscription";
     $hideFooter = true;
+    use Models\Functions;
 ?>
 <?php ob_start(); ?>
 <div class="container inscription py-3">
     <form method="post">
         <h3 class="text-center">Inscription</h3>
-        <?php Project\Models\Functions::flash(); ?>
+        <?php Functions::flash(); ?>
         <div class="form-group">
             <label for="pseudo">Pseudo</label>
             <input type="text" class="form-control" name="pseudo" id="pseudo" placeholder="Votre pseudo" value="<?php if(isset($pseudo)){echo $pseudo;} ?>" required>

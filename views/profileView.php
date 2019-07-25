@@ -1,12 +1,13 @@
 <?php
     $title = "Édition du profil"; 
     $hideFooter = true;
+    use Models\Functions;
 ?>
 <?php ob_start() ?>
 <div class="container edit">
     <form action="index.php?action=edit_profile" method="post">
         <h3 class="mb-4">Éditer mon profil</h3>
-        <?php Project\Models\Functions::flash(); ?>
+        <?php Functions::flash(); ?>
         <div class="form-row">
             <div class="form-group col-12">
                 <label for="pseudo">Pseudo</label>

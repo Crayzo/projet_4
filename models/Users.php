@@ -1,14 +1,14 @@
 <?php
-namespace Project\Models;
+namespace Models;
 
 class Users
 {
-    private $id,
-            $username,
-            $password,
-            $mail,
-            $admin,
-            $dark;
+    private $_id,
+            $_username,
+            $_password,
+            $_mail,
+            $_admin,
+            $_dark;
     
     public function __construct(Array $data)
     {
@@ -51,62 +51,62 @@ class Users
     //GETTERS
     public function getId()
     {
-        return $this->id;
+        return $this->_id;
     }
 
     public function getUsername()
     {
-        return $this->username;
+        return $this->_username;
     }
 
     public function getPassword()
     {
-        return $this->password;
+        return $this->_password;
     }
 
     public function getMail()
     {
-        return $this->mail;
+        return $this->_mail;
     }
 
     public function getAdmin()
     {
-        return $this->admin;
+        return $this->_admin;
     }
 
     public function getDark()
     {
-        return $this->dark;
+        return $this->_dark;
     }
 
     //SETTERS
     public function setId($id)
     {
-        $this->id = $id;
+        $this->_id = $id;
     }
 
     public function setUsername($username)
     {
-        $this->username = $username;
+        $this->_username = $username;
     }
 
     public function setPassword($password)
     {
-        $this->password = $password;
+        $this->_password = $password;
     }
 
     public function setMail($mail)
     {
-        $this->mail = $mail;
+        $this->_mail = $mail;
     } 
 
     public function setAdmin($admin)
     {
-        $this->admin = $admin;
+        $this->_admin = $admin;
     }
 
     public function setDark($dark)
     {
-        $this->dark = $dark;
+        $this->_dark = $dark;
     } 
 }

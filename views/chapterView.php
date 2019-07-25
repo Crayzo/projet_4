@@ -1,6 +1,8 @@
 <?php
     $title = $chapter->getTitle();
     $chapterPage = true;
+    use Models\Functions;
+    use Models\Reports;
 ?>
 <?php ob_start(); ?>
 <div id="main">
@@ -30,7 +32,7 @@
                             <textarea name="comment" class="form-control" placeholder="Votre commentaire" required><?php if(isset($postComment)){echo $postComment;} ?></textarea>
                         </div>
                     </div>
-                    <?php Project\Models\Functions::flash(); ?>
+                    <?php Functions::flash(); ?>
                     <button type="submit" class="btn btn-outline-secondary w-100" name="submit_comment">Envoyer</button>
                 <?php } else { ?> 
                     <p class="my-0">Vous devez être connecté(e) pour ajouter un commentaire !</p>
@@ -42,7 +44,7 @@
                 $user = $userManager->selectUsername($data->getAuthorId());
                 if(isset($_SESSION['id']))
                 {
-                    $report = new Project\Models\Reports([
+                    $report = new Reports([
                         'member_id' => $_SESSION['id'],
                         'comment_id' => $data->getId(),
                     ]);
