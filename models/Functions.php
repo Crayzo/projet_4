@@ -3,12 +3,12 @@ namespace Models;
 
 class Functions
 {
-    public static function check($data)
+    public static function check($var)
     {
-        $data = trim($data);
-        $data = stripcslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
+        $var = trim($var);
+        $var = stripcslashes($var);
+        $var = htmlspecialchars($var);
+        return $var;
     }
 
     public static function setFlash($message, $type = 'danger')
@@ -37,21 +37,9 @@ class Functions
 
     public static function autoload()
     {
-        spl_autoload_register(function ($className) 
+        spl_autoload_register(function($class) 
         {
-            $className = ltrim($className, '\\');
-            $fileName  = '';
-            $namespace = '';
-
-            if ($lastNsPos = strrpos($className, '\\')) 
-            {
-                $namespace = substr($className, 0, $lastNsPos);
-                $className = substr($className, $lastNsPos + 1);
-                $fileName  = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
-            }
-
-            $fileName .= $className . '.php';
-            require $fileName;
+            include str_replace('\\', DIRECTORY_SEPARATOR, lcfirst($class)) . '.php';
         });
     }
 }

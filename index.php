@@ -4,13 +4,9 @@ session_start();
 require('models/Functions.php');
 Models\Functions::autoload();
 
-use Controllers\ChapterController;
-use Controllers\CommentController;
-use Controllers\UserController;
-
-$chapterController = new ChapterController();
-$commentController = new CommentController();
-$userController = new UserController();
+$chapterController = new Controllers\ChapterController();
+$commentController = new Controllers\CommentController();
+$userController = new Controllers\UserController();
 
 $userController->cookieConnect();
 
