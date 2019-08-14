@@ -1,8 +1,13 @@
 <?php
+
 namespace Models;
 
 class ChapterManager extends Manager
 {
+    /**
+     * get last 4 chapters
+     * @return array
+     */
     public function getLastChapters()
     {
         $chapters = [];
@@ -19,6 +24,10 @@ class ChapterManager extends Manager
         return $chapters;
     }
 
+    /**
+     * @param int
+     * get a chapter
+     */
     public function get($id)
     {
         $db = $this->dbConnect();
@@ -38,6 +47,10 @@ class ChapterManager extends Manager
         }
     }
 
+    /**
+     * get all chapters
+     * @return array
+     */
     public function getAll()
     {
         $chapters = [];
@@ -54,6 +67,10 @@ class ChapterManager extends Manager
         return $chapters;
     }
 
+    /**
+     * @param object
+     * add a chapter
+     */
     public function add(Chapters $chapter)
     {   
         $db = $this->dbConnect();
@@ -64,6 +81,10 @@ class ChapterManager extends Manager
         ]);
     }
 
+    /**
+     * @param object
+     * update a chapter
+     */
     public function update(Chapters $chapter)
     {
         $db = $this->dbConnect();
@@ -75,6 +96,10 @@ class ChapterManager extends Manager
         ]);
     }
     
+    /**
+     * @param int
+     * delete a chapter and a comments associated to with chapter
+     */
     public function delete($id)
     {
         $db = $this->dbConnect();

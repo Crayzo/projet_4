@@ -1,9 +1,12 @@
 <?php 
-    $title = "Connexion";
-    $hideFooter = true;
-    use Models\Functions;
-?>
-<?php ob_start(); ?>
+
+$title = "Connexion";
+$hideFooter = true;
+
+use Models\Functions;
+
+ob_start(); ?>
+
 <div class="container login">
     <form method="post">
         <h3 class="text-center mb-4">Connexion</h3>
@@ -24,5 +27,7 @@
         <p class="mt-2">Vous n'avez pas de compte ? <a href="index.php?action=register">S'inscrire</a></p>
     </form>
 </div>
-<?php $content = ob_get_clean(); ?>
-<?php require('template.php'); ?>
+
+<?php 
+$content = ob_get_clean();
+require('template.php'); ?>

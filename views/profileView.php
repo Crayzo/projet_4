@@ -1,9 +1,12 @@
 <?php
-    $title = "Édition du profil"; 
-    $hideFooter = true;
-    use Models\Functions;
-?>
-<?php ob_start() ?>
+
+$title = "Édition du profil"; 
+$hideFooter = true;
+
+use Models\Functions;
+
+ob_start() ?>
+
 <div class="container edit">
     <form action="index.php?action=edit_profile" method="post">
         <h3 class="mb-4">Éditer mon profil</h3>
@@ -29,5 +32,7 @@
         <button type="submit" class="btn btn-primary">Mettre à jour mon profil</button>
     </form>
 </div>
-<?php $content = ob_get_clean(); ?>
-<?php require('template.php'); ?>
+
+<?php 
+$content = ob_get_clean();
+require('template.php'); ?>

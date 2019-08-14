@@ -1,11 +1,16 @@
 <?php
+
 namespace Models;
 
 class Manager
 {
+    /**
+     * @return object
+     */
     protected function dbConnect()
     {
-        $db = new \PDO('mysql:host=localhost;dbname=project_4;charset=utf8', 'root', 'root');
+
+        $db = new \PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
         return $db;
     }
 }

@@ -1,11 +1,16 @@
 <?php
+
 namespace Controllers;
+
 use Models\Functions;
 use Models\UserManager;
 use Models\Users;
 
 class UserController
 {
+    /**
+     * user login
+     */
     function login()
     {
         if(isset($_SESSION['id']))
@@ -44,7 +49,7 @@ class UserController
             {  
                 if(isset($_POST['rememberMe']))
                 {
-                    $passHash = password_hash($_POST['passwordConnect'], PASSWORD_DEFAULT);
+                    $passHash = password_hash($_POST['passwordConnect'], PASSWORD_BCRYPT);
                     setcookie('idConnect', $idConnect, time()+365*24*3600, null, null, false, true);
                     setcookie('password', $member->getPassword(), time()+365*24*3600, null, null, false, true);
                 }
@@ -60,6 +65,10 @@ class UserController
         }
         require('views/loginView.php');
     }
+
+    /**
+     * delete all cookies and session
+     */
     function logout()
     {
         session_start();
@@ -78,6 +87,10 @@ class UserController
             exit();
         }
     }
+
+    /**
+     * user registration
+     */
     function register()
     {
         if(isset($_SESSION['id']))
@@ -96,6 +109,7 @@ class UserController
     
             $countPseudo = $userManager->countUserPseudo($pseudo);
             $countMail = $userManager->countUserMail($mail);
+
             $validation = true;
     
             if(empty($_POST['pseudo']) || empty($_POST['mail']) || empty($_POST['mail2']) || empty($_POST['password']) || empty($_POST['password2']))
@@ -104,10 +118,10 @@ class UserController
                 Functions::setFlash('Tous les champs doivent être complétés !');
             }
     
-            elseif(strlen($pseudo) > 25)
+            elseif(strlen($pseudo) > PSEUDO_LENGTH)
             {
                 $validation = false;
-                Functions::setFlash('Votre pseudo ne doit pas dépasser 25 caractères.');
+                Functions::setFlash('Votre pseudo ne doit pas dépasser ' . PSEUDO_LENGTH . ' caractères.');
             }
                     
             elseif($countPseudo > 0)
@@ -142,7 +156,7 @@ class UserController
     
             elseif($validation)
             {
-                $passHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                $passHash = password_hash($_POST['password'], PASSWORD_BCRYPT);
     
                 $user = new Users([
                     'username' => $pseudo,
@@ -158,6 +172,10 @@ class UserController
         }
         require('views/registerView.php');
     }
+
+    /**
+     * modify the user
+     */
     function getProfile()
     {
         if(isset($_SESSION['id']))
@@ -166,23 +184,25 @@ class UserController
     
             $user = $userManager->selectUserId($_SESSION['id']);
             $validation = true;
-    
+
+            /**
+             * if the user changes his username
+             */
             if(isset($_POST['newPseudo']) && !empty($_POST['newPseudo']) && $_POST['newPseudo'] !== $user->getUsername())
             {
                 $newPseudo = Functions::check($_POST['newPseudo']);
-                $pseudoLength = strlen($_POST['newPseudo']);
                 $countUsername = $userManager->countUsername($newPseudo);
     
-                if($pseudoLength >= 25)
+                if(strlen($_POST['newPseudo']) > PSEUDO_LENGTH)
                 {
                     $validation = false;
-                    Functions::setFlash("Votre pseudo ne doit pas dépasser 25 caractères !");
+                    Functions::setFlash('Votre pseudo ne doit pas dépasser ' . PSEUDO_LENGTH . ' caractères.');
                 }
                 
                 elseif($countUsername)
                 {
                     $validation = false;
-                    Functions::setFlash("Le pseudo existe déjà !");
+                    Functions::setFlash('Le pseudo existe déjà !');
                 }
     
                 elseif($validation)
@@ -196,6 +216,9 @@ class UserController
                 }
             }
     
+            /**
+             * if the user changes his mail
+             */
             if(isset($_POST['newMail']) && !empty($_POST['newMail']) && $_POST['newMail'] !== $user->getMail())
             {
                 $newMail = Functions::check($_POST['newMail']);
@@ -224,9 +247,12 @@ class UserController
                 }
             }
     
+            /**
+             * if the user changes his password
+             */
             if(isset($_POST['newPswd']) && !empty($_POST['newPswd']) && $_POST['newPswd'] !== $user->getPassword() && isset($_POST['newPswd2']) && !empty($_POST['newPswd2']) && $_POST['newPswd2'] !== $user->getPassword())
             {
-                $pswd = password_hash($_POST['newPswd'], PASSWORD_DEFAULT);
+                $pswd = password_hash($_POST['newPswd'], PASSWORD_BCRYPT);
                 $pswd2 = $_POST['newPswd2'];
                 $isPasswordCorrect = password_verify($pswd2, $pswd);
     
@@ -259,6 +285,10 @@ class UserController
         else
             header('Location: index.php');
     }
+
+    /**
+     * change the dark session to true and light session to false
+     */
     function darkMode()
     {
         if(isset($_SESSION['id']))
@@ -285,6 +315,10 @@ class UserController
             exit();
         }
     }
+
+    /**
+     * change the light session to true and dark session to false
+     */
     function lightMode()
     {
         if(isset($_SESSION['id']))
@@ -310,6 +344,10 @@ class UserController
             exit();
         }
     }
+
+    /**
+     * adding login cookies
+     */
     function acceptCookie()
     {
         setcookie('accept_cookie', true, time()+365*24*3600, null, null, false, true); 
@@ -323,6 +361,10 @@ class UserController
             header("Location: index.php");
         }
     }
+
+    /**
+     * connect login cookies
+     */
     function cookieConnect()
     {
         if(!isset($_SESSION['id']) && isset($_COOKIE['idConnect'], $_COOKIE['password']) && !empty($_COOKIE['idConnect']) && !empty($_COOKIE['password']))

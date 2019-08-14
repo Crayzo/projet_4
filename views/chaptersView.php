@@ -1,8 +1,11 @@
 <?php
-    $title = "Chapitres";
-    use Models\Functions;
-?>
-<?php ob_start(); ?>
+
+$title = "Chapitres";
+
+use Models\Functions;
+
+ob_start(); ?>
+
 <div class="container" id="main">
     <!-- Chapters -->
     <section class="chapters">
@@ -26,6 +29,8 @@
         </div> 
     </section>
     <!-- Footer -->
-</div> 
-<?php $content = ob_get_clean(); ?>
-<?php require('template.php'); ?>
+</div>
+
+<?php 
+$content = ob_get_clean(); 
+require('template.php'); ?>

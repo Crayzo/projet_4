@@ -1,11 +1,16 @@
 <?php
+
 namespace Controllers;
+
 use Models\CommentManager;
 use Models\ReportManager;
 use Models\UserManager;
 
 class CommentController
 {
+    /**
+     * delete a comment
+     */
     function deleteComment()
     {
         if(isset($_GET['id']) && $_GET['id'] > 0)
@@ -50,6 +55,9 @@ class CommentController
         } 
     }
     
+    /**
+     * get all reported comments
+     */
     function getReports()
     {
         if(isset($_SESSION['id'], $_SESSION['admin']) && !empty($_SESSION['id']) && !empty($_SESSION['admin']) && $_SESSION['admin'] == true)
@@ -80,7 +88,6 @@ class CommentController
         {
             header('Location: index.php');
             exit();
-        }
-        
+        }  
     }
 }

@@ -1,5 +1,7 @@
 <?php
+
 namespace Controllers;
+
 use Models\ChapterManager;
 use Models\Chapters;
 use Models\CommentManager;
@@ -11,34 +13,44 @@ use Models\UserManager;
 
 class ChapterController
 {   
+    /**
+     * show the last 4 chapters
+     */
     function getLastChapters()
     {
         $chapterManager = new ChapterManager();
         $chapters = $chapterManager->getLastChapters();
         require('views/homeView.php');
     }
-    
-    function getChapter()
+
+    /**
+     * show a chapter
+     */
+    function getChapter($id)
     {
         $validation = true;
     
-        if(isset($_GET['id']) && $_GET['id'] > 0) 
+        if(isset($id) && $id > 0) 
         {
+            $id = intval($id);
+
             $chapterManager = new ChapterManager();
             $userManager = new UserManager();
             $commentManager = new CommentManager();
             $reportManager = new ReportManager();
     
-            $getId = intval($_GET['id']);
-            $chapter = $chapterManager->get($getId);
+            $chapter = $chapterManager->get($id);
     
             if(!$chapter)
             {
                 Functions::setFlash("Idendifiant de chapitre inconnu");
                 header('Location: index.php?action=chapters');
-                die();
+                exit();
             }
-            /* SUBMIT A COMMENT */
+            
+            /**
+             * submit a comment
+             */
             if(isset($_POST['submit_comment']))
             {
                 $postComment = Functions::check($_POST['comment']);
@@ -49,10 +61,10 @@ class ChapterController
                     Functions::setFlash("Vous devez écrire un commentaire avant d'envoyer !");
                 }
     
-                elseif(strlen($postComment) > 500)
+                elseif(strlen($postComment) > MESSAGE_LENGTH)
                 {
                     $validation = false;
-                    Functions::setFlash("Votre commentaire ne doit pas dépasser 500 caractères.");
+                    Functions::setFlash('Votre commentaire ne doit pas dépasser ' . MESSAGE_LENGTH . ' caractères.');
                 }
     
                 elseif($validation)
@@ -70,9 +82,11 @@ class ChapterController
                 }
             }
             
-            $comments = $commentManager->selectAll($getId);
+            $comments = $commentManager->selectAll($id);
     
-            /* SUBMIT A REPORT */
+            /**
+             * submit a report
+             */
             if(isset($_POST['submit_report']))
             { 
                 if(isset($_SESSION['id'], $_GET['report']) && !empty($_POST['message_report']) && $_GET['report'] > 0)
@@ -86,10 +100,10 @@ class ChapterController
                         Functions::setFlash("Vous devez écrire la raison avant de signaler !");
                     }
     
-                    elseif(strlen($messageReport) > 500)
+                    elseif(strlen($messageReport) > MESSAGE_LENGTH)
                     {
                         $validation = false;
-                        Functions::setFlash("Votre signalement ne doit pas dépasser 500 caractères.");
+                        Functions::setFlash('Votre signalement ne doit pas dépasser ' . MESSAGE_LENGTH . ' caractères.');
                     }
                     
                     elseif($validation)
@@ -119,15 +133,21 @@ class ChapterController
             header('Location: index.php');
     
     }
-    
+
+    /**
+     * show all chapters
+     */
     function getChapters()
     {
         $chapterManager = new ChapterManager();
-    
         $chapters = $chapterManager->getAll();
+
         require('views/chaptersView.php');
     }
     
+    /**
+     * add a chapter
+     */
     function addChapter()
     {
         if(!isset($_SESSION['admin']))
@@ -163,6 +183,9 @@ class ChapterController
         require('views/addChapterView.php');
     }
     
+    /**
+     * edit a chapter
+     */
     function editChapter()
     {
         if(!isset($_SESSION['admin']))
@@ -207,6 +230,9 @@ class ChapterController
             exit();
     }
     
+    /**
+     * delete a chapter
+     */
     function deleteChapter()
     {
         if(isset($_SESSION['admin']) && !empty($_SESSION['admin']) && $_SESSION['admin'] == true)

@@ -1,16 +1,19 @@
-<?php $title = "Signalements"; ?>
-<?php ob_start(); ?>
-<?php
+<?php 
+
+$title = "Signalements";
+ob_start();
+
 if($reportExist)
 {
-    foreach($reports as $report){ 
+    foreach($reports as $report)
+    { 
         /* USERS */
         $user = $userManager->selectUserId($report->getMemberId());
         /* COMMENTS */
         $comment = $commentManager->selectComment($report);
         /* COMMENT AUTHOR */
-        $author = $userManager->selectUserId($comment->getAuthorId());
-?>
+        $author = $userManager->selectUserId($comment->getAuthorId()); ?>
+
         <div class="container">
             <div class="card my-3">
                 <div class="card-header mb-1">
@@ -33,6 +36,9 @@ if($reportExist)
                 </div>
             </div>
         </div>
-<?php } } else echo "<p class='text-center mt-3'>Aucun signalement à afficher.<br><a href='index.php'>Aller à l'accueil</a></p>" ?>
-<?php $content = ob_get_clean(); ?>
-<?php require('template.php'); ?>
+<?php  } 
+} 
+else echo "<p class='text-center mt-3'>Aucun signalement à afficher.<br><a href='index.php'>Aller à l'accueil</a></p>";
+
+$content = ob_get_clean();
+require('template.php'); ?>

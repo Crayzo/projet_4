@@ -1,8 +1,10 @@
 <?php
-    $title = "Blog de Jean Forteroche";
-    $navTransparent = true;
-?>
-<?php ob_start(); ?>
+
+$title = "Blog de Jean Forteroche";
+$navTransparent = true;
+
+ob_start(); ?>
+
 <div id="main">
     <section>
         <div class="slider">
@@ -38,6 +40,8 @@
         </div>
     </section>
     <!-- FOOTER -->
-</div> 
-<?php $content = ob_get_clean(); ?>
-<?php require('template.php'); ?>
+</div>
+
+<?php 
+$content = ob_get_clean();
+require('template.php'); ?>

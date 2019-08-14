@@ -1,10 +1,12 @@
 <?php
-    $title = "Ajouter un chapitre"; 
-    $tinyMce = true;
-    $hideFooter = true;
-    use Models\Functions;
-?>
-<?php ob_start() ?>
+$title = "Ajouter un chapitre"; 
+$tinyMce = true;
+$hideFooter = true;
+
+use Models\Functions;
+
+ob_start() ?>
+
 <div class="container mt-3">
     <?php Functions::flash(); ?>
     <form action="index.php?action=new_chapter" method="post">
@@ -17,5 +19,7 @@
         <button type="submit" class="btn btn-dark w-100">Ajouter</button>
     </form>
 </div>
-<?php $content = ob_get_clean(); ?>
-<?php require('template.php'); ?>
+
+<?php 
+$content = ob_get_clean(); 
+require('template.php'); ?>

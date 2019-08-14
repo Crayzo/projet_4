@@ -3,9 +3,11 @@ namespace Models;
 
 class ReportManager extends Manager
 {
+    /**
+     * @return array
+     */
     public function select()
     {
-
         $reports = [];
 
         $db = $this->dbConnect();
@@ -20,6 +22,9 @@ class ReportManager extends Manager
         return $reports;
     }
 
+    /**
+     * @param object
+     */
     public function insert(Reports $report)
     {
         $db = $this->dbConnect();
@@ -31,6 +36,9 @@ class ReportManager extends Manager
         ]);
     }
 
+    /**
+     * @param int
+     */
     public function delete($getApprove)
     {
         $db = $this->dbConnect();
@@ -38,6 +46,9 @@ class ReportManager extends Manager
         $req->execute([$getApprove]);
     }
 
+    /**
+     * @param object
+     */
     public function deleteCommentId(Comments $comment)
     {
         $db = $this->dbConnect();
@@ -46,7 +57,11 @@ class ReportManager extends Manager
             $comment->getId()
         ]);
     }
-
+    
+    /**
+     * @param object
+     * @return int
+     */
     public function countReportsId(Reports $report)
     {
         $db = $this->dbConnect();
@@ -59,6 +74,9 @@ class ReportManager extends Manager
         return $count;
     }
 
+    /**
+     * @return int
+     */
     public function countReports()
     {
         $db = $this->dbConnect();
@@ -68,6 +86,10 @@ class ReportManager extends Manager
         return $count;
     }
 
+    /**
+     * @param int
+     * @return int
+     */
     public function selectCommentId($id)
     {
         $db = $this->dbConnect();

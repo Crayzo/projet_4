@@ -1,10 +1,13 @@
 <?php
-    $title = $chapter->getTitle();
-    $chapterPage = true;
-    use Models\Functions;
-    use Models\Reports;
-?>
-<?php ob_start(); ?>
+
+$title = $chapter->getTitle();
+$chapterPage = true;
+
+use Models\Functions;
+use Models\Reports;
+
+ob_start(); ?>
+
 <div id="main">
     <!-- CHAPTER -->
     <section id="chapter-text">
@@ -55,5 +58,7 @@
         </div>
     </section>
 </div>
-<?php $content = ob_get_clean(); ?>
-<?php require('template.php'); ?>
+
+<?php 
+$content = ob_get_clean();
+require('template.php'); ?>

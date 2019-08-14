@@ -1,7 +1,10 @@
 <?php
+
 session_start();
 
+require('config.php');
 require('models/Functions.php');
+
 Models\Functions::autoload();
 
 $chapterController = new Controllers\ChapterController();
@@ -14,79 +17,66 @@ try
 {
     if(isset($_GET['action'])) 
     {
-        if($_GET['action'] == 'chapter')
+        switch($_GET['action'])
         {
-            $chapterController->getChapter();
-        } 
+            case 'chapter':
+                $chapterController->getChapter($_GET['id']);
+                break;
 
-        elseif($_GET['action'] == 'chapters')
-        {
-            $chapterController->getChapters();
-        }
-        
-        elseif($_GET['action'] == 'login')
-        {
-            $userController->login();   
-        }
+            case 'chapters': 
+                $chapterController->getChapters();
+                break;
 
-        elseif($_GET['action'] == 'logout')
-        {
-            $userController->logout();
-        }
+            case 'login': 
+                $userController->login();
+                break;
 
-        elseif($_GET['action'] == 'register')
-        {
-            $userController->register();
-        }
-        
-        elseif($_GET['action'] == 'delete_comment')
-        {
-            $commentController->deleteComment();
-        }
+            case 'logout': 
+                $userController->logout();
+                break;
 
-        elseif($_GET['action'] == 'reports')
-        {
-            $commentController->getReports();
-        }
+            case 'register': 
+                $userController->register();
+                break;
 
-        elseif($_GET['action'] == 'accept_cookie')
-        {
-            $userController->acceptCookie();
-        }
+            case 'delete_comment': 
+                $commentController->deleteComment();
+                break;
 
-        elseif($_GET['action'] == 'new_chapter')
-        {
-            $chapterController->addChapter();
-        }
+            case 'reports': 
+                $commentController->getReports();
+                break;
 
-        elseif($_GET['action'] == 'edit_chapter')
-        {
-            $chapterController->editChapter();
-        }
+            case 'accept_cookie': 
+                $userController->acceptCookie();
+                break;
 
-        elseif($_GET['action'] == 'delete_chapter')
-        {
-            $chapterController->deleteChapter();
-        }
+            case 'new_chapter': 
+                $chapterController->addChapter();
+                break;
 
-        elseif($_GET['action'] == 'edit_profile')
-        {
-            $userController->getProfile();
-        }
+            case 'edit_chapter': 
+                $chapterController->editChapter();
+                break;
 
-        elseif($_GET['action'] == 'dark_mode')
-        {
-            $userController->darkMode();
-        }
+            case 'delete_chapter': 
+                $chapterController->deleteChapter();
+                break;
 
-        elseif($_GET['action'] == 'light_mode')
-        {
-            $userController->lightMode();
-        }
-        
-        else
-        {
-            $chapterController->getLastChapters();
+            case 'edit_profile': 
+                $userController->getProfile();
+                break;
+
+            case 'dark_mode': 
+                $userController->darkMode();
+                break;
+
+            case 'light_mode': 
+                $userController->lightMode();
+                break;
+
+            default:
+                $chapterController->getLastChapters();
         }
     }
     else

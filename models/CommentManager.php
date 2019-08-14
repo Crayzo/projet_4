@@ -1,11 +1,15 @@
 <?php
+
 namespace Models;
 
 class CommentManager extends Manager
 {
+    /**
+     * @param int
+     * @return array
+     */
     public function selectAll($getId)
     {
-
         $comments = [];
 
         $db = $this->dbConnect();
@@ -20,6 +24,10 @@ class CommentManager extends Manager
         return $comments;
     }
 
+    /**
+     * @param int
+     * @return object
+     */
     public function selectId($comment)
     {
         $db = $this->dbConnect();
@@ -31,6 +39,10 @@ class CommentManager extends Manager
         return new Comments($data);
     }
 
+    /**
+     * @param int
+     * @return object
+     */
     public function selectComment($report)
     {
         $db = $this->dbConnect();
@@ -42,6 +54,9 @@ class CommentManager extends Manager
         return new Comments($data);
     }
 
+    /**
+     * @param object
+     */
     public function delete(Comments $comment)
     {
         $db = $this->dbConnect();
@@ -51,6 +66,9 @@ class CommentManager extends Manager
         ]);
     }
 
+    /**
+     * @param object
+     */
     public function insert(Comments $comment)
     {
         $db = $this->dbConnect();

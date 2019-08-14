@@ -1,9 +1,12 @@
 <?php
-    $title = "Inscription";
-    $hideFooter = true;
-    use Models\Functions;
-?>
-<?php ob_start(); ?>
+
+$title = "Inscription";
+$hideFooter = true;
+
+use Models\Functions;
+
+ob_start(); ?>
+
 <div class="container inscription py-3">
     <form method="post">
         <h3 class="text-center">Inscription</h3>
@@ -36,5 +39,7 @@
         <p class="mt-2">Vous avez un compte ? <a href="index.php?action=login">Se connecter</a></p>
     </form>
 </div>
-<?php $content = ob_get_clean(); ?>
-<?php require('template.php'); ?>
+
+<?php 
+$content = ob_get_clean();
+require('template.php'); ?>

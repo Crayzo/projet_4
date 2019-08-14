@@ -3,10 +3,12 @@ namespace Models;
 
 class UserManager extends Manager
 {
+    /**
+     * @param string
+     * @return object
+     */
     public function selectUser($idConnect)
     {
-        $user = [];
-
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT * FROM users WHERE username = :username OR mail = :mail');
         $req->execute([
@@ -25,6 +27,10 @@ class UserManager extends Manager
         }
     }
 
+    /**
+     * @param string
+     * @return int
+     */
     public function countUserPseudo($pseudo)
     {
         $db = $this->dbConnect();
@@ -34,6 +40,10 @@ class UserManager extends Manager
         return $count;
     }
 
+    /**
+     * @param string
+     * @return int
+     */
     public function countUserMail($mail)
     {
         $db = $this->dbConnect();
@@ -43,6 +53,10 @@ class UserManager extends Manager
         return $count;
     }
 
+    /**
+     * @param int
+     * @return object
+     */
     public function selectUserId($data)
     {
         $db = $this->dbConnect();
@@ -54,6 +68,10 @@ class UserManager extends Manager
         return new Users($data);
     }
 
+    /**
+     * @param int
+     * @return object
+     */
     public function selectUsername($id)
     {
         $db = $this->dbConnect();
@@ -65,6 +83,10 @@ class UserManager extends Manager
         return new Users($username);
     } 
 
+    /**
+     * @param string
+     * @return int
+     */
     public function countUsername($username)
     {
         $db = $this->dbConnect();
@@ -76,6 +98,10 @@ class UserManager extends Manager
         return $count;
     }
 
+    /**
+     * @param object
+     * @return object
+     */
     public function selectUserPassword(Users $user)
     {
         $db = $this->dbConnect();
@@ -87,6 +113,9 @@ class UserManager extends Manager
         return new Users($data);
     }
 
+    /**
+     * @param object
+     */
     public function insertNewUser(Users $user)
     {
         $db = $this->dbConnect();
@@ -98,6 +127,9 @@ class UserManager extends Manager
         ]);
     }
 
+    /**
+     * @param object
+     */
     public function updateUsername(Users $user)
     {
         $db = $this->dbConnect();
@@ -108,6 +140,9 @@ class UserManager extends Manager
         ]);
     }
 
+    /**
+     * @param object
+     */
     public function updateMail(Users $user)
     {
         $db = $this->dbConnect();
@@ -118,6 +153,9 @@ class UserManager extends Manager
         ]);
     }
     
+    /**
+     * @param object
+     */
     public function updatePassword(Users $user)
     {
         $db = $this->dbConnect();
@@ -128,6 +166,9 @@ class UserManager extends Manager
         ]);
     }
 
+    /**
+     * @param object
+     */
     public function darkMode(Users $user)
     {
         $db = $this->dbConnect();
@@ -137,6 +178,9 @@ class UserManager extends Manager
         ]);
     }
 
+    /**
+     * @param object
+     */
     public function lightMode(Users $user)
     {
         $db = $this->dbConnect();

@@ -1,8 +1,13 @@
 <?php
+
 namespace Models;
 
 class Functions
 {
+    /**
+     * @param var to check
+     * @return var checked
+     */
     public static function check($var)
     {
         $var = trim($var);
@@ -11,6 +16,10 @@ class Functions
         return $var;
     }
 
+    /**
+     * @param string
+     * @param string
+     */
     public static function setFlash($message, $type = 'danger')
     {
         $_SESSION['flash'] = [
@@ -19,6 +28,9 @@ class Functions
         ];
     }
 
+    /**
+     * show the flash session
+     */
     public static function flash()
     {
         if(isset($_SESSION['flash']))
@@ -35,8 +47,14 @@ class Functions
         }
     }
 
+    /**
+     * autoload {class}.php
+     */
     public static function autoload()
     {
+        /**
+         * @param string
+         */
         spl_autoload_register(function($class) 
         {
             include str_replace('\\', DIRECTORY_SEPARATOR, lcfirst($class)) . '.php';
