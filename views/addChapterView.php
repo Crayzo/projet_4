@@ -12,10 +12,10 @@ ob_start() ?>
     <form action="index.php?action=new_chapter" method="post">
         <div class="form-row">
             <div class="form-group col-12">
-                <input type="text" class="form-control" name="title" placeholder="Chapitre X" value="<?php if(isset($_POST['title'])){echo $_POST['title'];} ?>">
+                <input type="text" class="form-control" name="title" placeholder="Chapitre X" value="<?php if(isset($newTitle)){echo $newTitle;} ?>">
             </div>
         </div>
-        <textarea name="content"><?php if(isset($_POST['content'])){echo $_POST['content'];} ?></textarea>
+        <textarea name="content"><?php if(isset($content)){echo $content;} ?></textarea>
         <button type="submit" class="btn btn-dark w-100">Ajouter</button>
     </form>
 </div>

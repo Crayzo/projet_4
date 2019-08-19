@@ -11,7 +11,7 @@ class UserController
     /**
      * user login
      */
-    function login()
+    function login($post, $idConnect, $passwordConnect, $rememberMe)
     {
         if(isset($_SESSION['id']))
         {
@@ -19,15 +19,15 @@ class UserController
             exit();
         }
         
-        if(!empty($_POST))
+        if($post)
         {
             $userManager = new UserManager();
             
-            $idConnect = Functions::check($_POST['idConnect']);
+            $idConnect = Functions::check($idConnect);
             $validation = true;
             $member = $userManager->selectUser($idConnect);
     
-            if(empty($idConnect) || empty($_POST['passwordConnect']))
+            if(empty($idConnect) || empty($passwordConnect))
             {
                 $validation = false;
                 Functions::setFlash('Tous les champs doivent être complétés !');
@@ -39,7 +39,7 @@ class UserController
                 Functions::setFlash('Mauvais identifiant !');
             }
     
-            elseif(!password_verify($_POST['passwordConnect'], $member->getPassword()))
+            elseif(!password_verify($passwordConnect, $member->getPassword()))
             {
                 $validation = false;
                 Functions::setFlash('Mauvais mot de passe !');
@@ -47,9 +47,9 @@ class UserController
     
             elseif($validation)
             {  
-                if(isset($_POST['rememberMe']))
+                if($rememberMe)
                 {
-                    $passHash = password_hash($_POST['passwordConnect'], PASSWORD_BCRYPT);
+                    $passHash = password_hash($passwordConnect, PASSWORD_BCRYPT);
                     setcookie('idConnect', $idConnect, time()+365*24*3600, null, null, false, true);
                     setcookie('password', $member->getPassword(), time()+365*24*3600, null, null, false, true);
                 }
@@ -91,7 +91,7 @@ class UserController
     /**
      * user registration
      */
-    function register()
+    function register($post, $pseudo, $mail, $mail2, $password, $password2)
     {
         if(isset($_SESSION['id']))
         {
@@ -99,20 +99,20 @@ class UserController
             exit();
         }
     
-        if(!empty($_POST))
+        if($post)
         {
             $userManager = new UserManager();
     
-            $pseudo = Functions::check($_POST['pseudo']);
-            $mail = Functions::check($_POST['mail']);
-            $mail2 = Functions::check($_POST['mail2']);
+            $pseudo = Functions::check($pseudo);
+            $mail = Functions::check($mail);
+            $mail2 = Functions::check($mail2);
     
             $countPseudo = $userManager->countUserPseudo($pseudo);
             $countMail = $userManager->countUserMail($mail);
 
             $validation = true;
     
-            if(empty($_POST['pseudo']) || empty($_POST['mail']) || empty($_POST['mail2']) || empty($_POST['password']) || empty($_POST['password2']))
+            if(empty($pseudo) || empty($mail) || empty($mail2) || empty($password) || empty($password2))
             {
                 $validation = false;
                 Functions::setFlash('Tous les champs doivent être complétés !');
@@ -148,7 +148,7 @@ class UserController
                 Functions::setFlash('Adresse mail déjà utilisée !');
             }
     
-            elseif($_POST['password'] !== $_POST['password2'])
+            elseif($password !== $password2)
             {
                 $validation = false;
                 Functions::setFlash('Vos mots de passe ne correspondent pas');
@@ -156,8 +156,8 @@ class UserController
     
             elseif($validation)
             {
-                $passHash = password_hash($_POST['password'], PASSWORD_BCRYPT);
-    
+                $passHash = password_hash($password, PASSWORD_BCRYPT);
+
                 $user = new Users([
                     'username' => $pseudo,
                     'mail' => $mail,
@@ -176,7 +176,7 @@ class UserController
     /**
      * modify the user
      */
-    function getProfile()
+    function getProfile($newPseudo, $newMail, $newPswd, $newPswd2)
     {
         if(isset($_SESSION['id']))
         {
@@ -188,12 +188,11 @@ class UserController
             /**
              * if the user changes his username
              */
-            if(isset($_POST['newPseudo']) && !empty($_POST['newPseudo']) && $_POST['newPseudo'] !== $user->getUsername())
+            if(isset($newPseudo) && !empty($newPseudo) && $newPseudo !== $user->getUsername())
             {
-                $newPseudo = Functions::check($_POST['newPseudo']);
                 $countUsername = $userManager->countUsername($newPseudo);
     
-                if(strlen($_POST['newPseudo']) > PSEUDO_LENGTH)
+                if(strlen($newPseudo) > PSEUDO_LENGTH)
                 {
                     $validation = false;
                     Functions::setFlash('Votre pseudo ne doit pas dépasser ' . PSEUDO_LENGTH . ' caractères.');
@@ -207,8 +206,10 @@ class UserController
     
                 elseif($validation)
                 {
+                    $newPseudo = Functions::check($newPseudo);
                     $user->setUsername($newPseudo);
                     $userManager->updateUsername($user);
+
                     $_SESSION['username'] = $user->getUsername();
                     Functions::setFlash("Votre compte a bien été mis à jour", "success");
                     header('Location: index.php?action=edit_profile');
@@ -219,9 +220,9 @@ class UserController
             /**
              * if the user changes his mail
              */
-            if(isset($_POST['newMail']) && !empty($_POST['newMail']) && $_POST['newMail'] !== $user->getMail())
+            if(isset($newMail) && !empty($newMail) && $newMail !== $user->getMail())
             {
-                $newMail = Functions::check($_POST['newMail']);
+                $newMail = Functions::check($newMail);
                 $countMail = $userManager->countUserMail($newMail);
     
                 if(!filter_var($newMail, FILTER_VALIDATE_EMAIL))
@@ -240,6 +241,7 @@ class UserController
                 {
                     $user->setMail($newMail);
                     $userManager->updateMail($user);
+
                     $_SESSION['mail'] = $user->getMail();
                     Functions::setFlash("Votre compte a bien été mis à jour", "success");
                     header('Location: index.php?action=edit_profile');
@@ -250,10 +252,10 @@ class UserController
             /**
              * if the user changes his password
              */
-            if(isset($_POST['newPswd']) && !empty($_POST['newPswd']) && $_POST['newPswd'] !== $user->getPassword() && isset($_POST['newPswd2']) && !empty($_POST['newPswd2']) && $_POST['newPswd2'] !== $user->getPassword())
+            if(isset($newPswd) && !empty($newPswd) && $newPswd !== $user->getPassword() && isset($newPswd2) && !empty($newPswd2) && $newPswd2 !== $user->getPassword())
             {
-                $pswd = password_hash($_POST['newPswd'], PASSWORD_BCRYPT);
-                $pswd2 = $_POST['newPswd2'];
+                $pswd = password_hash($newPswd, PASSWORD_BCRYPT);
+                $pswd2 = $newPswd2;
                 $isPasswordCorrect = password_verify($pswd2, $pswd);
     
                 $data = $userManager->selectUserPassword($user);

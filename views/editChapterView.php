@@ -10,7 +10,7 @@ ob_start() ?>
 
 <div class="container mt-3">
     <?php Functions::flash(); ?>
-    <form action="index.php?action=edit_chapter&id=<?= $getId ?>" method="post">
+    <form action="index.php?action=edit_chapter&id=<?= $id ?>" method="post">
         <div class="form-row">
             <div class="form-group col-12">
                 <input type="text" class="form-control" name="title" value="<?= $data->getTitle(); ?>" required>

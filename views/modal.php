@@ -6,7 +6,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <form id="modal-form" action="index.php?action=chapter&id=<?= $getId ?>&report=<?= $data->getId(); ?>" method="post">
+                <form id="modal-form" action="index.php?action=chapter&id=<?= $id ?>&report=<?= $data->getId(); ?>" method="post">
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Raison :</label>
                         <textarea class="form-control" name="message_report" id="message-text" required><?php if(isset($messageReport)){echo $messageReport;} ?></textarea>

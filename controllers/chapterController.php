@@ -26,13 +26,12 @@ class ChapterController
     /**
      * show a chapter
      */
-    function getChapter($id)
+    function getChapter($id, $submitComment, $comment, $submitReport, $idComment, $messageReport)
     {
         $validation = true;
     
-        if(isset($id) && $id > 0) 
+        if($id > 0) 
         {
-            $id = intval($id);
 
             $chapterManager = new ChapterManager();
             $userManager = new UserManager();
@@ -51,9 +50,9 @@ class ChapterController
             /**
              * submit a comment
              */
-            if(isset($_POST['submit_comment']))
+            if($submitComment)
             {
-                $postComment = Functions::check($_POST['comment']);
+                $postComment = Functions::check($comment);
                 
                 if(!isset($_SESSION['username'], $postComment) || empty($_SESSION['username']) || empty($postComment))
                 {
@@ -87,12 +86,12 @@ class ChapterController
             /**
              * submit a report
              */
-            if(isset($_POST['submit_report']))
-            { 
-                if(isset($_SESSION['id'], $_GET['report']) && !empty($_POST['message_report']) && $_GET['report'] > 0)
+            if($submitReport)
+            {
+                if(isset($_SESSION['id'], $idComment) && !empty($messageReport) && $idComment > 0)
                 {
                     $validation = true;
-                    $messageReport = Functions::check($_POST['message_report']);
+                    $messageReport = Functions::check($messageReport);
     
                     if(!isset($messageReport) || empty($messageReport))
                     {
@@ -111,7 +110,7 @@ class ChapterController
     
                         $report = new Reports([
                             'member_id' => $_SESSION['id'],
-                            'comment_id' => $_GET['report'],
+                            'comment_id' => $idComment,
                             'message' => $messageReport
                         ]);
     
@@ -130,7 +129,9 @@ class ChapterController
             require('views/chapterView.php');
         }
         else
+        {
             header('Location: index.php');
+        }
     
     }
 
@@ -148,20 +149,21 @@ class ChapterController
     /**
      * add a chapter
      */
-    function addChapter()
+    function addChapter($post, $newTitle, $content)
     {
         if(!isset($_SESSION['admin']))
         {  
             header('Location: index.php');
             exit();
         }
-        if(!empty($_POST))
+
+        if($post)
         {
             $chapterManager = new ChapterManager();
     
             $validation = true;
     
-            if(!isset($_POST['content'], $_POST['title']) || empty($_POST['content']) || empty($_POST['title']))
+            if(!isset($content, $newTitle) || empty($content) || empty($newTitle))
             {
                 $validation = false;
                 Functions::setFlash("Tous les champs doivent être complétés !");
@@ -170,8 +172,8 @@ class ChapterController
             elseif($validation)
             {
                 $chapter = new Chapters([
-                    "title" => $_POST['title'],
-                    "content" => $_POST['content']
+                    "title" => $newTitle,
+                    "content" => $content
                 ]);
       
                 $chapterManager->add($chapter);
@@ -186,24 +188,24 @@ class ChapterController
     /**
      * edit a chapter
      */
-    function editChapter()
+    function editChapter($id, $post, $title, $content)
     {
         if(!isset($_SESSION['admin']))
         {  
             header('Location: index.php');
             exit();
         }
-        if(isset($_GET['id']) && $_GET['id'] > 0)
+
+        if($id > 0)
         {
             $chapterManager = new ChapterManager();
     
-            $getId = intval($_GET['id']);
-            $data = $chapterManager->get($getId);
+            $data = $chapterManager->get($id);
             $validation = true;
     
-            if(!empty($_POST))
+            if($post)
             {
-                if(!isset($_POST['content'], $_POST['title']) || empty($_POST['content']) || empty($_POST['title']))
+                if(!isset($content, $title) || empty($content) || empty($title))
                 {
                     $validation = false;
                     Functions::setFlash("Tous les champs doivent être complétés !");
@@ -212,13 +214,13 @@ class ChapterController
                 elseif($validation)
                 {
                     $chapter = new Chapters([
-                        'id' => $getId,
-                        'content' => $_POST['content'],
-                        'title' => $_POST['title']
+                        'id' => $id,
+                        'content' => $content,
+                        'title' => $title
                     ]);
                     
                     $chapterManager->update($chapter);
-                    Functions::setFlash("Le chapitre a été modifié avec succès. <a class='alert-link' href='index.php?action=chapter&id=$getId'>Retour au chapitre</a>", "success");
+                    Functions::setFlash("Le chapitre a été modifié avec succès. <a class='alert-link' href='index.php?action=chapter&id=$id'>Retour au chapitre</a>", "success");
                     header('Location: index.php?action=edit_chapter&id=' . $data->getId());
                     exit();
                 }
@@ -233,16 +235,15 @@ class ChapterController
     /**
      * delete a chapter
      */
-    function deleteChapter()
+    function deleteChapter($id)
     {
         if(isset($_SESSION['admin']) && !empty($_SESSION['admin']) && $_SESSION['admin'] == true)
         {
-            if(isset($_GET['id']) && $_GET['id'] > 0)
+            if($id > 0)
             {
                 $chapterManager = new ChapterManager();
                 
-                $getId = intval($_GET['id']);
-                $chapterManager->delete($getId);
+                $chapterManager->delete($id);
                 Functions::setFlash("Le chapitre a été supprimé avec succès", "success");
                 header("Location: index.php?action=chapters");
                 exit();

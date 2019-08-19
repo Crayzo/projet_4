@@ -11,15 +11,14 @@ class CommentController
     /**
      * delete a comment
      */
-    function deleteComment()
+    function deleteComment($id)
     {
-        if(isset($_GET['id']) && $_GET['id'] > 0)
+        if($id > 0)
         {
             $commentManager = new CommentManager();
             $reportManager = new ReportManager();
     
-            $getId = intval($_GET['id']);
-            $comment = $commentManager->selectId($getId);
+            $comment = $commentManager->selectId($id);
     
             if(isset($_SESSION['id']))
             {
@@ -58,7 +57,7 @@ class CommentController
     /**
      * get all reported comments
      */
-    function getReports()
+    function getReports($idReport, $idComment)
     {
         if(isset($_SESSION['id'], $_SESSION['admin']) && !empty($_SESSION['id']) && !empty($_SESSION['admin']) && $_SESSION['admin'] == true)
         {
@@ -69,15 +68,13 @@ class CommentController
             $reports = $reportManager->select();
             $reportExist = $reportManager->countReports();
     
-            if(isset($_GET['approve']) && $_GET['approve'] > 0)
+            if($idReport > 0)
             {
-                $getApprove = intval($_GET['approve']);
-                $reportManager->delete($getApprove);
+                $reportManager->delete($idReport);
     
-                if(isset($_GET['delete']) && $_GET['delete'] > 0)
+                if($idComment > 0)
                 {
-                    $getDelete = intval($_GET['delete']);
-                    $comment = $commentManager->selectId($getDelete);
+                    $comment = $commentManager->selectId($idComment);
                     $commentManager->delete($comment);
                 }
                 header('Location: index.php?action=reports');
